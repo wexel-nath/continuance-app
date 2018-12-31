@@ -1,0 +1,8 @@
+.vertical-menu {
+  height: 100vh;
+  text-align: center;
+}
+
+.sidebar-link {
+  cursor: pointer;
+}

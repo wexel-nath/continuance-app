@@ -1,0 +1,8 @@
+.suggestion {
+  cursor: pointer;
+}
+
+.suggestion-list {
+  position: absolute !important;
+  z-index: 1000 !important;
+}

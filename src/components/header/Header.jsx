@@ -3,6 +3,19 @@ import logo from "../../img/continuance_logo.jpg";
 import "./Header.css";
 
 class Header extends React.Component {
+  getUserWidget() {
+    return (
+      this.props.loggedIn && (
+        <div className="right menu">
+          <div className="ui dropdown item user-dropdown">
+            <h3 className="ui header">{this.props.first_name}</h3>
+            <i className="blue large user icon" />
+          </div>
+        </div>
+      )
+    );
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -15,12 +28,7 @@ class Header extends React.Component {
           >
             <img src={logo} alt="continuance-logo" />
           </a>
-          <div className="right menu">
-            <div className="ui dropdown item user-dropdown">
-              <h3 className="ui header">{this.props.first_name}</h3>
-              <i className="blue large user icon" />
-            </div>
-          </div>
+          {this.getUserWidget()}
         </div>
       </React.Fragment>
     );

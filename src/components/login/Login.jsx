@@ -24,12 +24,9 @@ class Login extends React.Component {
     const response = login(this.state.username, this.state.password);
     if (response.hasOwnProperty("error")) {
       this.setState({ error: response.error });
-      return;
+    } else {
+      this.props.onLogin(response.user);
     }
-    this.props.onLogin({
-      first_name: response.first_name,
-      username: response.username
-    });
   };
 
   getErrorMessage() {

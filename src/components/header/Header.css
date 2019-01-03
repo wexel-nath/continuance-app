@@ -2,10 +2,19 @@
   width: 210px;
 }
 
+.header-menu {
+  margin-bottom: 0px !important;
+}
+
 .user-dropdown h3 {
   margin: 8px !important;
 }
 
 .user-dropdown i {
   margin-right: 0px !important;
+}
+
+.user-dropdown-wrapper {
+  float: right;
+  margin-right: 140px;
 }

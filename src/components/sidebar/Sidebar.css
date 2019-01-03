@@ -6,3 +6,7 @@
 .sidebar-link {
   cursor: pointer;
 }
+
+.sidebar-link:hover {
+  color: #2185d0 !important;
+}

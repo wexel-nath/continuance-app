@@ -10,8 +10,9 @@ class App extends React.Component {
     content: "",
     loggedIn: false,
     user: {
+      username: "",
       first_name: "",
-      username: ""
+      last_name: ""
     }
   };
 
@@ -19,13 +20,10 @@ class App extends React.Component {
     this.setState({ content: value });
   };
 
-  onLogin = ({ first_name, username }) => {
+  onLogin = user => {
     this.setState({
       loggedIn: true,
-      user: {
-        first_name: first_name,
-        username: username
-      }
+      user: user
     });
   };
 
@@ -33,14 +31,18 @@ class App extends React.Component {
     this.setState({
       loggedIn: false,
       user: {
-        first_name: "Guest",
-        username: ""
+        username: "",
+        first_name: "",
+        last_name: ""
       }
     });
   }
 
   getContent() {
-    return this.state.loggedIn ? (
+    if (!this.state.loggedIn) {
+      return <Login onLogin={this.onLogin} />;
+    }
+    return (
       <div className="ui stackable grid">
         <div className="three wide column collapsed">
           <Sidebar onSidebarLinkClick={this.onSidebarLinkClick} />
@@ -49,8 +51,6 @@ class App extends React.Component {
           <Content content={this.state.content} />
         </div>
       </div>
-    ) : (
-      <Login onLogin={this.onLogin} />
     );
   }
 

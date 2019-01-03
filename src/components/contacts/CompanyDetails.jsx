@@ -23,7 +23,7 @@ class CompanyDetails extends React.Component {
             <input
               type="text"
               name="company-website"
-              placeholder="https://www.wexel-tech.com"
+              placeholder="https://www.getwexel.com"
             />
           </div>
           <div className="field">

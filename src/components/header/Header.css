@@ -15,6 +15,12 @@
 }
 
 .user-dropdown-wrapper {
-  float: right;
-  margin-right: 140px;
+  position: absolute !important;
+  transition-delay: 0.5s !important;
+  opacity: 0 !important;
+}
+
+.user-dropdown:hover .user-dropdown-wrapper {
+  transition-delay: 0s !important;
+  opacity: 1 !important;
 }

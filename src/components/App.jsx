@@ -27,7 +27,7 @@ class App extends React.Component {
     });
   };
 
-  onLogout() {
+  onLogout = () => {
     this.setState({
       loggedIn: false,
       user: {
@@ -36,7 +36,7 @@ class App extends React.Component {
         last_name: ""
       }
     });
-  }
+  };
 
   getContent() {
     if (!this.state.loggedIn) {
@@ -60,6 +60,7 @@ class App extends React.Component {
         <Header
           first_name={this.state.user.first_name}
           loggedIn={this.state.loggedIn}
+          onLogout={this.onLogout}
         />
         {this.getContent()}
       </div>

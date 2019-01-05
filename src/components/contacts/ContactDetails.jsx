@@ -2,6 +2,20 @@ import React from "react";
 import LocationSearchInput from "./LocationSearchInput";
 
 class ContactDetails extends React.Component {
+  state = {
+    suggestions: []
+  };
+
+  buildSuggestionList() {
+    return this.state.suggestions.map((suggestion, index) => {
+      return (
+        <div key={index} className="item">
+          {suggestion}
+        </div>
+      );
+    });
+  }
+
   render() {
     return (
       <div className="ui segment">
@@ -39,6 +53,14 @@ class ContactDetails extends React.Component {
             <label>Location Met</label>
             <LocationSearchInput />
           </div>
+        </div>
+        <div className="field">
+          <label>Notes</label>
+          <textarea
+            rows="2"
+            name="contact-notes"
+            placeholder="Optional notes"
+          />
         </div>
       </div>
     );

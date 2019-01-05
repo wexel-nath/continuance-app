@@ -1,6 +1,6 @@
 import React from "react";
 import ContactDetails from "./ContactDetails";
-import CompanyPosition from "./CompanyPosition";
+import CompanyPosition from "../company/CompanyPosition";
 
 class NewContact extends React.Component {
   render() {

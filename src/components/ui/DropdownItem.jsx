@@ -1,15 +1,9 @@
 import React from "react";
 
-const DropdownItem = ({ value, selected, handleClick, handleMouseEnter }) => {
-  let style = "floating item dropdown-item";
-  selected && (style += " dropdown-selected");
+const DropdownItem = ({ handleClick, text }) => {
   return (
-    <div
-      className={style}
-      onMouseDown={handleClick}
-      onMouseEnter={handleMouseEnter}
-    >
-      {value}
+    <div className="item" onClick={handleClick}>
+      {text}
     </div>
   );
 };

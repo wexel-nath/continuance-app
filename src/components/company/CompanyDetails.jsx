@@ -22,7 +22,7 @@ class CompanyDetails extends React.Component {
           </div>
         </div>
         <div className="field">
-          <label>Skills</label>
+          <label>Company Expertise</label>
           <Dropdown
             className="ui multiple selection dropdown"
             placeholder="You can select multiple"

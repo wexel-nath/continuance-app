@@ -4,6 +4,10 @@ import DropdownItem from "../ui/DropdownItem";
 import "./Header.css";
 
 class Header extends React.Component {
+  componentDidUpdate() {
+    window.$(".ui.dropdown").dropdown();
+  }
+
   getUserWidget() {
     return (
       this.props.loggedIn && (

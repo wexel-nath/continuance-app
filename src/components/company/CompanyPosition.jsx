@@ -30,6 +30,7 @@ class CompanyPosition extends React.Component {
             <Dropdown
               className="ui selection dropdown"
               placeholder="Select a Company"
+              showIcon
             >
               <DropdownItem
                 handleClick={() => this.setState({ company: "new" })}

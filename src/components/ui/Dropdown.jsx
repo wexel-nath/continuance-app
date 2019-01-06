@@ -11,11 +11,12 @@ class Dropdown extends React.Component {
       className,
       value,
       placeholder,
-      children
+      children,
+      showIcon
     } = this.props;
     return (
       <div className={className} onInput={handleChange} value={value}>
-        <i className="dropdown icon" />
+        {showIcon && <i className="dropdown icon" />}
         <div className="default text">{placeholder}</div>
         <div className="menu">{children}</div>
       </div>

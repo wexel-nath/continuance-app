@@ -26,6 +26,7 @@ class CompanyDetails extends React.Component {
           <Dropdown
             className="ui multiple selection dropdown"
             placeholder="You can select multiple"
+            showIcon
           >
             <DropdownItem text="Distributor" />
             <DropdownItem text="Sales Agent" />

@@ -1,6 +1,7 @@
 import React from "react";
 import cities from "../../api/cities";
 import Dropdown from "../ui/Dropdown";
+import DropdownItem from "../ui/DropdownItem";
 
 class LocationSearchInput extends React.Component {
   state = {
@@ -26,11 +27,7 @@ class LocationSearchInput extends React.Component {
 
   buildSuggestionList() {
     return this.state.suggestions.map((suggestion, index) => {
-      return (
-        <div key={index} className="item">
-          {suggestion.matching_full_name}
-        </div>
-      );
+      return <DropdownItem key={index} text={suggestion.matching_full_name} />;
     });
   }
 
@@ -40,6 +37,7 @@ class LocationSearchInput extends React.Component {
         className="ui search selection dropdown"
         placeholder="Type a location..."
         value={this.state.address}
+        name={this.props.name}
         handleChange={this.handleChange}
       >
         {this.buildSuggestionList()}

@@ -7,15 +7,17 @@ class Dropdown extends React.Component {
 
   render() {
     const {
-      handleChange,
       className,
+      handleChange,
       value,
+      name,
+      showIcon,
       placeholder,
-      children,
-      showIcon
+      children
     } = this.props;
     return (
       <div className={className} onInput={handleChange} value={value}>
+        <input type="hidden" name={name} />
         {showIcon && <i className="dropdown icon" />}
         <div className="default text">{placeholder}</div>
         <div className="menu">{children}</div>

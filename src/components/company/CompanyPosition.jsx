@@ -29,16 +29,19 @@ class CompanyPosition extends React.Component {
             <label>Company</label>
             <Dropdown
               className="ui selection dropdown"
+              name="company-id"
               placeholder="Select a Company"
               showIcon
             >
               <DropdownItem
                 handleClick={() => this.setState({ company: "new" })}
                 text="Add New Company"
+                value="new"
               />
               <DropdownItem
                 handleClick={() => this.setState({ company: "none" })}
                 text="I'm not sure"
+                value="none"
               />
               {/* TODO: Get list of companies */}
             </Dropdown>

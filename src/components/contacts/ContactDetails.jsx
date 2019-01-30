@@ -47,11 +47,11 @@ class ContactDetails extends React.Component {
         <div className="two fields">
           <div className="field">
             <label>Based in</label>
-            <LocationSearchInput />
+            <LocationSearchInput name="location" />
           </div>
           <div className="field">
             <label>Location Met</label>
-            <LocationSearchInput />
+            <LocationSearchInput name="location-met" />
           </div>
         </div>
         <div className="field">

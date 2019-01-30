@@ -15,7 +15,7 @@ class NewContact extends React.Component {
           <CompanyPosition />
 
           {/* TODO: enable button when required fields are filled */}
-          <button className="ui disabled blue button" type="submit">
+          <button className="ui primary button" type="submit">
             Create New Contact
           </button>
         </form>

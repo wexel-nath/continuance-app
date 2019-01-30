@@ -25,6 +25,7 @@ class CompanyDetails extends React.Component {
           <label>Company Expertise</label>
           <Dropdown
             className="ui multiple selection dropdown"
+            name="company-expertise"
             placeholder="You can select multiple"
             showIcon
           >

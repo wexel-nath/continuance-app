@@ -1,11 +1,8 @@
 import React from "react";
 
-const SidebarLink = ({ linkValue, onSidebarLinkClick, value }) => {
+const SidebarLink = ({ onSidebarLinkClick, value }) => {
   return (
-    <div
-      onClick={() => onSidebarLinkClick(linkValue)}
-      className="item sidebar-link"
-    >
+    <div onClick={onSidebarLinkClick} className="item sidebar-link">
       {value}
     </div>
   );

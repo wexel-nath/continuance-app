@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import logo from "../../img/continuance_logo.jpg";
 import login from "../../api/authentication";
 import "./Login.css";
@@ -26,6 +27,7 @@ class Login extends React.Component {
       this.setState({ error: response.error });
     } else {
       this.props.onLogin(response.user);
+      this.props.history.push("/");
     }
   };
 
@@ -71,4 +73,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);

@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import SidebarItem from "./SidebarItem";
 import SidebarLink from "./SidebarLink";
 import "./Sidebar.css";
@@ -9,18 +10,18 @@ class Sidebar extends React.Component {
       <div className="ui massive fluid vertical menu vertical-menu">
         <SidebarItem header="Contacts">
           <SidebarLink
-            linkValue="contact-add-new"
-            onSidebarLinkClick={this.props.onSidebarLinkClick}
+            onSidebarLinkClick={() => this.props.history.push("/contacts/new")}
             value="Add New"
           />
           <SidebarLink
-            linkValue="contact-search"
-            onSidebarLinkClick={this.props.onSidebarLinkClick}
+            onSidebarLinkClick={() =>
+              this.props.history.push("/contacts/search")
+            }
             value="Search"
           />
           <SidebarLink
             linkValue="contact-view-all"
-            onSidebarLinkClick={this.props.onSidebarLinkClick}
+            onSidebarLinkClick={() => this.props.history.push("/contacts")}
             value="View All"
           />
         </SidebarItem>
@@ -30,4 +31,4 @@ class Sidebar extends React.Component {
   }
 }
 
-export default Sidebar;
+export default withRouter(Sidebar);

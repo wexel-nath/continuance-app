@@ -1,5 +1,6 @@
 import React from "react";
-import Sidebar from "./sidebar/Sidebar";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
 import Content from "./Content";
 import Header from "./header/Header";
 import Login from "./login/Login";
@@ -14,10 +15,6 @@ class App extends React.Component {
       first_name: "",
       last_name: ""
     }
-  };
-
-  onSidebarLinkClick = value => {
-    this.setState({ content: value });
   };
 
   onLogin = user => {
@@ -38,32 +35,30 @@ class App extends React.Component {
     });
   };
 
-  getContent() {
-    if (!this.state.loggedIn) {
-      return <Login onLogin={this.onLogin} />;
-    }
-    return (
-      <div className="ui stackable grid">
-        <div className="three wide column collapsed">
-          <Sidebar onSidebarLinkClick={this.onSidebarLinkClick} />
-        </div>
-        <div className="thirteen wide column collapsed">
-          <Content content={this.state.content} />
-        </div>
-      </div>
-    );
-  }
-
   render() {
     return (
-      <div>
-        <Header
-          first_name={this.state.user.first_name}
-          loggedIn={this.state.loggedIn}
-          onLogout={this.onLogout}
-        />
-        {this.getContent()}
-      </div>
+      <Router>
+        <React.Fragment>
+          <Header
+            first_name={this.state.user.first_name}
+            loggedIn={this.state.loggedIn}
+            onLogout={this.onLogout}
+          />
+
+          <Switch>
+            <Route
+              exact
+              path="/login"
+              render={() => <Login onLogin={this.onLogin} />}
+            />
+            <PrivateRoute
+              path="/"
+              signedIn={this.state.loggedIn}
+              component={Content}
+            />
+          </Switch>
+        </React.Fragment>
+      </Router>
     );
   }
 }

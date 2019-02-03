@@ -1,4 +1,4 @@
-function login(username, password) {
+export function login(username, password) {
   if (username === "guest" && password === "guest") {
     return {
       user: {
@@ -10,5 +10,3 @@ function login(username, password) {
   }
   return { error: "Incorrect username or password" };
 }
-
-export default login;

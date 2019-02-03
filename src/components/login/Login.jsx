@@ -1,14 +1,15 @@
 import React from "react";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { handleLogIn } from "../../actions";
+
 import logo from "../../img/continuance_logo.jpg";
-import login from "../../api/authentication";
 import "./Login.css";
 
 class Login extends React.Component {
   state = {
     username: "",
-    password: "",
-    error: ""
+    password: ""
   };
 
   onUsernameChange = event => {
@@ -21,25 +22,18 @@ class Login extends React.Component {
 
   onLoginSubmit = event => {
     event.preventDefault();
+    this.props.handleLogIn(this.state.username, this.state.password);
 
-    const response = login(this.state.username, this.state.password);
-    if (response.hasOwnProperty("error")) {
-      this.setState({ error: response.error });
-    } else {
-      this.props.onLogin(response.user);
-      this.props.history.push("/");
-    }
+    // TODO: user custom history object and push from reducer
+    this.props.history.push("/");
   };
 
-  getErrorMessage() {
-    return (
-      this.state.error !== "" && (
-        <div className="ui warning message">{this.state.error}</div>
-      )
-    );
+  renderErrorMessage(error) {
+    return <div className="ui warning message">{error}</div>;
   }
 
   render() {
+    const { error } = this.props;
     return (
       <div className="ui container login-wrapper">
         <div className="ui segment login-card">
@@ -66,11 +60,25 @@ class Login extends React.Component {
               Login
             </button>
           </form>
-          {this.getErrorMessage()}
+          {error && this.renderErrorMessage(error)}
+          <div className="ui horizontal divider">OR</div>
+          <button className="ui red fluid large button login-button">
+            <i className="google icon" />
+            Sign in with Google
+          </button>
         </div>
       </div>
     );
   }
 }
 
-export default withRouter(Login);
+const mapStateToProps = state => {
+  return {
+    error: state.auth.error
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { handleLogIn }
+)(withRouter(Login));

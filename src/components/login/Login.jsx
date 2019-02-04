@@ -1,66 +1,59 @@
 import React from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { Field, reduxForm } from "redux-form";
+
 import { handleLogIn } from "../../actions";
 
 import logo from "../../img/continuance_logo.jpg";
 import "./Login.css";
 
 class Login extends React.Component {
-  state = {
-    username: "",
-    password: ""
+  onLoginSubmit = ({ username, password }) => {
+    this.props.handleLogIn(username, password);
   };
 
-  onUsernameChange = event => {
-    this.setState({ username: event.target.value, error: "" });
-  };
+  maybeRenderErrorMessage(error) {
+    return error && <div className="ui warning message">{error}</div>;
+  }
 
-  onPasswordChange = event => {
-    this.setState({ password: event.target.value, error: "" });
-  };
-
-  onLoginSubmit = event => {
-    event.preventDefault();
-    this.props.handleLogIn(this.state.username, this.state.password);
-
-    // TODO: user custom history object and push from reducer
-    this.props.history.push("/");
-  };
-
-  renderErrorMessage(error) {
-    return <div className="ui warning message">{error}</div>;
+  renderInput({ input, type, placeholder, meta }) {
+    const { error, touched } = meta;
+    return (
+      <div className="field">
+        <div className="ui fluid large input">
+          <input {...input} type={type} placeholder={placeholder} />
+        </div>
+        {error && touched && (
+          <div className="ui pointing red basic label">{error}</div>
+        )}
+      </div>
+    );
   }
 
   render() {
-    const { error } = this.props;
+    const { authError, handleSubmit } = this.props;
     return (
       <div className="ui container login-wrapper">
         <div className="ui segment login-card">
-          <form className="ui form" onSubmit={this.onLoginSubmit}>
+          <form className="ui form" onSubmit={handleSubmit(this.onLoginSubmit)}>
             <img className="ui image" src={logo} alt="continuance-logo" />
-            <div className="ui fluid large input">
-              <input
-                type="text"
-                onChange={this.onUsernameChange}
-                value={this.state.username}
-                placeholder="Username"
-              />
-            </div>
-            <div className="ui fluid large input password-input">
-              <input
-                type="password"
-                onChange={this.onPasswordChange}
-                value={this.state.password}
-                placeholder="Password"
-              />
-            </div>
-            <div className="ui warning message">{this.state.error}</div>
+            <Field
+              name="username"
+              component={this.renderInput}
+              type="text"
+              placeholder="Username"
+            />
+            <Field
+              name="password"
+              component={this.renderInput}
+              type="password"
+              placeholder="Password"
+            />
             <button className="ui primary fluid large button login-button">
               Login
             </button>
           </form>
-          {error && this.renderErrorMessage(error)}
+          {this.maybeRenderErrorMessage(authError)}
           <div className="ui horizontal divider">OR</div>
           <button className="ui red fluid large button login-button">
             <i className="google icon" />
@@ -72,13 +65,32 @@ class Login extends React.Component {
   }
 }
 
+const validate = ({ username, password }) => {
+  const errors = {};
+
+  if (!username) {
+    errors.username = "Enter your username";
+  }
+
+  if (!password) {
+    errors.password = "Enter your password";
+  }
+
+  return errors;
+};
+
+const form = reduxForm({
+  form: "login",
+  validate
+})(Login);
+
 const mapStateToProps = state => {
   return {
-    error: state.auth.error
+    authError: state.auth.error
   };
 };
 
 export default connect(
   mapStateToProps,
   { handleLogIn }
-)(withRouter(Login));
+)(form);

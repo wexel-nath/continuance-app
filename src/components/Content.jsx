@@ -1,5 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
+
 import NewContact from "./contacts/NewContact";
 import Sidebar from "./sidebar/Sidebar";
 

@@ -1,16 +1,17 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 
 import PrivateRoute from "./PrivateRoute";
 import Content from "./Content";
 import Header from "./header/Header";
 import Login from "./login/Login";
+import history from "../history";
 
 import "./App.css";
 
 const App = () => {
   return (
-    <Router>
+    <Router history={history}>
       <React.Fragment>
         <Header />
 

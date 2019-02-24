@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+
 import { handleLogOut } from "../../actions";
 
 import logo from "../../img/continuance_logo.jpg";
@@ -33,8 +34,8 @@ class Header extends React.Component {
         <a
           className="ui image image-logo"
           href="https://www.continuancepictures.com/"
-          target="_blank"
           rel="noopener noreferrer"
+          target="_blank"
         >
           <img src={logo} alt="continuance-logo" />
         </a>
@@ -44,10 +45,10 @@ class Header extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ auth: { loggedIn, user } }) => {
   return {
-    loggedIn: state.auth.loggedIn,
-    user: state.auth.user
+    loggedIn,
+    user
   };
 };
 

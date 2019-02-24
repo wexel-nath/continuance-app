@@ -1,8 +1,8 @@
 import React from "react";
 
+import history from "../../history";
 import SidebarItem from "./SidebarItem";
 import SidebarLink from "./SidebarLink";
-import history from "../../history";
 
 import "./Sidebar.css";
 
@@ -11,15 +11,15 @@ const Sidebar = () => {
     <div className="ui massive fluid vertical menu vertical-menu">
       <SidebarItem header="Contacts">
         <SidebarLink
-          onSidebarLinkClick={() => history.push("/contacts/new")}
+          onClick={() => history.push("/contacts/new")}
           value="Add New"
         />
         <SidebarLink
-          onSidebarLinkClick={() => history.push("/contacts/search")}
+          onClick={() => history.push("/contacts/search")}
           value="Search"
         />
         <SidebarLink
-          onSidebarLinkClick={() => history.push("/contacts")}
+          onClick={() => history.push("/contacts")}
           value="View All"
         />
       </SidebarItem>

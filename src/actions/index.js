@@ -11,7 +11,7 @@ import {
   ADD_NEW_CONTACT
 } from "./types";
 
-export const handleLogIn = (username, password) => async dispatch => {
+export const handleLogIn = ({ username, password }) => async dispatch => {
   const response = await login(username, password);
   if (response.hasOwnProperty("error")) {
     dispatch({
@@ -57,6 +57,9 @@ export const handleAddNewContact = formValues => {
   }
   if (contact.location_met) {
     contact.location_met = contact.location_met.label;
+  }
+  if (contact.company === "new") {
+    contact.company = contact.company_name;
   }
   // TODO: hit continuance api
   history.push("/contacts");

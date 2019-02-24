@@ -3,6 +3,10 @@ import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
 import CompanyDetails from "./CompanyDetails";
+import {
+  renderTextInput,
+  renderOptionSelectInput
+} from "../helper/formHelpers";
 
 class CompanyPosition extends React.Component {
   componentDidMount() {
@@ -10,7 +14,7 @@ class CompanyPosition extends React.Component {
   }
 
   renderCompanyList() {
-    let companyList = [
+    const companyList = [
       { name: "Add new company", id: "new" },
       ...this.props.companies,
       { name: "I'm not sure", id: "none" }
@@ -24,42 +28,35 @@ class CompanyPosition extends React.Component {
     });
   }
 
-  renderCompanySelector = ({ input, meta: { touched, error } }) => {
-    return (
-      <div className="field">
-        <label>Company</label>
-        <select className="ui dropdown" {...input}>
-          <option value="">Select a Company</option>
-          {this.renderCompanyList()}
-        </select>
-      </div>
-    );
-  };
-
-  renderPositionInput = ({ input, meta: { touched, error } }) => {
-    return (
-      <div className="field">
-        <label>Position</label>
-        <input type="text" {...input} placeholder="Agent" />
-        {error && touched && (
-          <div className="ui pointing red basic label">{error}</div>
-        )}
-      </div>
-    );
-  };
+  renderCompanyDetails() {
+    const { selectedCompany, form } = this.props;
+    if (selectedCompany === "new") {
+      return <CompanyDetails header="New Company" form={form} />;
+    }
+    return null;
+  }
 
   render() {
     return (
       <div className="ui segment">
         <h3 className="ui header">Company Position</h3>
         <div className="two fields">
-          <Field name="position" component={this.renderPositionInput} />
-          <Field name="company" component={this.renderCompanySelector} />
+          <Field
+            name="position"
+            label="Position"
+            placeholder="Agent"
+            component={renderTextInput}
+          />
+          <Field
+            name="company"
+            label="Company"
+            className="ui dropdown"
+            placeholder="Select a Company"
+            options={this.renderCompanyList()}
+            component={renderOptionSelectInput}
+          />
         </div>
-
-        {this.props.selectedCompany === "new" && (
-          <CompanyDetails header="New Company" form={this.props.form} />
-        )}
+        {this.renderCompanyDetails()}
       </div>
     );
   }

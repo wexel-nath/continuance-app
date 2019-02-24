@@ -1,51 +1,27 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 
+import {
+  renderTextInput,
+  renderTextAreaInput,
+  renderOptionSelectInput
+} from "../helper/formHelpers";
+
 class CompanyDetails extends React.Component {
   componentDidMount() {
     window.$(".ui.dropdown").dropdown();
   }
 
-  renderTextInput({ input, label, placeholder, meta }) {
-    return (
-      <div className="field">
-        <label>{label}</label>
-        <input {...input} type="text" placeholder={placeholder} />
-      </div>
-    );
-  }
-
-  renderTextAreaInput({ input, label, placeholder, rows }) {
-    return (
-      <div className="field">
-        <label>{label}</label>
-        <textarea {...input} rows={rows} placeholder={placeholder} />
-      </div>
-    );
-  }
-
   renderExpertiseList() {
-    let expertiseList = ["Distributor", "Sales Agent", "Production Company"];
-    return expertiseList.map((expertise, i) => {
+    const expertiseList = ["Distributor", "Sales Agent", "Production Company"];
+    return expertiseList.map((expertise, index) => {
       return (
-        <option key={i} className="item" value={expertise}>
+        <option className="item" key={index} value={expertise}>
           {expertise}
         </option>
       );
     });
   }
-
-  renderExpertiseSelector = ({ input, meta: { touched, error } }) => {
-    return (
-      <div className="field">
-        <label>Company Expertise</label>
-        <select className="ui multiple selection dropdown" {...input}>
-          <option value="">You can select multiple</option>
-          {this.renderExpertiseList()}
-        </select>
-      </div>
-    );
-  };
 
   render() {
     return (
@@ -53,27 +29,32 @@ class CompanyDetails extends React.Component {
         <h3 className="ui header">{this.props.header}</h3>
         <div className="two fields">
           <Field
-            name="company_name"
+            component={renderTextInput}
             label="Company Name"
+            name="company_name"
             placeholder="Wexel"
-            component={this.renderTextInput}
           />
           <Field
-            name="company_website"
+            component={renderTextInput}
             label="Company Website"
+            name="company_website"
             placeholder="https://www.getwexel.com"
-            component={this.renderTextInput}
           />
         </div>
         <Field
+          className="ui multiple selection dropdown"
+          component={renderOptionSelectInput}
+          label="Company Expertise"
           name="company_expertise"
-          component={this.renderExpertiseSelector}
+          placeholder="You can select multiple"
+          options={this.renderExpertiseList()}
         />
         <Field
-          name="company_description"
+          component={renderTextAreaInput}
           label="Company Description"
+          name="company_description"
           placeholder="Optional description"
-          component={this.renderTextAreaInput}
+          rows="2"
         />
       </div>
     );

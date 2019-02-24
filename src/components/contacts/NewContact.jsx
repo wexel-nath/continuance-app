@@ -5,6 +5,7 @@ import { reduxForm } from "redux-form";
 import ContactDetails from "./ContactDetails";
 import CompanyPosition from "../company/CompanyPosition";
 import { handleAddNewContact } from "../../actions";
+import validate from "./validateNewContact";
 
 const FORM_NAME = "new_contact";
 
@@ -26,7 +27,10 @@ const NewContact = ({ handleSubmit, addNewContact }) => {
   );
 };
 
-const formFunc = reduxForm({ form: FORM_NAME })(NewContact);
+const formFunc = reduxForm({
+  form: FORM_NAME,
+  validate
+})(NewContact);
 
 export default connect(
   null,

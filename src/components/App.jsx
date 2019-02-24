@@ -1,11 +1,11 @@
 import React from "react";
 import { Router, Route, Switch } from "react-router-dom";
 
-import PrivateRoute from "./PrivateRoute";
 import Content from "./Content";
 import Header from "./header/Header";
-import Login from "./login/Login";
 import history from "../history";
+import Login from "./login/Login";
+import PrivateRoute from "./PrivateRoute";
 
 import "./App.css";
 
@@ -16,7 +16,7 @@ const App = () => {
         <Header />
 
         <Switch>
-          <Route exact path="/login" component={Login} />
+          <Route component={Login} exact path="/login" />
           <PrivateRoute path="/">
             <Content />
           </PrivateRoute>

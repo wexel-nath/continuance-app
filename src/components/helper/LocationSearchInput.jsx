@@ -25,10 +25,10 @@ class LocationSearchInput extends React.Component {
     return (
       <Select
         name={name}
-        placeholder="Type a location..."
-        onInputChange={this.handleInput}
         onChange={onChange}
+        onInputChange={this.handleInput}
         options={this.buildSuggestionOptions()}
+        placeholder="Type a location..."
       />
     );
   }

@@ -9,16 +9,11 @@ import logo from "../../img/continuance_logo.jpg";
 import "./Login.css";
 
 class Login extends React.Component {
-  onLoginSubmit = ({ username, password }) => {
-    this.props.handleLogIn(username, password);
-  };
-
   maybeRenderErrorMessage(error) {
     return error && <div className="ui warning message">{error}</div>;
   }
 
-  renderInput({ input, type, placeholder, meta }) {
-    const { error, touched } = meta;
+  renderInput({ input, meta: { error, touched }, placeholder, type }) {
     return (
       <div className="field">
         <div className="ui fluid large input">
@@ -32,26 +27,26 @@ class Login extends React.Component {
   }
 
   render() {
-    const { loggedIn, authError, handleSubmit } = this.props;
+    const { loggedIn, authError, handleSubmit, handleLogIn } = this.props;
     if (loggedIn) {
       return <Redirect to={{ pathname: "/" }} />;
     }
     return (
       <div className="ui container login-wrapper">
         <div className="ui segment login-card">
-          <form className="ui form" onSubmit={handleSubmit(this.onLoginSubmit)}>
+          <form className="ui form" onSubmit={handleSubmit(handleLogIn)}>
             <img className="ui image" src={logo} alt="continuance-logo" />
             <Field
-              name="username"
               component={this.renderInput}
-              type="text"
+              name="username"
               placeholder="Username"
+              type="text"
             />
             <Field
-              name="password"
               component={this.renderInput}
-              type="password"
+              name="password"
               placeholder="Password"
+              type="password"
             />
             <button className="ui primary fluid large button login-button">
               Login
@@ -83,19 +78,19 @@ const validate = ({ username, password }) => {
   return errors;
 };
 
-const form = reduxForm({
+const formFunc = reduxForm({
   form: "login",
   validate
 })(Login);
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ auth }) => {
   return {
-    loggedIn: state.auth.loggedIn,
-    authError: state.auth.error
+    authError: auth.error,
+    loggedIn: auth.loggedIn
   };
 };
 
 export default connect(
   mapStateToProps,
   { handleLogIn }
-)(form);
+)(formFunc);

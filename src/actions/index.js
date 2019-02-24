@@ -1,22 +1,31 @@
 import { login } from "../api/authentication";
+import cities from "../api/cities";
 import history from "../history";
-import { LOG_IN, LOG_IN_FAIL, LOG_OUT, GOOGLE_SIGN_IN } from "./types";
 
-export const handleLogIn = (username, password) => {
-  // TODO: change to async action creator
-  const response = login(username, password);
+import {
+  LOG_IN,
+  LOG_IN_FAIL,
+  LOG_OUT,
+  GOOGLE_SIGN_IN,
+  LOCATION_SEARCH,
+  ADD_NEW_CONTACT
+} from "./types";
+
+export const handleLogIn = (username, password) => async dispatch => {
+  const response = await login(username, password);
   if (response.hasOwnProperty("error")) {
-    return {
+    dispatch({
       type: LOG_IN_FAIL,
       payload: response.error
-    };
+    });
+    return;
   }
 
   history.push("/");
-  return {
+  dispatch({
     type: LOG_IN,
     payload: response.user
-  };
+  });
 };
 
 export const handleGoogleSignIn = () => {
@@ -27,8 +36,32 @@ export const handleGoogleSignIn = () => {
 };
 
 export const handleLogOut = () => {
-  history.push("/login");
   return {
     type: LOG_OUT
+  };
+};
+
+export const handleLocationSearch = (name, address) => async dispatch => {
+  const response = await cities.get("", { params: { search: address } });
+
+  dispatch({
+    type: LOCATION_SEARCH,
+    payload: { name, result: response.data._embedded["city:search-results"] }
+  });
+};
+
+export const handleAddNewContact = formValues => {
+  const contact = formValues;
+  if (contact.location) {
+    contact.location = contact.location.label;
+  }
+  if (contact.location_met) {
+    contact.location_met = contact.location_met.label;
+  }
+  // TODO: hit continuance api
+  history.push("/contacts");
+  return {
+    type: ADD_NEW_CONTACT,
+    payload: contact
   };
 };

@@ -2,8 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { handleLogOut } from "../../actions";
 
-import DropdownItem from "../ui/DropdownItem";
-
 import logo from "../../img/continuance_logo.jpg";
 import "./Header.css";
 
@@ -12,14 +10,16 @@ class Header extends React.Component {
     window.$(".ui.dropdown").dropdown();
   }
 
-  renderUserOptions(firstName) {
+  renderUserOptionsMenu(firstName) {
     return (
       <div className="right menu">
         <div className="ui dropdown item user-dropdown">
           <h3 className="ui header">{firstName}</h3>
           <i className="blue large user icon" />
           <div className="menu">
-            <DropdownItem text="Logout" handleClick={this.props.handleLogOut} />
+            <div className="item" onClick={this.props.handleLogOut}>
+              Logout
+            </div>
           </div>
         </div>
       </div>
@@ -38,7 +38,7 @@ class Header extends React.Component {
         >
           <img src={logo} alt="continuance-logo" />
         </a>
-        {loggedIn && this.renderUserOptions(user.first_name)}
+        {loggedIn && this.renderUserOptionsMenu(user.first_name)}
       </div>
     );
   }

@@ -1,59 +1,79 @@
 import React from "react";
+import { connect } from "react-redux";
+import { Field, reduxForm } from "redux-form";
+
 import CompanyDetails from "./CompanyDetails";
-import Dropdown from "../ui/Dropdown";
-import DropdownItem from "../ui/DropdownItem";
 
 class CompanyPosition extends React.Component {
-  state = {
-    company: ""
-  };
+  componentDidMount() {
+    window.$(".ui.dropdown").dropdown();
+  }
 
-  companyItem(value, text) {
+  renderCompanyList() {
+    let companyList = [
+      { name: "Add new company", id: "new" },
+      ...this.props.companies,
+      { name: "I'm not sure", id: "none" }
+    ];
+    return companyList.map(company => {
+      return (
+        <option key={company.id} value={company.id}>
+          {company.name}
+        </option>
+      );
+    });
+  }
+
+  renderCompanySelector = ({ input, meta: { touched, error } }) => {
     return (
-      <div className="item" onClick={() => this.setState({ company: value })}>
-        {text}
+      <div className="field">
+        <label>Company</label>
+        <select className="ui dropdown" {...input}>
+          <option value="">Select a Company</option>
+          {this.renderCompanyList()}
+        </select>
       </div>
     );
-  }
+  };
+
+  renderPositionInput = ({ input, meta: { touched, error } }) => {
+    return (
+      <div className="field">
+        <label>Position</label>
+        <input type="text" {...input} placeholder="Agent" />
+        {error && touched && (
+          <div className="ui pointing red basic label">{error}</div>
+        )}
+      </div>
+    );
+  };
 
   render() {
     return (
       <div className="ui segment">
         <h3 className="ui header">Company Position</h3>
         <div className="two fields">
-          <div className="field">
-            <label>Position</label>
-            <input type="text" name="position" placeholder="Agent" />
-          </div>
-          <div className="field">
-            <label>Company</label>
-            <Dropdown
-              className="ui selection dropdown"
-              name="company-id"
-              placeholder="Select a Company"
-              showIcon
-            >
-              <DropdownItem
-                handleClick={() => this.setState({ company: "new" })}
-                text="Add New Company"
-                value="new"
-              />
-              <DropdownItem
-                handleClick={() => this.setState({ company: "none" })}
-                text="I'm not sure"
-                value="none"
-              />
-              {/* TODO: Get list of companies */}
-            </Dropdown>
-          </div>
+          <Field name="position" component={this.renderPositionInput} />
+          <Field name="company" component={this.renderCompanySelector} />
         </div>
 
-        {this.state.company === "new" && (
-          <CompanyDetails header="New Company" />
+        {this.props.selectedCompany === "new" && (
+          <CompanyDetails header="New Company" form={this.props.form} />
         )}
       </div>
     );
   }
 }
 
-export default CompanyPosition;
+const mapStateToProps = ({ form }, ownProps) => {
+  const formName = form[ownProps.form] || {};
+  const values = formName.values || {};
+  return {
+    selectedCompany: values.company || "",
+    companies: []
+  };
+};
+
+const connectFunc = connect(mapStateToProps)(CompanyPosition);
+
+export default reduxForm()(connectFunc);

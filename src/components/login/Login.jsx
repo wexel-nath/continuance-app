@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
+import { Redirect } from "react-router-dom";
 
 import { handleLogIn } from "../../actions";
 
@@ -31,7 +32,10 @@ class Login extends React.Component {
   }
 
   render() {
-    const { authError, handleSubmit } = this.props;
+    const { loggedIn, authError, handleSubmit } = this.props;
+    if (loggedIn) {
+      return <Redirect to={{ pathname: "/" }} />;
+    }
     return (
       <div className="ui container login-wrapper">
         <div className="ui segment login-card">
@@ -86,6 +90,7 @@ const form = reduxForm({
 
 const mapStateToProps = state => {
   return {
+    loggedIn: state.auth.loggedIn,
     authError: state.auth.error
   };
 };

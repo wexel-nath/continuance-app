@@ -1,70 +1,97 @@
 import React from "react";
+import { Field, reduxForm } from "redux-form";
+
 import LocationSearchInput from "./LocationSearchInput";
+import validate from "./vaildate";
 
 class ContactDetails extends React.Component {
-  state = {
-    suggestions: []
-  };
+  renderTextInput({ input, label, placeholder, meta }) {
+    const { error, touched } = meta;
+    return (
+      <div className="field">
+        <label>{label}</label>
+        <input type="text" {...input} placeholder={placeholder} />
+        {error && touched && (
+          <div className="ui pointing red basic label">{error}</div>
+        )}
+      </div>
+    );
+  }
 
-  buildSuggestionList() {
-    return this.state.suggestions.map((suggestion, index) => {
-      return (
-        <div key={index} className="item">
-          {suggestion}
-        </div>
-      );
-    });
+  renderTextAreaInput({ input, label, placeholder, rows }) {
+    return (
+      <div className="field">
+        <label>{label}</label>
+        <textarea {...input} rows={rows} placeholder={placeholder} />
+      </div>
+    );
+  }
+
+  renderLocationInput({ input, name, label }) {
+    return (
+      <div className="field">
+        <label>{label}</label>
+        <LocationSearchInput input={input} name={name} />
+      </div>
+    );
   }
 
   render() {
     return (
       <div className="ui segment">
         <h3 className="ui header">Contact Details</h3>
-        <div className="three fields">
-          <div className="field">
-            <label>First Name</label>
-            <input type="text" name="first-name" placeholder="Thomas" />
-          </div>
-          <div className="field">
-            <label>Middle Name</label>
-            <input type="text" name="middle-name" placeholder="Bang" />
-          </div>
-          <div className="field">
-            <label>Last Name</label>
-            <input type="text" name="last-name" placeholder="Alter" />
-          </div>
-        </div>
         <div className="two fields">
-          <div className="field">
-            <label>Contact Number</label>
-            <input type="text" name="phone" placeholder="0412 345 678" />
-          </div>
-          <div className="field">
-            <label>Email Address</label>
-            <input type="text" name="email" placeholder="thomas@example.com" />
-          </div>
-        </div>
-        <div className="two fields">
-          <div className="field">
-            <label>Based in</label>
-            <LocationSearchInput name="location" />
-          </div>
-          <div className="field">
-            <label>Location Met</label>
-            <LocationSearchInput name="location-met" />
-          </div>
-        </div>
-        <div className="field">
-          <label>Notes</label>
-          <textarea
-            rows="2"
-            name="contact-notes"
-            placeholder="Optional notes"
+          <Field
+            label="First Name"
+            name="firstName"
+            component={this.renderTextInput}
+            placeholder="Thomas"
+          />
+          <Field
+            label="Last Name"
+            name="lastName"
+            component={this.renderTextInput}
+            placeholder="Alter"
           />
         </div>
+        <div className="two fields">
+          <Field
+            label="Contact Number"
+            name="phone"
+            component={this.renderTextInput}
+            placeholder="0412 345 678"
+          />
+          <Field
+            label="Email Address"
+            name="email"
+            component={this.renderTextInput}
+            placeholder="thomas@example.com"
+          />
+        </div>
+        <div className="two fields">
+          <Field
+            label="Based In"
+            name="location"
+            component={this.renderLocationInput}
+          />
+          <Field
+            label="Location Met"
+            name="location_met"
+            component={this.renderLocationInput}
+          />
+        </div>
+        <Field
+          label="Notes"
+          name="contactNotes"
+          component={this.renderTextAreaInput}
+          placeholder="Optional notes"
+          rows="2"
+        />
       </div>
     );
   }
 }
 
-export default ContactDetails;
+export default reduxForm({
+  validate
+})(ContactDetails);

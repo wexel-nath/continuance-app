@@ -1,49 +1,46 @@
 import React from "react";
-import cities from "../../api/cities";
-import Dropdown from "../ui/Dropdown";
-import DropdownItem from "../ui/DropdownItem";
+import { connect } from "react-redux";
+import Select from "react-select";
+
+import { handleLocationSearch } from "../../actions";
 
 class LocationSearchInput extends React.Component {
-  state = {
-    address: "",
-    suggestions: []
-  };
-
-  handleChange = async event => {
-    const address = event.target.value;
-    this.setState({ address: address });
-    if (address === "") {
-      this.setState({ suggestions: [] });
-      return;
-    }
-
-    const response = await cities.get("", {
-      params: { search: address }
-    });
-    this.setState({
-      suggestions: response.data._embedded["city:search-results"]
-    });
-  };
-
-  buildSuggestionList() {
-    return this.state.suggestions.map((suggestion, index) => {
-      return <DropdownItem key={index} text={suggestion.matching_full_name} />;
+  buildSuggestionOptions() {
+    return this.props.suggestions.map(suggestion => {
+      const location = suggestion.matching_full_name;
+      return {
+        value: location,
+        label: location
+      };
     });
   }
 
+  handleInput = value => {
+    const { name } = this.props.input;
+    this.props.handleLocationSearch(name, value);
+  };
+
   render() {
+    const { name, onChange } = this.props.input;
     return (
-      <Dropdown
-        className="ui search selection dropdown"
+      <Select
+        name={name}
         placeholder="Type a location..."
-        value={this.state.address}
-        name={this.props.name}
-        handleChange={this.handleChange}
-      >
-        {this.buildSuggestionList()}
-      </Dropdown>
+        onInputChange={this.handleInput}
+        onChange={onChange}
+        options={this.buildSuggestionOptions()}
+      />
     );
   }
 }
 
-export default LocationSearchInput;
+const mapStateToProps = (state, { input }) => {
+  return {
+    suggestions: state.location[input.name]
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { handleLocationSearch }
+)(LocationSearchInput);

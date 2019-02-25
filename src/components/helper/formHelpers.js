@@ -54,3 +54,32 @@ export const renderOptionSelectInput = ({
     </div>
   );
 };
+
+export const renderDisabledInput = (label, value) => {
+  return (
+    <div className="field">
+      <label>{label}</label>
+      <input
+        className="ui disabled input"
+        onChange={() => {}}
+        type="text"
+        value={value}
+      />
+    </div>
+  );
+};
+
+export const renderDisabledTextArea = (label, value) => {
+  return (
+    <div className="field">
+      <label>{label}</label>
+      <textarea
+        className="ui disabled input"
+        onChange={() => {}}
+        rows="2"
+        type="text"
+        value={value}
+      />
+    </div>
+  );
+};

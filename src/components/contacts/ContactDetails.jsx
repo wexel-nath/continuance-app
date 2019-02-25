@@ -53,7 +53,7 @@ const ContactDetails = () => {
       </div>
       <Field
         label="Notes"
-        name="contactNotes"
+        name="notes"
         component={renderTextAreaInput}
         placeholder="Optional notes"
         rows="2"

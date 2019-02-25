@@ -1,27 +1,29 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class ListContacts extends React.Component {
-  renderContactRows(contacts) {
+  renderContactItems(contacts) {
     let contactsArray = [];
     for (const key in contacts) {
       // handle re-sorting?
       contactsArray.push(contacts[key]);
     }
     return contactsArray.map(
-      (
-        { firstName, lastName, phone, email, location, position, company },
-        index
-      ) => {
+      ({ firstName, lastName, email, location, position, company }, index) => {
         return (
-          <tr key={index}>
-            <td>{firstName + " " + lastName}</td>
-            <td>{phone}</td>
-            <td>{email}</td>
-            <td>{location}</td>
-            <td>{position}</td>
-            <td>{company}</td>
-          </tr>
+          <div className="item" key={index}>
+            <div className="content">
+              <Link className="header" to={`/contacts/${email}`}>
+                {firstName + " " + lastName}
+              </Link>
+              <div className="meta">
+                {location && <div className="ui label">{location}</div>}
+                {position && <div className="ui label">{position}</div>}
+                {company && <div className="ui label">{company}</div>}
+              </div>
+            </div>
+          </div>
         );
       }
     );
@@ -33,20 +35,16 @@ class ListContacts extends React.Component {
       return <div>ListContacts</div>;
     }
     return (
-      <div>
-        <table className="ui fixed single line celled table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Contact Number</th>
-              <th>Email Address</th>
-              <th>Based In</th>
-              <th>Position</th>
-              <th>Company</th>
-            </tr>
-          </thead>
-          <tbody>{this.renderContactRows(contacts)}</tbody>
-        </table>
+      <div className="ui container">
+        <h2 className="ui header">
+          <i className="address card outline icon blue" />
+          View Contacts
+        </h2>
+        <div className="ui segment">
+          <div className="ui divided items">
+            {this.renderContactItems(contacts)}
+          </div>
+        </div>
       </div>
     );
   }

@@ -1,8 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-import history from "../../history";
 import SidebarItem from "./SidebarItem";
-import SidebarLink from "./SidebarLink";
 
 import "./Sidebar.css";
 
@@ -10,18 +9,15 @@ const Sidebar = () => {
   return (
     <div className="ui massive fluid vertical menu vertical-menu">
       <SidebarItem header="Contacts">
-        <SidebarLink
-          onClick={() => history.push("/contacts/new")}
-          value="Add New"
-        />
-        <SidebarLink
-          onClick={() => history.push("/contacts/search")}
-          value="Search"
-        />
-        <SidebarLink
-          onClick={() => history.push("/contacts")}
-          value="View All"
-        />
+        <Link className="item sidebar-link" to="/contacts/new">
+          Add New
+        </Link>
+        <Link className="item sidebar-link" to="/contacts/search">
+          Search
+        </Link>
+        <Link className="item sidebar-link" to="/contacts">
+          View All
+        </Link>
       </SidebarItem>
       <SidebarItem /> {/* Empty SidebarItem to close off the segment */}
     </div>

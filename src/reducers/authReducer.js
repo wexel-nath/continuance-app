@@ -1,8 +1,11 @@
 import { LOG_IN, LOG_IN_FAIL, LOG_OUT } from "../actions/types";
 
 const INITIAL_STATE = {
-  loggedIn: false,
-  user: {},
+  loggedIn: true,
+  user: {
+    username: "guest",
+    first_name: "Guest"
+  },
   error: null
 };
 

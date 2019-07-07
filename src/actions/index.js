@@ -1,6 +1,7 @@
 import { login } from "../api/authentication";
 import cities from "../api/cities";
 import history from "../history";
+import { writeCookie } from "../util/cookie";
 
 import {
   LOG_IN_REQUEST,
@@ -11,17 +12,22 @@ import {
   ADD_NEW_CONTACT
 } from "./types";
 
+const COOKIE_EXPIRY = 60 * 60 * 4;
+
 export const handleLogIn = ({ username, password }) => async dispatch => {
   dispatch({
     type: LOG_IN_REQUEST
   });
   return login(username, password)
-    .then(response =>
+    .then(response => {
+      const { jwt_token, refresh_token, user } = response.data.result;
+      writeCookie("JWT", jwt_token, COOKIE_EXPIRY);
+      writeCookie("REFRESH", refresh_token, COOKIE_EXPIRY);
       dispatch({
         type: LOG_IN,
-        payload: response.data.result.user
-      })
-    )
+        payload: user
+      });
+    })
     .catch(error => {
       const { status, data, statusText } = error.response;
       dispatch({

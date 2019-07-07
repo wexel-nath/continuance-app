@@ -3,34 +3,32 @@ import cities from "../api/cities";
 import history from "../history";
 
 import {
+  LOG_IN_REQUEST,
   LOG_IN,
   LOG_IN_FAIL,
   LOG_OUT,
-  GOOGLE_SIGN_IN,
   LOCATION_SEARCH,
   ADD_NEW_CONTACT
 } from "./types";
 
 export const handleLogIn = ({ username, password }) => async dispatch => {
+  dispatch({
+    type: LOG_IN_REQUEST
+  });
   return login(username, password)
-    .then(response => dispatch({
-      type: LOG_IN,
-      payload: response.data.result.user
-    }))
+    .then(response =>
+      dispatch({
+        type: LOG_IN,
+        payload: response.data.result.user
+      })
+    )
     .catch(error => {
       const { status, data, statusText } = error.response;
       dispatch({
         type: LOG_IN_FAIL,
-        payload: status >= 500 ? statusText : data.messages[0],
-      })
+        payload: status >= 500 ? statusText : data.messages[0]
+      });
     });
-};
-
-export const handleGoogleSignIn = () => {
-  // TODO: implement google sign in
-  return {
-    type: GOOGLE_SIGN_IN
-  };
 };
 
 export const handleLogOut = () => {

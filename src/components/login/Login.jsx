@@ -27,7 +27,13 @@ class Login extends React.Component {
   }
 
   render() {
-    const { loggedIn, authError, handleSubmit, handleLogIn } = this.props;
+    const {
+      loggedIn,
+      authError,
+      isFetching,
+      handleSubmit,
+      handleLogIn
+    } = this.props;
     if (loggedIn) {
       return <Redirect to={{ pathname: "/" }} />;
     }
@@ -48,16 +54,14 @@ class Login extends React.Component {
               placeholder="Password"
               type="password"
             />
-            <button className="ui primary fluid large button login-button">
+            <button
+              className="ui primary fluid large button login-button"
+              disabled={isFetching}
+            >
               Login
             </button>
           </form>
           {this.maybeRenderErrorMessage(authError)}
-          <div className="ui horizontal divider">OR</div>
-          <button className="ui red fluid large button login-button">
-            <i className="google icon" />
-            Sign in with Google
-          </button>
         </div>
       </div>
     );
@@ -86,7 +90,8 @@ const formFunc = reduxForm({
 const mapStateToProps = ({ auth }) => {
   return {
     authError: auth.error,
-    loggedIn: auth.loggedIn
+    loggedIn: auth.loggedIn,
+    isFetching: auth.isFetching
   };
 };
 

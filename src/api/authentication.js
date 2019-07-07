@@ -1,12 +1,12 @@
+import axios from "axios";
+
+const auth = axios.create({
+  baseURL: "https://wexel-auth.herokuapp.com"
+})
+
 export function login(username, password) {
-  if (username === "guest" && password === "guest") {
-    return {
-      user: {
-        username: "guest",
-        first_name: "Guest",
-        last_name: "User"
-      }
-    };
-  }
-  return { error: "Incorrect username or password" };
+  return auth.post('/login', {
+    username: username,
+    password: password
+  })
 }

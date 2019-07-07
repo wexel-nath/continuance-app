@@ -12,20 +12,18 @@ import {
 } from "./types";
 
 export const handleLogIn = ({ username, password }) => async dispatch => {
-  const response = await login(username, password);
-  if (response.hasOwnProperty("error")) {
-    dispatch({
-      type: LOG_IN_FAIL,
-      payload: response.error
+  return login(username, password)
+    .then(response => dispatch({
+      type: LOG_IN,
+      payload: response.data.result.user
+    }))
+    .catch(error => {
+      const { status, data, statusText } = error.response;
+      dispatch({
+        type: LOG_IN_FAIL,
+        payload: status >= 500 ? statusText : data.messages[0],
+      })
     });
-    return;
-  }
-
-  history.push("/");
-  dispatch({
-    type: LOG_IN,
-    payload: response.user
-  });
 };
 
 export const handleGoogleSignIn = () => {

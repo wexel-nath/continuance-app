@@ -5,8 +5,8 @@ import Select from "react-select";
 import { handleLocationSearch } from "../../actions";
 
 class LocationSearchInput extends React.Component {
-  buildSuggestionOptions() {
-    return this.props.suggestions.map(suggestion => {
+  buildSuggestionOptions(suggestions) {
+    return suggestions.map(suggestion => {
       const location = suggestion.matching_full_name;
       return {
         value: location,
@@ -21,13 +21,16 @@ class LocationSearchInput extends React.Component {
   };
 
   render() {
-    const { name, onChange } = this.props.input;
+    const {
+      suggestions,
+      input: { name, onChange }
+    } = this.props;
     return (
       <Select
         name={name}
         onChange={onChange}
         onInputChange={this.handleInput}
-        options={this.buildSuggestionOptions()}
+        options={this.buildSuggestionOptions(suggestions ? suggestions : [])}
         placeholder="Type a location..."
       />
     );

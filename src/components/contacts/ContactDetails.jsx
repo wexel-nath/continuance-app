@@ -42,12 +42,12 @@ const ContactDetails = () => {
       <div className="two fields">
         <Field
           label="Based In"
-          name="location"
+          name="locationBased"
           component={renderLocationInput}
         />
         <Field
           label="Location Met"
-          name="location_met"
+          name="locationMet"
           component={renderLocationInput}
         />
       </div>

@@ -1,23 +1,17 @@
-import { ADD_NEW_CONTACT } from "../actions/types";
+import { ADD_NEW_CONTACT, GET_CONTACT_LIST } from "../actions/types";
 
-const INITIAL_STATE = {
-  "nathanw@benon.com": {
-    firstName: "Nathan",
-    lastName: "Welch",
-    phone: "0418721903",
-    email: "nathanw@benon.com",
-    location: "Brisbane, Queensland, Australia",
-    location_met: "Brisbane, Queensland, Australia",
-    position: "Developer",
-    company: "Jumbo Interactive"
-  }
-};
+const INITIAL_STATE = {};
 
-export default (state = INITIAL_STATE, action) => {
-  switch (action.type) {
+export default (state = INITIAL_STATE, { type, payload }) => {
+  switch (type) {
     case ADD_NEW_CONTACT:
-      // TODO: replace phone with ID returned from api
-      return { ...state, [action.payload.email]: action.payload };
+      return { ...state, [payload.contactId]: payload };
+    case GET_CONTACT_LIST:
+      var contactsMap = {};
+      for (const contact of payload) {
+        contactsMap[contact.contactId] = contact;
+      }
+      return { ...state, ...contactsMap };
     default:
       return state;
   }

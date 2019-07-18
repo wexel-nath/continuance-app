@@ -3,10 +3,7 @@ import { LOG_IN, LOG_IN_FAIL, LOG_OUT, LOG_IN_REQUEST } from "../actions/types";
 const INITIAL_STATE = {
   loggedIn: false,
   isFetching: false,
-  user: {
-    username: "",
-    first_name: ""
-  },
+  user: {},
   error: null
 };
 

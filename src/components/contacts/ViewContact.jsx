@@ -17,9 +17,9 @@ class ViewContact extends React.Component {
       lastName,
       phone,
       email,
-      location,
-      location_met,
-      position,
+      locationBased,
+      locationMet,
+      companyPosition,
       company,
       notes
     } = this.props.contact;
@@ -36,11 +36,11 @@ class ViewContact extends React.Component {
             {renderDisabledInput("Email Address", email)}
           </div>
           <div className="two fields">
-            {renderDisabledInput("Based In", location)}
-            {renderDisabledInput("Location Met", location_met)}
+            {renderDisabledInput("Based In", locationBased)}
+            {renderDisabledInput("Location Met", locationMet)}
           </div>
           <div className="two fields">
-            {renderDisabledInput("Position", position)}
+            {renderDisabledInput("Position", companyPosition)}
             {renderDisabledInput("Company", company)}
           </div>
           {renderDisabledTextArea("Notes", notes)}

@@ -2,9 +2,12 @@ import { login } from "../api/authentication";
 import cities from "../api/cities";
 import history from "../history";
 import { writeCookie } from "../util/cookie";
-import { camelizeKeys as toCamelCase } from "humps";
+import {
+  camelizeKeys as toCamelCase,
+  decamelizeKeys as toSnakeCase
+} from "humps";
 
-import { getContactList } from "../api/continuance-server";
+import { getContactList, newContact } from "../api/continuance-server";
 import {
   LOG_IN_REQUEST,
   LOG_IN,
@@ -55,7 +58,7 @@ export const handleLocationSearch = (name, address) => async dispatch => {
   });
 };
 
-export const handleAddNewContact = formValues => {
+export const handleAddNewContact = formValues => async dispatch => {
   const contact = formValues;
   if (contact.locationBased) {
     contact.locationBased = contact.locationBased.label;
@@ -67,14 +70,20 @@ export const handleAddNewContact = formValues => {
     contact.company = contact.company_name;
   }
 
-  console.log(contact);
-
-  // TODO: hit continuance api
-  history.push("/contacts");
-  return {
-    type: ADD_NEW_CONTACT,
-    payload: contact
+  // TODO: get companyId or create one
+  contact.company = {
+    companyId: 1
   };
+
+  await newContact(toSnakeCase(contact)).then(response => {
+    if (response.status === 201) {
+      history.push("/contacts");
+      dispatch({
+        type: ADD_NEW_CONTACT,
+        payload: toCamelCase(response.data.result)
+      });
+    }
+  });
 };
 
 export const handleGetContactList = (limit, offset) => async dispatch => {

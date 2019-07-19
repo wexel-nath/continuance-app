@@ -8,5 +8,8 @@ export const LOG_OUT = "LOG_OUT";
 export const ADD_NEW_CONTACT = "ADD_NEW_CONTACT";
 export const GET_CONTACT_LIST = "GET_CONTACT_LIST";
 
+// Company
+export const GET_COMPANY_LIST = "GET_COMPANY_LIST";
+
 // Helpers
 export const LOCATION_SEARCH = "LOCATION_SEARCH";

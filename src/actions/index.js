@@ -7,7 +7,11 @@ import {
   decamelizeKeys as toSnakeCase
 } from "humps";
 
-import { getContactList, newContact } from "../api/continuance-server";
+import {
+  getContactList,
+  newContact,
+  getCompanyList
+} from "../api/continuance-server";
 import {
   LOG_IN_REQUEST,
   LOG_IN,
@@ -15,7 +19,8 @@ import {
   LOG_OUT,
   LOCATION_SEARCH,
   ADD_NEW_CONTACT,
-  GET_CONTACT_LIST
+  GET_CONTACT_LIST,
+  GET_COMPANY_LIST
 } from "./types";
 
 const COOKIE_EXPIRY = 60 * 60 * 4;
@@ -59,37 +64,57 @@ export const handleLocationSearch = (name, address) => async dispatch => {
 };
 
 export const handleAddNewContact = formValues => async dispatch => {
-  const contact = formValues;
+  let contact = formValues;
   if (contact.locationBased) {
     contact.locationBased = contact.locationBased.label;
   }
   if (contact.locationMet) {
     contact.locationMet = contact.locationMet.label;
   }
-  if (contact.company === "new") {
-    contact.company = contact.companyName;
-  }
 
-  // TODO: get companyId or create one
-  contact.company = {
-    companyId: 1
-  };
+  contact.company =
+    formValues.companySelector === "new"
+      ? {
+          companyName: formValues.companyName,
+          companyWebsite: formValues.companyWebsite,
+          companyExpertise: formValues.companyExpertise,
+          companyDescription: formValues.companyDescription
+        }
+      : {
+          companyId: parseInt(formValues.companySelector)
+        };
 
-  await newContact(toSnakeCase(contact)).then(response => {
-    if (response.status === 201) {
-      history.push("/contacts");
-      dispatch({
-        type: ADD_NEW_CONTACT,
-        payload: toCamelCase(response.data.result)
-      });
-    }
-  });
+  // todo: dispatch a loading state
+
+  await newContact(toSnakeCase(contact))
+    .then(response => {
+      if (response.status === 201) {
+        history.push("/contacts");
+        dispatch({
+          type: ADD_NEW_CONTACT,
+          payload: toCamelCase(response.data.result)
+        });
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      // todo: display error to user
+    });
 };
 
 export const handleGetContactList = (limit, offset) => async dispatch => {
   await getContactList(limit, offset).then(response => {
     dispatch({
       type: GET_CONTACT_LIST,
+      payload: toCamelCase(response.data.result)
+    });
+  });
+};
+
+export const handleGetCompanyList = () => async dispatch => {
+  await getCompanyList().then(response => {
+    dispatch({
+      type: GET_COMPANY_LIST,
       payload: toCamelCase(response.data.result)
     });
   });

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
 import CompanyDetails from "./CompanyDetails";
+import { handleGetCompanyList } from "../../actions";
 import {
   renderTextInput,
   renderOptionSelectInput
@@ -11,18 +12,19 @@ import {
 class CompanyPosition extends React.Component {
   componentDidMount() {
     window.$(".ui.dropdown").dropdown();
+    this.props.handleGetCompanyList();
   }
 
   renderCompanyList() {
     const companyList = [
-      { name: "Add new company", id: "new" },
+      { companyName: "Add new company", companyId: "new" },
       ...this.props.companies,
-      { name: "I'm not sure", id: "none" }
+      { companyName: "I'm not sure", companyId: "none" }
     ];
     return companyList.map(company => {
       return (
-        <option key={company.id} value={company.id}>
-          {company.name}
+        <option key={company.companyId} value={company.companyId}>
+          {company.companyName}
         </option>
       );
     });
@@ -48,7 +50,7 @@ class CompanyPosition extends React.Component {
             component={renderTextInput}
           />
           <Field
-            name="company"
+            name="companySelector"
             label="Company"
             className="ui dropdown"
             placeholder="Select a Company"
@@ -62,15 +64,18 @@ class CompanyPosition extends React.Component {
   }
 }
 
-const mapStateToProps = ({ form }, ownProps) => {
+const mapStateToProps = ({ form, companies }, ownProps) => {
   const formName = form[ownProps.form] || {};
   const values = formName.values || {};
   return {
-    selectedCompany: values.company || "",
-    companies: []
+    selectedCompany: values.companySelector || "",
+    companies: companies
   };
 };
 
-const connectFunc = connect(mapStateToProps)(CompanyPosition);
+const connectFunc = connect(
+  mapStateToProps,
+  { handleGetCompanyList }
+)(CompanyPosition);
 
 export default reduxForm()(connectFunc);

@@ -12,3 +12,7 @@ export function newContact(data) {
 export function getContactList(limit, offset) {
   return server.get("/contact", { params: { limit, offset } });
 }
+
+export function getCompanyList() {
+  return server.get("/company");
+}

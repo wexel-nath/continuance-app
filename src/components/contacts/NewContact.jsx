@@ -9,14 +9,14 @@ import validate from "./validateNewContact";
 
 const FORM_NAME = "new_contact";
 
-const NewContact = ({ handleSubmit, addNewContact }) => {
+const NewContact = ({ handleSubmit, handleAddNewContact }) => {
   return (
     <div className="ui container">
       <h2 className="ui header">
         <i className="address card outline icon blue" />
         Add New Contact
       </h2>
-      <form className="ui form" onSubmit={handleSubmit(addNewContact)}>
+      <form className="ui form" onSubmit={handleSubmit(handleAddNewContact)}>
         <ContactDetails form={FORM_NAME} />
         <CompanyPosition form={FORM_NAME} />
         <button className="ui primary button" type="submit">
@@ -34,5 +34,5 @@ const formFunc = reduxForm({
 
 export default connect(
   null,
-  { addNewContact: handleAddNewContact }
+  { handleAddNewContact }
 )(formFunc);

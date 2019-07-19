@@ -39,7 +39,7 @@ class Header extends React.Component {
         >
           <img src={logo} alt="continuance-logo" />
         </a>
-        {loggedIn && this.renderUserOptionsMenu(user.first_name)}
+        {loggedIn && this.renderUserOptionsMenu(user.firstName)}
       </div>
     );
   }

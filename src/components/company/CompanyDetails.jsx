@@ -31,13 +31,13 @@ class CompanyDetails extends React.Component {
           <Field
             component={renderTextInput}
             label="Company Name"
-            name="company_name"
+            name="companyName"
             placeholder="Wexel"
           />
           <Field
             component={renderTextInput}
             label="Company Website"
-            name="company_website"
+            name="companyWebsite"
             placeholder="https://www.getwexel.com"
           />
         </div>
@@ -45,14 +45,14 @@ class CompanyDetails extends React.Component {
           className="ui multiple selection dropdown"
           component={renderOptionSelectInput}
           label="Company Expertise"
-          name="company_expertise"
+          name="companyExpertise"
           placeholder="You can select multiple"
           options={this.renderExpertiseList()}
         />
         <Field
           component={renderTextAreaInput}
           label="Company Description"
-          name="company_description"
+          name="companyDescription"
           placeholder="Optional description"
           rows="2"
         />

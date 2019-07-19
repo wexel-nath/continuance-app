@@ -42,7 +42,7 @@ class CompanyPosition extends React.Component {
         <h3 className="ui header">Company Position</h3>
         <div className="two fields">
           <Field
-            name="position"
+            name="companyPosition"
             label="Position"
             placeholder="Agent"
             component={renderTextInput}

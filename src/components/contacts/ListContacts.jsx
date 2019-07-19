@@ -20,7 +20,7 @@ class ListContacts extends React.Component {
         contactId,
         firstName,
         lastName,
-        email,
+        contactEmail,
         locationBased,
         companyPosition,
         company
@@ -39,7 +39,7 @@ class ListContacts extends React.Component {
                   <div className="ui label">{companyPosition}</div>
                 )}
                 {company && <div className="ui label">{company}</div>}
-                {email && <div className="ui label">{email}</div>}
+                {contactEmail && <div className="ui label">{contactEmail}</div>}
               </div>
             </div>
           </div>

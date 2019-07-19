@@ -2,7 +2,7 @@ const emailRegex = new RegExp(
   "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$"
 );
 
-export default ({ firstName, lastName, phone, email }) => {
+export default ({ firstName, lastName, contactPhone, contactEmail }) => {
   const errors = {};
 
   if (!firstName) {
@@ -11,11 +11,11 @@ export default ({ firstName, lastName, phone, email }) => {
   if (!lastName) {
     errors.lastName = "Enter a last name";
   }
-  if (!phone) {
-    errors.phone = "Enter a contact number";
+  if (!contactPhone) {
+    errors.contactPhone = "Enter a contact number";
   }
-  if (!emailRegex.test(email)) {
-    errors.email = "Enter a valid email address";
+  if (!emailRegex.test(contactEmail)) {
+    errors.contactEmail = "Enter a valid email address";
   }
 
   return errors;

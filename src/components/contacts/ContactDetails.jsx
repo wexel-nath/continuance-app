@@ -28,13 +28,13 @@ const ContactDetails = () => {
       <div className="two fields">
         <Field
           label="Contact Number"
-          name="phone"
+          name="contactPhone"
           component={renderTextInput}
           placeholder="0412 345 678"
         />
         <Field
           label="Email Address"
-          name="email"
+          name="contactEmail"
           component={renderTextInput}
           placeholder="thomas@example.com"
         />

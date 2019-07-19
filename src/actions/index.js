@@ -67,7 +67,7 @@ export const handleAddNewContact = formValues => async dispatch => {
     contact.locationMet = contact.locationMet.label;
   }
   if (contact.company === "new") {
-    contact.company = contact.company_name;
+    contact.company = contact.companyName;
   }
 
   // TODO: get companyId or create one

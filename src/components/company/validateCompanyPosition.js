@@ -1,12 +1,12 @@
-export default ({ position, company, company_name }) => {
+export default ({ position, company, companyName }) => {
   const errors = {};
 
   if (!position) {
     errors.position = "Enter a first position";
   }
 
-  if (company === "new" && !company_name) {
-    errors.company_name = "Enter a company name";
+  if (company === "new" && !companyName) {
+    errors.companyName = "Enter a company name";
   }
 
   return errors;

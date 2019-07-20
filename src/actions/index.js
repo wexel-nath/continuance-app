@@ -35,7 +35,7 @@ export const handleLogIn = ({ username, password }) => async dispatch => {
   });
   return login(username, password)
     .then(response => {
-      const { jwt, refreshToken, user } = toCamelCase(response.data.result);
+      const { jwt, refreshToken, user } = toCamelCase(response.data.data);
       setJwt(jwt);
       setRefresh(refreshToken);
 
@@ -45,17 +45,17 @@ export const handleLogIn = ({ username, password }) => async dispatch => {
       });
     })
     .catch(error => {
-      const { status, data, statusText } = error.response;
+      const { data, statusText } = error.response;
       dispatch({
         type: LOG_IN_FAIL,
-        payload: status >= 500 ? statusText : data.messages[0]
+        payload: data.meta ? data.meta : statusText
       });
     });
 };
 
 export const handleRefresh = () => async dispatch => {
   await refresh(getJwt(), getRefresh()).then(response => {
-    const { jwt, refreshToken, user } = toCamelCase(response.data.result);
+    const { jwt, refreshToken, user } = toCamelCase(response.data.data);
     setJwt(jwt);
     setRefresh(refreshToken);
 

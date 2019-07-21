@@ -4,7 +4,7 @@ import {
 } from "humps";
 
 import { login, refresh, logout } from "../api/authentication";
-import cities from "../api/cities";
+import { getCities } from "../api/cities";
 import history from "../history";
 import {
   setJwt,
@@ -29,33 +29,37 @@ import {
   GET_COMPANY_LIST
 } from "./types";
 
-export const handleLogIn = ({ username, password }) => async dispatch => {
+export const handleLogin = ({ username, password }) => async dispatch => {
   dispatch({
     type: LOG_IN_REQUEST
   });
-  return login(username, password)
-    .then(response => {
-      const { jwt, refreshToken, user } = toCamelCase(response.data.data);
-      setJwt(jwt);
-      setRefresh(refreshToken);
 
-      dispatch({
-        type: LOG_IN,
-        payload: user
-      });
-    })
-    .catch(error => {
-      const { data, statusText } = error.response;
-      dispatch({
-        type: LOG_IN_FAIL,
-        payload: data.meta ? data.meta : statusText
-      });
+  const {
+    data: { data, meta },
+    statusText
+  } = await login(username, password);
+
+  if (data) {
+    const { jwt, refreshToken, user } = toCamelCase(data);
+    setJwt(jwt);
+    setRefresh(refreshToken);
+
+    dispatch({ type: LOG_IN, payload: user });
+  } else {
+    dispatch({
+      type: LOG_IN_FAIL,
+      payload: meta ? meta : statusText
     });
+  }
 };
 
 export const handleRefresh = () => async dispatch => {
-  await refresh(getJwt(), getRefresh()).then(response => {
-    const { jwt, refreshToken, user } = toCamelCase(response.data.data);
+  const {
+    data: { data }
+  } = await refresh(getJwt(), getRefresh());
+
+  if (data) {
+    const { jwt, refreshToken, user } = toCamelCase(data);
     setJwt(jwt);
     setRefresh(refreshToken);
 
@@ -63,25 +67,26 @@ export const handleRefresh = () => async dispatch => {
       type: LOG_IN,
       payload: user
     });
-  });
+  }
 };
 
-export const handleLogOut = () => async dispatch => {
+export const handleLogOut = () => dispatch => {
   dispatch({
     type: LOG_OUT
   });
-  await logout(getJwt(), getRefresh()).then(() => {
-    clearTokens();
-  });
+  logout(getJwt(), getRefresh());
+  clearTokens();
 };
 
 export const handleLocationSearch = (name, address) => async dispatch => {
-  const response = await cities.get("", { params: { search: address } });
+  const { data } = await getCities(address);
 
-  dispatch({
-    type: LOCATION_SEARCH,
-    payload: { name, result: response.data._embedded["city:search-results"] }
-  });
+  if (data) {
+    dispatch({
+      type: LOCATION_SEARCH,
+      payload: { name, result: data._embedded["city:search-results"] }
+    });
+  }
 };
 
 export const handleAddNewContact = formValues => async dispatch => {
@@ -107,36 +112,37 @@ export const handleAddNewContact = formValues => async dispatch => {
 
   // todo: dispatch a loading state
 
-  await newContact(toSnakeCase(contact))
-    .then(response => {
-      if (response.status === 201) {
-        history.push("/contacts");
-        dispatch({
-          type: ADD_NEW_CONTACT,
-          payload: toCamelCase(response.data.result)
-        });
-      }
-    })
-    .catch(error => {
-      console.log(error);
-      // todo: display error to user
+  const { data, status } = await newContact(toSnakeCase(contact));
+
+  if (status === 201) {
+    history.push("/contacts");
+    dispatch({
+      type: ADD_NEW_CONTACT,
+      payload: toCamelCase(data.result)
     });
+  }
+
+  // todo: handle error case
 };
 
 export const handleGetContactList = (limit, offset) => async dispatch => {
-  await getContactList(limit, offset).then(response => {
+  const { data } = await getContactList(limit, offset);
+
+  if (data) {
     dispatch({
       type: GET_CONTACT_LIST,
-      payload: toCamelCase(response.data.result)
+      payload: toCamelCase(data.result)
     });
-  });
+  }
 };
 
 export const handleGetCompanyList = () => async dispatch => {
-  await getCompanyList().then(response => {
+  const { data } = await getCompanyList();
+
+  if (data) {
     dispatch({
       type: GET_COMPANY_LIST,
-      payload: toCamelCase(response.data.result)
+      payload: toCamelCase(data.result)
     });
-  });
+  }
 };

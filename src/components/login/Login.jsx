@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { Redirect } from "react-router-dom";
 
-import { handleLogIn } from "../../actions";
+import { handleLogin } from "../../actions";
 
 import logo from "../../img/continuance_logo.jpg";
 import "./Login.css";
@@ -32,7 +32,7 @@ class Login extends React.Component {
       authError,
       isFetching,
       handleSubmit,
-      handleLogIn
+      handleLogin
     } = this.props;
     if (loggedIn) {
       return <Redirect to={{ pathname: "/" }} />;
@@ -40,7 +40,7 @@ class Login extends React.Component {
     return (
       <div className="ui container login-wrapper">
         <div className="ui segment login-card">
-          <form className="ui form" onSubmit={handleSubmit(handleLogIn)}>
+          <form className="ui form" onSubmit={handleSubmit(handleLogin)}>
             <img className="ui image" src={logo} alt="continuance-logo" />
             <Field
               component={this.renderInput}
@@ -97,5 +97,5 @@ const mapStateToProps = ({ auth }) => {
 
 export default connect(
   mapStateToProps,
-  { handleLogIn }
+  { handleLogin }
 )(formFunc);

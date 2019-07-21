@@ -121,13 +121,16 @@ export const handleAddNewContact = formValues => async dispatch => {
 
   // todo: dispatch a loading state
 
-  const { data, status } = await newContact(toSnakeCase(contact));
+  const {
+    data: { data },
+    status
+  } = await newContact(toSnakeCase(contact));
 
   if (status === 201) {
     history.push("/contacts");
     dispatch({
       type: ADD_NEW_CONTACT,
-      payload: toCamelCase(data.result)
+      payload: toCamelCase(data)
     });
   }
 
@@ -135,23 +138,27 @@ export const handleAddNewContact = formValues => async dispatch => {
 };
 
 export const handleGetContactList = (limit, offset) => async dispatch => {
-  const { data } = await getContactList(limit, offset);
+  const {
+    data: { data }
+  } = await getContactList(limit, offset);
 
   if (data) {
     dispatch({
       type: GET_CONTACT_LIST,
-      payload: toCamelCase(data.result)
+      payload: toCamelCase(data)
     });
   }
 };
 
 export const handleGetCompanyList = () => async dispatch => {
-  const { data } = await getCompanyList();
+  const {
+    data: { data }
+  } = await getCompanyList();
 
   if (data) {
     dispatch({
       type: GET_COMPANY_LIST,
-      payload: toCamelCase(data.result)
+      payload: toCamelCase(data)
     });
   }
 };

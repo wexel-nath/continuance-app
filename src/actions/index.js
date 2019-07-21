@@ -3,7 +3,7 @@ import {
   decamelizeKeys as toSnakeCase
 } from "humps";
 
-import { login, refresh, logout } from "../api/authentication";
+import { login, logout, getUser } from "../api/authentication";
 import { getCities } from "../api/cities";
 import history from "../history";
 import {
@@ -53,29 +53,38 @@ export const handleLogin = ({ username, password }) => async dispatch => {
   }
 };
 
-export const handleRefresh = () => async dispatch => {
+export const handleGetUser = () => async dispatch => {
+  if (!getJwt() || !getRefresh()) {
+    clearTokens();
+    return;
+  }
+
+  dispatch({
+    type: LOG_IN_REQUEST
+  });
+
   const {
     data: { data }
-  } = await refresh(getJwt(), getRefresh());
+  } = await getUser();
 
   if (data) {
-    const { jwt, refreshToken, user } = toCamelCase(data);
-    setJwt(jwt);
-    setRefresh(refreshToken);
-
+    const user = toCamelCase(data);
+    dispatch({ type: LOG_IN, payload: user });
+  } else {
     dispatch({
-      type: LOG_IN,
-      payload: user
+      type: LOG_IN_FAIL,
+      payload: "Session timed out."
     });
   }
 };
 
-export const handleLogOut = () => dispatch => {
+export const handleLogOut = () => async dispatch => {
+  const refresh = getRefresh();
+  await logout(refresh);
+  clearTokens();
   dispatch({
     type: LOG_OUT
   });
-  logout(getJwt(), getRefresh());
-  clearTokens();
 };
 
 export const handleLocationSearch = (name, address) => async dispatch => {

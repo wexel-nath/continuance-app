@@ -4,7 +4,6 @@ import { Redirect, Route } from "react-router-dom";
 
 const PrivateRoute = ({ children, loggedIn, ...rest }) => {
   if (!loggedIn) {
-    // check tokens
     return <Redirect to={{ pathname: "/login" }} />;
   }
   return <Route {...rest} render={() => children} />;

@@ -3,12 +3,16 @@ import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { Redirect } from "react-router-dom";
 
-import { handleLogin } from "../../actions";
+import { handleLogin, handleGetUser } from "../../actions";
 
 import logo from "../../img/continuance_logo.jpg";
 import "./Login.css";
 
 class Login extends React.Component {
+  componentDidMount() {
+    this.props.handleGetUser();
+  }
+
   maybeRenderErrorMessage(error) {
     return error && <div className="ui warning message">{error}</div>;
   }
@@ -97,5 +101,5 @@ const mapStateToProps = ({ auth }) => {
 
 export default connect(
   mapStateToProps,
-  { handleLogin }
+  { handleLogin, handleGetUser }
 )(formFunc);

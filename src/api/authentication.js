@@ -1,7 +1,7 @@
 import axios from "axios";
 import { decamelizeKeys as toSnakeCase } from "humps";
 
-import { request } from "./request";
+import { request, requestWithAuth, makeAuthRequest } from "./request";
 
 const auth = axios.create({
   baseURL: "https://wexel-auth.herokuapp.com"
@@ -15,22 +15,28 @@ export async function login(username, password) {
   return await request(auth.post("/login", data));
 }
 
-export async function refresh(jwt, refreshToken) {
-  const data = toSnakeCase({ refreshToken });
+export async function refresh(refreshToken) {
   const config = {
-    headers: {
-      Authorization: "Bearer " + jwt
-    }
+    method: "POST",
+    url: "/refresh",
+    data: toSnakeCase({ refreshToken })
   };
-  return await request(auth.post("/refresh", data, config));
+  return await makeAuthRequest(auth, config);
 }
 
-export async function logout(jwt, refreshToken) {
-  const data = toSnakeCase({ refreshToken });
+export async function logout(refreshToken) {
   const config = {
-    headers: {
-      Authorization: "Bearer " + jwt
-    }
+    method: "POST",
+    url: "/logout",
+    data: toSnakeCase({ refreshToken })
   };
-  return await request(auth.post("/logout", data, config));
+  return await requestWithAuth(auth, config);
+}
+
+export async function getUser() {
+  const config = {
+    method: "GET",
+    url: "/user"
+  };
+  return await requestWithAuth(auth, config);
 }

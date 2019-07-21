@@ -16,7 +16,8 @@ import {
 import {
   getContactList,
   newContact,
-  getCompanyList
+  getCompanyList,
+  searchContacts
 } from "../api/continuance-server";
 import {
   LOG_IN_REQUEST,
@@ -26,7 +27,8 @@ import {
   LOCATION_SEARCH,
   ADD_NEW_CONTACT,
   GET_CONTACT_LIST,
-  GET_COMPANY_LIST
+  GET_COMPANY_LIST,
+  SEARCH_CONTACTS
 } from "./types";
 
 export const handleLogin = ({ username, password }) => async dispatch => {
@@ -145,6 +147,19 @@ export const handleGetContactList = (limit, offset) => async dispatch => {
   if (data) {
     dispatch({
       type: GET_CONTACT_LIST,
+      payload: toCamelCase(data)
+    });
+  }
+};
+
+export const handleSearchContacts = search => async dispatch => {
+  const {
+    data: { data }
+  } = await searchContacts(search);
+
+  if (data) {
+    dispatch({
+      type: SEARCH_CONTACTS,
       payload: toCamelCase(data)
     });
   }

@@ -19,7 +19,16 @@ export async function getContactList(limit, offset) {
   const config = {
     method: "GET",
     url: "/contact",
-    data: { params: { limit, offset } }
+    params: { limit, offset }
+  };
+  return await requestWithAuth(server, config);
+}
+
+export async function searchContacts(search) {
+  const config = {
+    method: "GET",
+    url: "/contact/search",
+    params: { search }
   };
   return await requestWithAuth(server, config);
 }

@@ -23,7 +23,7 @@ class ListContacts extends React.Component {
         contactEmail,
         locationBased,
         companyPosition,
-        company
+        companyName
       }) => {
         return (
           <div className="item" key={contactId}>
@@ -38,7 +38,7 @@ class ListContacts extends React.Component {
                 {companyPosition && (
                   <div className="ui label">{companyPosition}</div>
                 )}
-                {company && <div className="ui label">{company}</div>}
+                {companyName && <div className="ui label">{companyName}</div>}
                 {contactEmail && <div className="ui label">{contactEmail}</div>}
               </div>
             </div>

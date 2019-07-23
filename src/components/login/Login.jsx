@@ -4,6 +4,7 @@ import { Field, reduxForm } from "redux-form";
 import { Redirect } from "react-router-dom";
 
 import { handleLogin, handleGetUser } from "../../actions";
+import { renderTextInput } from "../helper/formHelpers";
 
 import logo from "../../img/continuance_logo.jpg";
 import "./Login.css";
@@ -13,31 +14,8 @@ class Login extends React.Component {
     this.props.handleGetUser();
   }
 
-  maybeRenderErrorMessage(error) {
-    return error && <div className="ui warning message">{error}</div>;
-  }
-
-  renderInput({ input, meta: { error, touched }, placeholder, type }) {
-    return (
-      <div className="field">
-        <div className="ui fluid large input">
-          <input {...input} type={type} placeholder={placeholder} />
-        </div>
-        {error && touched && (
-          <div className="ui pointing red basic label">{error}</div>
-        )}
-      </div>
-    );
-  }
-
   render() {
-    const {
-      loggedIn,
-      authError,
-      isFetching,
-      handleSubmit,
-      handleLogin
-    } = this.props;
+    const { loggedIn, err, isFetching, handleSubmit, handleLogin } = this.props;
     if (loggedIn) {
       return <Redirect to={{ pathname: "/" }} />;
     }
@@ -47,13 +25,13 @@ class Login extends React.Component {
           <form className="ui form" onSubmit={handleSubmit(handleLogin)}>
             <img className="ui image" src={logo} alt="continuance-logo" />
             <Field
-              component={this.renderInput}
+              component={renderTextInput}
               name="username"
               placeholder="Username"
               type="text"
             />
             <Field
-              component={this.renderInput}
+              component={renderTextInput}
               name="password"
               placeholder="Password"
               type="password"
@@ -65,7 +43,7 @@ class Login extends React.Component {
               Login
             </button>
           </form>
-          {this.maybeRenderErrorMessage(authError)}
+          {err && <div className="ui warning message">{err}</div>}
         </div>
       </div>
     );
@@ -91,11 +69,11 @@ const formFunc = reduxForm({
   validate
 })(Login);
 
-const mapStateToProps = ({ auth }) => {
+const mapStateToProps = ({ auth: { error, loggedIn, isFetching } }) => {
   return {
-    authError: auth.error,
-    loggedIn: auth.loggedIn,
-    isFetching: auth.isFetching
+    err: error,
+    loggedIn,
+    isFetching
   };
 };
 

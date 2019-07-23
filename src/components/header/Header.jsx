@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { handleLogOut } from "../../actions";
@@ -18,6 +19,9 @@ class Header extends React.Component {
           <h3 className="ui header">{firstName}</h3>
           <i className="blue large user icon" />
           <div className="menu">
+            <Link className="item" to="preferences">
+              Preferences
+            </Link>
             <div className="item" onClick={this.props.handleLogOut}>
               Logout
             </div>

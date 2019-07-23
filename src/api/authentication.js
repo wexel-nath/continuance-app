@@ -40,3 +40,12 @@ export async function getUser() {
   };
   return await requestWithAuth(auth, config);
 }
+
+export async function changePassword(newPassword) {
+  const config = {
+    method: "POST",
+    url: "/change-password",
+    data: toSnakeCase({ newPassword })
+  };
+  return await requestWithAuth(auth, config);
+}

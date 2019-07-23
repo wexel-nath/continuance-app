@@ -6,12 +6,13 @@ export const renderTextInput = ({
   input,
   label,
   meta: { error, touched },
-  placeholder
+  placeholder,
+  type
 }) => {
   return (
     <div className="field">
       <label>{label}</label>
-      <input type="text" {...input} placeholder={placeholder} />
+      <input type={type || "text"} {...input} placeholder={placeholder} />
       {error && touched && (
         <div className="ui pointing red basic label">{error}</div>
       )}

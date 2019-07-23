@@ -1,12 +1,12 @@
 import React from "react";
 
-const SidebarItem = ({ header, children }) => {
+const SidebarGroup = ({ header, children }) => {
   return (
-    <div className="item">
-      <div className="header">{header}</div>
-      <div className="menu">{children}</div>
+    <div>
+      <h3 style={{ marginTop: "15px", marginLeft: "15px" }}>{header}</h3>
+      {children}
     </div>
   );
 };
 
-export default SidebarItem;
+export default SidebarGroup;

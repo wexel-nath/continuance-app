@@ -1,25 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
-import SidebarItem from "./SidebarItem";
+import SidebarGroup from "./SidebarItem";
+import SidebarLink from "./SidebarLink";
 
 import "./Sidebar.css";
 
 const Sidebar = () => {
   return (
-    <div className="ui massive fluid vertical menu vertical-menu">
-      <SidebarItem header="Contacts">
-        <Link className="item sidebar-link" to="/contacts/new">
-          Add New
-        </Link>
-        <Link className="item sidebar-link" to="/contacts/search">
-          Search
-        </Link>
-        <Link className="item sidebar-link" to="/contacts">
-          View All
-        </Link>
-      </SidebarItem>
-      <SidebarItem /> {/* Empty SidebarItem to close off the segment */}
+    <div className="ui left visible vertical sidebar menu sidebar-menu">
+      <SidebarGroup header="Contacts">
+        <SidebarLink to="/contacts/new" icon="plus circle" title="Add New" />
+        <SidebarLink to="/contacts/search" icon="search" title="Search" />
+        <SidebarLink
+          to="/contacts"
+          icon="address book outline"
+          title="View All"
+        />
+      </SidebarGroup>
     </div>
   );
 };

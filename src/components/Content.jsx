@@ -12,11 +12,9 @@ import "./Content.css";
 
 const Content = () => {
   return (
-    <div className="ui stackable grid content-grid">
-      <div className="three wide column collapsed">
-        <Sidebar />
-      </div>
-      <div className="thirteen wide padded column collapsed">
+    <div className="ui bottom attached segment pushable pushable-content">
+      <Sidebar />
+      <div className="pusher">
         <div className="ui basic segment">
           <Switch>
             <Route exact path="/contacts/new" component={NewContact} />

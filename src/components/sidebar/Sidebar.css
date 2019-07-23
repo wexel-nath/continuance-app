@@ -1,5 +1,5 @@
 .vertical-menu {
-  height: 100vh;
+  height: calc(100vh - 89px);
   text-align: center;
 }
 
@@ -9,4 +9,8 @@
 
 .sidebar-link:hover {
   color: #2185d0 !important;
+}
+
+.sidebar-menu {
+  width: 200px !important;
 }

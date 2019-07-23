@@ -5,7 +5,6 @@ export const LOG_IN = "LOG_IN";
 export const LOG_OUT = "LOG_OUT";
 
 // Contacts
-export const ADD_NEW_CONTACT = "ADD_NEW_CONTACT";
 export const GET_CONTACT_LIST = "GET_CONTACT_LIST";
 export const SEARCH_CONTACTS = "SEARCH_CONTACTS";
 

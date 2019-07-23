@@ -15,13 +15,13 @@ class Login extends React.Component {
   }
 
   render() {
-    const { loggedIn, err, isFetching, handleSubmit, handleLogin } = this.props;
+    const { loggedIn, err, loading, handleSubmit, handleLogin } = this.props;
     if (loggedIn) {
       return <Redirect to={{ pathname: "/" }} />;
     }
     return (
       <div className="ui container login-wrapper">
-        <div className="ui segment login-card">
+        <div className={`ui ${loading && "loading"} segment login-card`}>
           <form className="ui form" onSubmit={handleSubmit(handleLogin)}>
             <img className="ui image" src={logo} alt="continuance-logo" />
             <Field
@@ -38,7 +38,7 @@ class Login extends React.Component {
             />
             <button
               className="ui primary fluid large button login-button"
-              disabled={isFetching}
+              disabled={loading}
             >
               Login
             </button>
@@ -56,7 +56,6 @@ const validate = ({ username, password }) => {
   if (!username) {
     errors.username = "Enter your username";
   }
-
   if (!password) {
     errors.password = "Enter your password";
   }
@@ -69,11 +68,11 @@ const formFunc = reduxForm({
   validate
 })(Login);
 
-const mapStateToProps = ({ auth: { error, loggedIn, isFetching } }) => {
+const mapStateToProps = ({ auth: { error, loggedIn, loading } }) => {
   return {
     err: error,
     loggedIn,
-    isFetching
+    loading
   };
 };
 

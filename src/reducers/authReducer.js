@@ -2,7 +2,7 @@ import { LOG_IN, LOG_IN_FAIL, LOG_OUT, LOG_IN_REQUEST } from "../actions/types";
 
 const INITIAL_STATE = {
   loggedIn: false,
-  isFetching: false,
+  loading: false,
   user: {},
   error: null
 };
@@ -10,14 +10,14 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOG_IN_REQUEST:
-      return { ...state, isFetching: true };
+      return { ...state, loading: true };
     case LOG_IN_FAIL:
-      return { ...state, isFetching: false, error: action.payload };
+      return { ...state, loading: false, error: action.payload };
     case LOG_IN:
       return {
         ...state,
         loggedIn: true,
-        isFetching: false,
+        loading: false,
         user: action.payload,
         error: null
       };

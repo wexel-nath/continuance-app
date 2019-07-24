@@ -1,16 +1,29 @@
 import React from "react";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { camelizeKeys as toCamelCase } from "humps";
 
 import {
   renderDisabledInput,
   renderDisabledTextArea
 } from "../helper/formHelpers";
+import { getContactById } from "../../api/continuance";
 
 class ViewContact extends React.Component {
+  state = {
+    contact: null
+  };
+
+  async componentDidMount() {
+    const {
+      data: { data }
+    } = await getContactById(this.props.match.params.id);
+
+    this.setState({ contact: toCamelCase(data) });
+  }
+
   render() {
-    if (!this.props.contact) {
-      return <Redirect to="/contacts" />;
+    const { contact } = this.state;
+    if (!contact) {
+      return <div>{/* todo: loading */}</div>;
     }
     const {
       firstName,
@@ -22,7 +35,7 @@ class ViewContact extends React.Component {
       companyPosition,
       companyName,
       notes
-    } = this.props.contact;
+    } = contact;
     return (
       <div className="ui form container">
         <div className="ui segment">
@@ -50,10 +63,4 @@ class ViewContact extends React.Component {
   }
 }
 
-const mapStateToParams = ({ contacts }, ownProps) => {
-  return {
-    contact: contacts[ownProps.match.params.id]
-  };
-};
-
-export default connect(mapStateToParams)(ViewContact);
+export default ViewContact;

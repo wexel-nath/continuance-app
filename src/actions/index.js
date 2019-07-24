@@ -9,14 +9,13 @@ import {
   getRefresh,
   clearTokens
 } from "../util/storage";
-import { getContactList, getCompanyList } from "../api/continuance";
+import { getCompanyList } from "../api/continuance";
 import {
   LOG_IN_REQUEST,
   LOG_IN,
   LOG_IN_FAIL,
   LOG_OUT,
   LOCATION_SEARCH,
-  GET_CONTACT_LIST,
   GET_COMPANY_LIST
 } from "./types";
 
@@ -85,19 +84,6 @@ export const handleLocationSearch = (name, address) => async dispatch => {
     dispatch({
       type: LOCATION_SEARCH,
       payload: { name, result: data._embedded["city:search-results"] }
-    });
-  }
-};
-
-export const handleGetContactList = (limit, offset) => async dispatch => {
-  const {
-    data: { data }
-  } = await getContactList(limit, offset);
-
-  if (data) {
-    dispatch({
-      type: GET_CONTACT_LIST,
-      payload: toCamelCase(data)
     });
   }
 };

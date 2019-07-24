@@ -1,38 +1,43 @@
 import React from "react";
-import { connect } from "react-redux";
+import { camelizeKeys as toCamelCase } from "humps";
 
-import { handleGetContactList } from "../../actions";
 import ContactTable from "./ContactTable";
+import { getContactList } from "../../api/continuance";
 
 class ListContacts extends React.Component {
-  componentDidMount() {
-    this.props.handleGetContactList(20, 0);
+  state = {
+    contacts: [],
+    limit: 20,
+    offset: 0
+  };
+
+  async componentDidMount() {
+    const { limit, offset } = this.state;
+
+    let contacts = [];
+    const {
+      data: { data }
+    } = await getContactList(limit, offset);
+
+    if (data) {
+      contacts = toCamelCase(data);
+    }
+
+    this.setState({ contacts });
   }
 
   render() {
-    const { contacts } = this.props;
-    let contactsArray = [];
-    for (const key in contacts) {
-      // handle re-sorting?
-      contactsArray.push(contacts[key]);
-    }
+    const { contacts } = this.state;
     return (
       <div className="ui container">
         <h2 className="ui header">
           <i className="address card outline icon blue" />
           View Contacts
         </h2>
-        <ContactTable contacts={contactsArray} />
+        <ContactTable contacts={contacts} />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ contacts }) => {
-  return { contacts };
-};
-
-export default connect(
-  mapStateToProps,
-  { handleGetContactList }
-)(ListContacts);
+export default ListContacts;

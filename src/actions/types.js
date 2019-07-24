@@ -4,9 +4,6 @@ export const LOG_IN_FAIL = "LOG_IN_FAIL";
 export const LOG_IN = "LOG_IN";
 export const LOG_OUT = "LOG_OUT";
 
-// Contacts
-export const GET_CONTACT_LIST = "GET_CONTACT_LIST";
-
 // Company
 export const GET_COMPANY_LIST = "GET_COMPANY_LIST";
 

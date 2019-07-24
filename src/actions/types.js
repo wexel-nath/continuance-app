@@ -6,7 +6,6 @@ export const LOG_OUT = "LOG_OUT";
 
 // Contacts
 export const GET_CONTACT_LIST = "GET_CONTACT_LIST";
-export const SEARCH_CONTACTS = "SEARCH_CONTACTS";
 
 // Company
 export const GET_COMPANY_LIST = "GET_COMPANY_LIST";

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const tableRow = contact => {
+const ContactRow = ({ contact }) => {
   const {
     contactId,
     firstName,
@@ -27,13 +27,11 @@ const tableRow = contact => {
 };
 
 const ContactTable = ({ contacts }) => {
-  let contactsArray = [];
-  for (const key in contacts) {
-    // handle re-sorting?
-    contactsArray.push(contacts[key]);
+  if (contacts.length === 0) {
+    return <div>{/* todo: no contacts message */}</div>;
   }
   return (
-    <table class="ui striped table">
+    <table className="ui striped table">
       <thead>
         <tr>
           <th>Name</th>
@@ -43,7 +41,11 @@ const ContactTable = ({ contacts }) => {
           <th>Position</th>
         </tr>
       </thead>
-      <tbody>{contactsArray.map(contact => tableRow(contact))}</tbody>
+      <tbody>
+        {contacts.map(contact => {
+          return <ContactRow contact={contact} key={contact.contactId} />;
+        })}
+      </tbody>
     </table>
   );
 };

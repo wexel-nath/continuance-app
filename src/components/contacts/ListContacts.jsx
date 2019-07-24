@@ -11,13 +11,18 @@ class ListContacts extends React.Component {
 
   render() {
     const { contacts } = this.props;
+    let contactsArray = [];
+    for (const key in contacts) {
+      // handle re-sorting?
+      contactsArray.push(contacts[key]);
+    }
     return (
       <div className="ui container">
         <h2 className="ui header">
           <i className="address card outline icon blue" />
           View Contacts
         </h2>
-        <ContactTable contacts={contacts} />
+        <ContactTable contacts={contactsArray} />
       </div>
     );
   }

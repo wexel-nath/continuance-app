@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { requestWithAuth } from "./request";
 
-const server = axios.create({
+const continuance = axios.create({
   baseURL: "https://continuance-server.herokuapp.com"
 });
 
@@ -12,7 +12,7 @@ export async function newContact(data) {
     url: "/contact",
     data: data
   };
-  return await requestWithAuth(server, config);
+  return await requestWithAuth(continuance, config);
 }
 
 export async function getContactList(limit, offset) {
@@ -21,16 +21,24 @@ export async function getContactList(limit, offset) {
     url: "/contact",
     params: { limit, offset }
   };
-  return await requestWithAuth(server, config);
+  return await requestWithAuth(continuance, config);
+}
+
+export async function getContactById(contactId) {
+  const config = {
+    method: "GET",
+    url: `/contact/${contactId}`
+  };
+  return await requestWithAuth(continuance, config);
 }
 
 export async function searchContacts(search) {
   const config = {
     method: "GET",
-    url: "/contact/search",
+    url: "/search/contact",
     params: { search }
   };
-  return await requestWithAuth(server, config);
+  return await requestWithAuth(continuance, config);
 }
 
 export async function getCompanyList() {
@@ -38,5 +46,5 @@ export async function getCompanyList() {
     method: "GET",
     url: "/company"
   };
-  return await requestWithAuth(server, config);
+  return await requestWithAuth(continuance, config);
 }

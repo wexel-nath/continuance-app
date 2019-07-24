@@ -9,7 +9,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       for (const contact of payload) {
         contactsMap[contact.contactId] = contact;
       }
-      return { ...state, ...contactsMap };
+      return contactsMap;
     default:
       return state;
   }

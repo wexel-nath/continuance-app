@@ -13,7 +13,7 @@ import {
   getContactList,
   getCompanyList,
   searchContacts
-} from "../api/continuance-server";
+} from "../api/continuance";
 import {
   LOG_IN_REQUEST,
   LOG_IN,

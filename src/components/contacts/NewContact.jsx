@@ -6,7 +6,7 @@ import { decamelizeKeys as toSnakeCase } from "humps";
 import ContactDetails from "./ContactDetails";
 import CompanyPosition from "../company/CompanyPosition";
 import validate from "./validateNewContact";
-import { newContact } from "../../api/continuance-server";
+import { newContact } from "../../api/continuance";
 import history from "../../history";
 
 const FORM_NAME = "new_contact";

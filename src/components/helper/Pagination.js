@@ -2,7 +2,7 @@ import React from "react";
 
 import "./Pagination.css";
 
-export const PaginationItem = ({ active, disabled, onClick, children }) => {
+const PaginationItem = ({ active, disabled, onClick, children }) => {
   return (
     <div
       className={`icon ${disabled && "disabled"} ${active &&
@@ -14,37 +14,7 @@ export const PaginationItem = ({ active, disabled, onClick, children }) => {
   );
 };
 
-export const PaginationStart = ({ currentPage, handlePageChange }) => {
-  return (
-    <PaginationItem
-      disabled={currentPage === 1}
-      onClick={() => {
-        handlePageChange(currentPage - 1);
-      }}
-    >
-      <i className="angle left icon" />
-    </PaginationItem>
-  );
-};
-
-export const PaginationEnd = ({
-  currentPage,
-  totalPages,
-  handlePageChange
-}) => {
-  return (
-    <PaginationItem
-      disabled={currentPage === totalPages}
-      onClick={() => {
-        handlePageChange(currentPage + 1);
-      }}
-    >
-      <i className="angle right icon" />
-    </PaginationItem>
-  );
-};
-
-export const PaginationItems = ({ currentPage, pages, handlePageChange }) => {
+const PaginationItems = ({ currentPage, pages, handlePageChange }) => {
   return pages.map(page => {
     const active = currentPage === page;
     return (
@@ -61,28 +31,57 @@ export const PaginationItems = ({ currentPage, pages, handlePageChange }) => {
   });
 };
 
+const PaginationStart = ({ currentPage, handlePageChange }) => {
+  const disabled = currentPage === 1;
+  return (
+    <PaginationItem
+      disabled={disabled}
+      onClick={() => {
+        !disabled && handlePageChange(currentPage - 1);
+      }}
+    >
+      <i className="angle left icon" />
+    </PaginationItem>
+  );
+};
+
+const PaginationEnd = ({ currentPage, totalPages, handlePageChange }) => {
+  const disabled = currentPage === totalPages;
+  return (
+    <PaginationItem
+      disabled={disabled}
+      onClick={() => {
+        !disabled && handlePageChange(currentPage + 1);
+      }}
+    >
+      <i className="angle right icon" />
+    </PaginationItem>
+  );
+};
+
 export const Pagination = ({ currentPage, totalPages, handlePageChange }) => {
-  console.log(handlePageChange);
   let pages = [];
   for (let page = 1; page <= totalPages; page++) {
     pages.push(page);
   }
   return (
-    <div className="ui pagination menu">
-      <PaginationStart
-        currentPage={currentPage}
-        handlePageChange={handlePageChange}
-      />
-      <PaginationItems
-        currentPage={currentPage}
-        handlePageChange={handlePageChange}
-        pages={pages}
-      />
-      <PaginationEnd
-        currentPage={currentPage}
-        handlePageChange={handlePageChange}
-        totalPages={totalPages}
-      />
+    <div className="ui basic center aligned segment">
+      <div className="ui pagination menu">
+        <PaginationStart
+          currentPage={currentPage}
+          handlePageChange={handlePageChange}
+        />
+        <PaginationItems
+          currentPage={currentPage}
+          handlePageChange={handlePageChange}
+          pages={pages}
+        />
+        <PaginationEnd
+          currentPage={currentPage}
+          handlePageChange={handlePageChange}
+          totalPages={totalPages}
+        />
+      </div>
     </div>
   );
 };

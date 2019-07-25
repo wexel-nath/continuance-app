@@ -15,11 +15,11 @@ export async function newContact(data) {
   return await requestWithAuth(continuance, config);
 }
 
-export async function getContactList(limit, offset) {
+export async function getContactList(page) {
   const config = {
     method: "GET",
     url: "/contact",
-    params: { limit, offset }
+    params: { page }
   };
   return await requestWithAuth(continuance, config);
 }

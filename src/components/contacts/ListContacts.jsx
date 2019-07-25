@@ -1,43 +1,42 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { camelizeKeys as toCamelCase } from "humps";
 
 import ContactTable from "./ContactTable";
 import { getContactList } from "../../api/continuance";
+import { Pagination } from "../helper/Pagination";
 
-class ListContacts extends React.Component {
-  state = {
-    contacts: [],
-    limit: 20,
-    offset: 0
+const ListContacts = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [contacts, setContacts] = useState([]);
+
+  const getContacts = async () => {
+    const response = await getContactList(currentPage);
+    const {
+      data: { data, meta }
+    } = toCamelCase(response);
+    setContacts(data || []);
+    setTotalPages(meta.totalPages || 1);
   };
 
-  async componentDidMount() {
-    const { limit, offset } = this.state;
+  useEffect(() => {
+    getContacts();
+  }, [currentPage]);
 
-    let contacts = [];
-    const {
-      data: { data }
-    } = await getContactList(limit, offset);
-
-    if (data) {
-      contacts = toCamelCase(data);
-    }
-
-    this.setState({ contacts });
-  }
-
-  render() {
-    const { contacts } = this.state;
-    return (
-      <div className="ui container">
-        <h2 className="ui header">
-          <i className="address card outline icon blue" />
-          View Contacts
-        </h2>
-        <ContactTable contacts={contacts} />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="ui container">
+      <h2 className="ui header">
+        <i className="address card outline icon blue" />
+        View Contacts
+      </h2>
+      <ContactTable contacts={contacts} />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        handlePageChange={setCurrentPage}
+      />
+    </div>
+  );
+};
 
 export default ListContacts;

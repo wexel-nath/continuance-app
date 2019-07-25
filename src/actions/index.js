@@ -9,14 +9,12 @@ import {
   getRefresh,
   clearTokens
 } from "../util/storage";
-import { getCompanyList } from "../api/continuance";
 import {
   LOG_IN_REQUEST,
   LOG_IN,
   LOG_IN_FAIL,
   LOG_OUT,
-  LOCATION_SEARCH,
-  GET_COMPANY_LIST
+  LOCATION_SEARCH
 } from "./types";
 
 export const handleLogin = ({ username, password }) => async dispatch => {
@@ -68,7 +66,7 @@ export const handleGetUser = () => async dispatch => {
   }
 };
 
-export const handleLogOut = () => async dispatch => {
+export const handleLogout = () => async dispatch => {
   const refresh = getRefresh();
   await logout(refresh);
   clearTokens();
@@ -84,19 +82,6 @@ export const handleLocationSearch = (name, address) => async dispatch => {
     dispatch({
       type: LOCATION_SEARCH,
       payload: { name, result: data._embedded["city:search-results"] }
-    });
-  }
-};
-
-export const handleGetCompanyList = () => async dispatch => {
-  const {
-    data: { data }
-  } = await getCompanyList();
-
-  if (data) {
-    dispatch({
-      type: GET_COMPANY_LIST,
-      payload: toCamelCase(data)
     });
   }
 };

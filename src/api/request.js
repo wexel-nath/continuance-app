@@ -1,13 +1,8 @@
 import { camelizeKeys as toCamelCase } from "humps";
 
-import {
-  getJwt,
-  getRefresh,
-  setJwt,
-  setRefresh,
-  clearTokens
-} from "../util/storage";
+import { getJwt, getRefresh, setJwt, setRefresh } from "../util/storage";
 import { refresh } from "./authentication";
+import { handleLogout } from "../actions";
 
 const getAuthHeader = () => {
   return "Bearer " + getJwt();
@@ -46,7 +41,7 @@ export const requestWithAuth = async (axios, config) => {
 
       return await makeAuthRequest(axios, config);
     } else {
-      clearTokens();
+      handleLogout(false);
     }
   }
 

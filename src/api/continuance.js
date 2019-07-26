@@ -1,10 +1,14 @@
 import axios from "axios";
 
-import { requestWithAuth } from "./request";
+import { request, requestWithAuth } from "./request";
 
 const continuance = axios.create({
   baseURL: "https://continuance-server.herokuapp.com"
 });
+
+export async function getHealth() {
+  return await request(continuance.get("/healthz"));
+}
 
 export async function newContact(data) {
   const config = {

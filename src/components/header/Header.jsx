@@ -17,7 +17,7 @@ const OptionsMenu = ({ firstName, handleLogout }) => {
           <Link className="item" to="/preferences">
             Preferences
           </Link>
-          <div className="item" onClick={handleLogout}>
+          <div className="item" onClick={() => handleLogout(true)}>
             Logout
           </div>
         </div>

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { camelizeKeys as toCamelCase } from "humps";
 
 import ContactTable from "./ContactTable";
 import { searchContacts } from "../../api/continuance";
+import PageTitle from "../helper/PageTitle";
 
 const SearchInput = ({ onChange }) => {
   return (
@@ -21,43 +22,46 @@ const SearchInput = ({ onChange }) => {
   );
 };
 
-class SearchContacts extends React.Component {
-  state = {
-    contacts: []
+const useSearchContacts = () => {
+  const [contacts, setContacts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const [delayFunc, setDelayFunc] = useState(null);
+
+  const handleSearch = async () => {
+    setLoading(true);
+    const {
+      data: { data }
+    } = await searchContacts(search);
+    setContacts(toCamelCase(data || []));
+    setLoading(false);
   };
 
-  handleChange = async search => {
-    let contacts = [];
+  useEffect(() => {
     if (search !== "") {
-      const {
-        data: { data }
-      } = await searchContacts(search);
-
-      if (data) {
-        contacts = toCamelCase(data);
-      }
+      clearTimeout(delayFunc);
+      setDelayFunc(setTimeout(handleSearch, 500));
     }
+  }, [search]);
 
-    this.setState({ contacts });
-  };
+  return [contacts, loading, setSearch];
+};
 
-  render() {
-    const { contacts } = this.state;
-    return (
-      <div className="ui container">
-        <h2 className="ui header">
-          <i className="address card outline icon blue" />
-          Search Contacts
-        </h2>
-        <SearchInput
-          onChange={({ target }) => {
-            this.handleChange(target.value);
-          }}
-        />
-        <ContactTable contacts={contacts} />
-      </div>
-    );
-  }
-}
+const SearchContacts = () => {
+  const [contacts, loading, setSearch] = useSearchContacts();
+
+  return (
+    <div className="ui container">
+      <PageTitle title="Search Contacts" icon="address card outline" />
+      <SearchInput
+        onChange={({ target }) => {
+          setSearch(target.value);
+        }}
+      />
+      <br />
+      <ContactTable contacts={contacts} loading={loading} />
+    </div>
+  );
+};
 
 export default SearchContacts;

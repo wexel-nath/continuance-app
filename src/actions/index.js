@@ -66,9 +66,11 @@ export const handleGetUser = () => async dispatch => {
   }
 };
 
-export const handleLogout = () => async dispatch => {
-  const refresh = getRefresh();
-  await logout(refresh);
+export const handleLogout = callLogout => async dispatch => {
+  if (callLogout) {
+    const refresh = getRefresh();
+    await logout(refresh);
+  }
   clearTokens();
   dispatch({
     type: LOG_OUT

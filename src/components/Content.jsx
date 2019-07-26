@@ -7,6 +7,7 @@ import SearchContacts from "./contacts/SearchContacts";
 import Sidebar from "./sidebar/Sidebar";
 import ViewContact from "./contacts/ViewContact";
 import Preferences from "./preferences/Preferences";
+import LandingPage from "./LandingPage";
 
 import "./Content.css";
 
@@ -22,6 +23,7 @@ const Content = () => {
             <Route exact path="/contacts/search" component={SearchContacts} />
             <Route exact path="/contacts/:id" component={ViewContact} />
             <Route exact path="/preferences" component={Preferences} />
+            <Route exact path="/" component={LandingPage} />
           </Switch>
         </div>
       </div>

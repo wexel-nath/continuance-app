@@ -28,20 +28,18 @@ const ContactRow = ({ contact }) => {
   );
 };
 
-class ContactTable extends React.Component {
-  state = {
-    pagination: {
-      currentPage: 1,
-      totalPages: 5
-    }
-  };
+const Loader = () => {
+  return (
+    <div className="ui active inverted dimmer">
+      <div className="ui text loader">Loading</div>
+    </div>
+  );
+};
 
-  render() {
-    const { contacts } = this.props;
-    if (contacts.length === 0) {
-      return <div>{/* todo: no contacts message */}</div>;
-    }
-    return (
+const ContactTable = ({ contacts, loading }) => {
+  return (
+    <div>
+      {loading && <Loader />}
       <table className="ui striped table">
         <thead>
           <tr>
@@ -58,8 +56,8 @@ class ContactTable extends React.Component {
           })}
         </tbody>
       </table>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default ContactTable;

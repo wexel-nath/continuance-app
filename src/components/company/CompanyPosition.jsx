@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { camelizeKeys as toCamelCase } from "humps";
@@ -10,66 +10,68 @@ import {
   renderOptionSelectInput
 } from "../helper/formHelpers";
 
-class CompanyPosition extends React.Component {
-  state = {
-    companies: []
-  };
+const getCompanyOptions = companies => {
+  const companyList = [
+    { companyName: "Add new company", companyId: "new" },
+    ...companies,
+    { companyName: "I'm not sure", companyId: "none" }
+  ];
+  return companyList.map(company => {
+    return (
+      <option key={company.companyId} value={company.companyId}>
+        {company.companyName}
+      </option>
+    );
+  });
+};
 
-  async componentDidMount() {
-    window.$(".ui.dropdown").dropdown();
+const useCompanies = () => {
+  const [companies, setCompanies] = useState([]);
 
+  const getCompanies = async () => {
     const {
       data: { data }
     } = await getCompanyList();
 
     if (data) {
-      this.setState({ companies: toCamelCase(data) });
+      setCompanies(toCamelCase(data));
     }
-  }
+  };
 
-  renderCompanyList() {
-    const companyList = [
-      { companyName: "Add new company", companyId: "new" },
-      ...this.state.companies,
-      { companyName: "I'm not sure", companyId: "none" }
-    ];
-    return companyList.map(company => {
-      return (
-        <option key={company.companyId} value={company.companyId}>
-          {company.companyName}
-        </option>
-      );
-    });
-  }
+  useEffect(() => {
+    window.$(".ui.dropdown").dropdown();
+    getCompanies();
+  }, []);
 
-  render() {
-    const { selectedCompany, form } = this.props;
-    return (
-      <div className="ui segment">
-        <h3 className="ui header">Company Position</h3>
-        <div className="two fields">
-          <Field
-            name="companyPosition"
-            label="Position"
-            placeholder="Agent"
-            component={renderTextInput}
-          />
-          <Field
-            name="companySelector"
-            label="Company"
-            className="ui dropdown"
-            placeholder="Select a Company"
-            options={this.renderCompanyList()}
-            component={renderOptionSelectInput}
-          />
-        </div>
-        {selectedCompany === "new" && (
-          <CompanyDetails header="New Company" form={form} />
-        )}
+  return companies;
+};
+
+const CompanyPosition = ({ selectedCompany, form }) => {
+  const companies = useCompanies();
+  return (
+    <div className="ui segment">
+      <h3 className="ui header">Company Position</h3>
+      <div className="two fields">
+        <Field
+          name="companyPosition"
+          label="Position"
+          placeholder="Agent"
+          component={renderTextInput}
+        />
+        <Field
+          name="companySelector"
+          label="Company"
+          className="ui dropdown"
+          options={getCompanyOptions(companies)}
+          component={renderOptionSelectInput}
+        />
       </div>
-    );
-  }
-}
+      {selectedCompany === "new" && (
+        <CompanyDetails header="New Company" form={form} />
+      )}
+    </div>
+  );
+};
 
 const mapStateToProps = ({ form }, ownProps) => {
   const formName = form[ownProps.form] || {};

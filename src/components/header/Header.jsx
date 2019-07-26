@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -26,30 +26,27 @@ const OptionsMenu = ({ firstName, handleLogout }) => {
   );
 };
 
-class Header extends React.Component {
-  componentDidUpdate() {
+const Header = ({ loggedIn, user, handleLogout }) => {
+  useEffect(() => {
     window.$(".ui.dropdown").dropdown();
-  }
+  });
 
-  render() {
-    const { loggedIn, user, handleLogout } = this.props;
-    return (
-      <div className="ui menu header-menu">
-        <a
-          className="ui image image-logo"
-          href="https://www.continuancepictures.com/"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <img src={logo} alt="continuance-logo" />
-        </a>
-        {loggedIn && (
-          <OptionsMenu firstName={user.firstName} handleLogout={handleLogout} />
-        )}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="ui menu header-menu">
+      <a
+        className="ui image image-logo"
+        href="https://www.continuancepictures.com/"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <img src={logo} alt="continuance-logo" />
+      </a>
+      {loggedIn && (
+        <OptionsMenu firstName={user.firstName} handleLogout={handleLogout} />
+      )}
+    </div>
+  );
+};
 
 const mapStateToProps = ({ auth: { loggedIn, user } }) => {
   return {

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 
+import PageTitle from "../components/helper/PageTitle";
 import { getHealth } from "../api/continuance";
 
 const LandingPage = () => {
@@ -8,7 +9,11 @@ const LandingPage = () => {
     getHealth();
   }, []);
 
-  return <div>{/* todo: recent events */}</div>;
+  return (
+    <div className="ui container">
+      <PageTitle title="Recent Events" icon="calendar alternate outline" />
+    </div>
+  );
 };
 
 export default LandingPage;

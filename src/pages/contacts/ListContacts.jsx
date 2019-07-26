@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { camelizeKeys as toCamelCase } from "humps";
 
-import ContactTable from "./ContactTable";
+import ContactTable from "../../components/contacts/ContactTable";
+import { Pagination } from "../../components/helper/Pagination";
+import PageTitle from "../../components/helper/PageTitle";
 import { getContactList } from "../../api/continuance";
-import { Pagination } from "../helper/Pagination";
 
 const useGetContacts = () => {
   const [contacts, setContacts] = useState([]);
@@ -39,10 +40,7 @@ const ListContacts = () => {
 
   return (
     <div className="ui container">
-      <h2 className="ui header">
-        <i className="address card outline icon blue" />
-        View Contacts
-      </h2>
+      <PageTitle title="View Contacts" icon="address book outline" />
       <ContactTable contacts={contacts} loading={loading} />
       <Pagination
         currentPage={currentPage}

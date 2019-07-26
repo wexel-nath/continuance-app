@@ -1,10 +1,11 @@
 import React from "react";
 import { camelizeKeys as toCamelCase } from "humps";
 
+import PageTitle from "../../components/helper/PageTitle";
 import {
   renderDisabledInput,
   renderDisabledTextArea
-} from "../helper/formHelpers";
+} from "../../components/helper/formHelpers";
 import { getContactById } from "../../api/continuance";
 
 class ViewContact extends React.Component {
@@ -38,8 +39,11 @@ class ViewContact extends React.Component {
     } = contact;
     return (
       <div className="ui form container">
+        <PageTitle
+          title={firstName + " " + lastName}
+          icon="address card outline"
+        />
         <div className="ui segment">
-          <h2 className="ui header">{firstName + " " + lastName}</h2>
           <div className="two fields">
             {renderDisabledInput("First Name", firstName)}
             {renderDisabledInput("Last Name", lastName)}

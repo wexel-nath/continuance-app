@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { camelizeKeys as toCamelCase } from "humps";
 
-import ContactTable from "./ContactTable";
+import ContactTable from "../../components/contacts/ContactTable";
+import PageTitle from "../../components/helper/PageTitle";
 import { searchContacts } from "../../api/continuance";
-import PageTitle from "../helper/PageTitle";
 
 const SearchInput = ({ onChange }) => {
   return (
@@ -52,7 +52,7 @@ const SearchContacts = () => {
 
   return (
     <div className="ui container">
-      <PageTitle title="Search Contacts" icon="address card outline" />
+      <PageTitle title="Search Contacts" icon="search" />
       <SearchInput
         onChange={({ target }) => {
           setSearch(target.value);

@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { Redirect } from "react-router-dom";
 
+import { renderTextInput } from "../../components/helper/formHelpers";
 import { handleLogin, handleGetUser } from "../../actions";
-import { renderTextInput } from "../helper/formHelpers";
 
 import logo from "../../img/continuance_logo.jpg";
 import "./Login.css";

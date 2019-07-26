@@ -3,9 +3,10 @@ import { connect } from "react-redux";
 import { reduxForm } from "redux-form";
 import { decamelizeKeys as toSnakeCase } from "humps";
 
-import ContactDetails from "./ContactDetails";
-import CompanyPosition from "../company/CompanyPosition";
-import validate from "./validateNewContact";
+import ContactDetails from "../../components/contacts/ContactDetails";
+import validate from "../../components/contacts/validateNewContact";
+import CompanyPosition from "../../components/company/CompanyPosition";
+import PageTitle from "../../components/helper/PageTitle";
 import { newContact } from "../../api/continuance";
 import history from "../../history";
 
@@ -62,10 +63,7 @@ class NewContact extends React.Component {
     const { message, loading } = this.state;
     return (
       <div className="ui container">
-        <h2 className="ui header">
-          <i className="address card outline icon blue" />
-          Add New Contact
-        </h2>
+        <PageTitle title="Add New Contact" icon="plus circle" />
         <form
           className={`ui ${loading && "loading"} ${message && "warning"} form`}
           onSubmit={handleSubmit(this.handleAddNewContact)}

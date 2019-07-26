@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import Loader from "../helper/Loader";
+
 import "./ContactTable.css";
 
 const ContactRow = ({ contact }) => {
@@ -25,14 +27,6 @@ const ContactRow = ({ contact }) => {
       <td>{companyName || ""}</td>
       <td>{companyPosition || ""}</td>
     </tr>
-  );
-};
-
-const Loader = () => {
-  return (
-    <div className="ui active inverted dimmer">
-      <div className="ui text loader">Loading</div>
-    </div>
   );
 };
 

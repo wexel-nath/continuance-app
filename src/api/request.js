@@ -1,8 +1,13 @@
 import { camelizeKeys as toCamelCase } from "humps";
 
-import { getJwt, getRefresh, setJwt, setRefresh } from "../util/storage";
+import {
+  getJwt,
+  getRefresh,
+  setJwt,
+  setRefresh,
+  clearTokens
+} from "../util/storage";
 import { refresh } from "./authentication";
-import { handleLogout } from "../actions";
 
 const getAuthHeader = () => {
   return "Bearer " + getJwt();
@@ -23,7 +28,12 @@ export const makeAuthRequest = async (axios, config) => {
   return await axios
     .request(config)
     .then(response => response)
-    .catch(error => error.response);
+    .catch(error => {
+      const serverDownResponse = {
+        data: { meta: "The server is temporarily unavailable." }
+      };
+      return error.response || serverDownResponse;
+    });
 };
 
 export const requestWithAuth = async (axios, config) => {
@@ -41,7 +51,10 @@ export const requestWithAuth = async (axios, config) => {
 
       return await makeAuthRequest(axios, config);
     } else {
-      handleLogout(false);
+      // todo: use auth provider, clear user
+      clearTokens();
+      history.push("/login");
+      return {};
     }
   }
 

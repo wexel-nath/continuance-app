@@ -1,80 +1,12 @@
-import { camelizeKeys as toCamelCase } from "humps";
-
-import { login, logout, getUser } from "../api/authentication";
 import { getCities } from "../api/cities";
-import {
-  setJwt,
-  setRefresh,
-  getJwt,
-  getRefresh,
-  clearTokens
-} from "../util/storage";
-import {
-  LOG_IN_REQUEST,
-  LOG_IN,
-  LOG_IN_FAIL,
-  LOG_OUT,
-  LOCATION_SEARCH
-} from "./types";
+import { LOG_IN, LOG_OUT, LOCATION_SEARCH } from "./types";
 
-export const handleLogin = ({ username, password }) => async dispatch => {
-  dispatch({
-    type: LOG_IN_REQUEST
-  });
-
-  const {
-    data: { data, meta },
-    statusText
-  } = await login(username, password);
-
-  if (data) {
-    const { jwt, refreshToken, user } = toCamelCase(data);
-    setJwt(jwt);
-    setRefresh(refreshToken);
-
-    dispatch({ type: LOG_IN, payload: user });
-  } else {
-    dispatch({
-      type: LOG_IN_FAIL,
-      payload: meta ? meta : statusText
-    });
-  }
+export const setUser = user => async dispatch => {
+  dispatch({ type: LOG_IN, payload: user });
 };
 
-export const handleGetUser = () => async dispatch => {
-  if (!getJwt() || !getRefresh()) {
-    clearTokens();
-    return;
-  }
-
-  dispatch({
-    type: LOG_IN_REQUEST
-  });
-
-  const {
-    data: { data }
-  } = await getUser();
-
-  if (data) {
-    const user = toCamelCase(data);
-    dispatch({ type: LOG_IN, payload: user });
-  } else {
-    dispatch({
-      type: LOG_IN_FAIL,
-      payload: "Session timed out."
-    });
-  }
-};
-
-export const handleLogout = callLogout => async dispatch => {
-  if (callLogout) {
-    const refresh = getRefresh();
-    await logout(refresh);
-  }
-  clearTokens();
-  dispatch({
-    type: LOG_OUT
-  });
+export const clearUser = () => async dispatch => {
+  dispatch({ type: LOG_OUT });
 };
 
 export const handleLocationSearch = (name, address) => async dispatch => {

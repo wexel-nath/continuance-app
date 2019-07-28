@@ -2,6 +2,24 @@ import React from "react";
 
 import LocationSearchInput from "./LocationSearchInput";
 
+export const Input = ({ label, name, placeholder, type, formValues }) => {
+  const error = formValues.errors[name] || "";
+  const value = formValues.values[name] || "";
+  return (
+    <div className="field">
+      <label>{label}</label>
+      <input
+        name={name}
+        placeholder={placeholder}
+        onChange={formValues.handleChange}
+        type={type}
+        value={value}
+      />
+      {error && <div className="ui pointing red basic label">{error}</div>}
+    </div>
+  );
+};
+
 export const renderTextInput = ({
   input,
   label,

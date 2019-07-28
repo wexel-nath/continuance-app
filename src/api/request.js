@@ -7,6 +7,7 @@ import {
   setRefresh,
   clearTokens
 } from "../util/storage";
+import history from "../history";
 import { refresh } from "./authentication";
 
 const getAuthHeader = () => {

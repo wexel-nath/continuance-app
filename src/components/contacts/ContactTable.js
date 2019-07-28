@@ -33,7 +33,7 @@ const ContactRow = ({ contact }) => {
 const ContactTable = ({ contacts, loading }) => {
   return (
     <div>
-      {loading && <Loader />}
+      {loading && <Loader text="Loading" />}
       <table className="ui striped table">
         <thead>
           <tr>

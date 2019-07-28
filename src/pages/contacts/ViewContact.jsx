@@ -47,7 +47,7 @@ const ViewContact = ({ match }) => {
   return (
     <div className="ui form container">
       <PageTitle title={fullName} icon="address card outline" />
-      {loading && <Loader />}
+      {loading && <Loader text="Loading" />}
       <div className="ui segment">
         <div className="two fields">
           <DisabledInput label="First Name" value={firstName || ""} />

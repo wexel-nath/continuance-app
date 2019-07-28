@@ -1,4 +1,4 @@
-import { LOG_IN, LOG_IN_FAIL, LOG_OUT, LOG_IN_REQUEST } from "../actions/types";
+import { LOG_IN, LOG_OUT } from "../actions/types";
 
 const INITIAL_STATE = {
   loggedIn: false,
@@ -9,10 +9,6 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case LOG_IN_REQUEST:
-      return { ...state, loading: true };
-    case LOG_IN_FAIL:
-      return { ...state, loading: false, error: action.payload };
     case LOG_IN:
       return {
         ...state,
@@ -22,7 +18,7 @@ export default (state = INITIAL_STATE, action) => {
         error: null
       };
     case LOG_OUT:
-      return { ...state, loggedIn: false, user: null, error: null };
+      return INITIAL_STATE;
     default:
       return state;
   }

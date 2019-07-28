@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 
-import { clearUser } from "../../actions";
 import { logout } from "../../api/authentication";
-import { getRefresh, clearTokens } from "../../util/storage";
+import { getRefresh } from "../../util/storage";
 import history from "../../history";
+import AuthContext from "../../context/AuthContext";
 
 import logo from "../../img/continuance_logo.jpg";
 import "./Header.css";
@@ -29,15 +28,15 @@ const OptionsMenu = ({ firstName, handleLogout }) => {
   );
 };
 
-const Header = ({ loggedIn, user, clearUser }) => {
+const Header = () => {
   useEffect(() => {
     window.$(".ui.dropdown").dropdown();
   });
+  const { user, isAuthenticated, setLoggedOut } = useContext(AuthContext);
 
   const handleLogout = () => {
     logout(getRefresh());
-    clearTokens();
-    clearUser();
+    setLoggedOut();
     history.push("/login");
   };
 
@@ -51,21 +50,11 @@ const Header = ({ loggedIn, user, clearUser }) => {
       >
         <img src={logo} alt="continuance-logo" />
       </a>
-      {loggedIn && (
+      {isAuthenticated && (
         <OptionsMenu firstName={user.firstName} handleLogout={handleLogout} />
       )}
     </div>
   );
 };
 
-const mapStateToProps = ({ auth: { loggedIn, user } }) => {
-  return {
-    loggedIn,
-    user
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  { clearUser }
-)(Header);
+export default Header;

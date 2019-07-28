@@ -6,11 +6,12 @@ import Header from "../../components/header/Header";
 import history from "../../history";
 import Login from "../login/Login";
 import PrivateRoute from "./PrivateRoute";
+import { AuthProvider } from "../../context/AuthContext";
 
 const App = () => {
   return (
     <Router history={history}>
-      <React.Fragment>
+      <AuthProvider>
         <Header />
 
         <Switch>
@@ -19,7 +20,7 @@ const App = () => {
             <Content />
           </PrivateRoute>
         </Switch>
-      </React.Fragment>
+      </AuthProvider>
     </Router>
   );
 };

@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
 import { camelizeKeys as toCamelCase } from "humps";
 
 import { Input } from "../../components/helper/formHelpers";
 import useForm from "../../components/helper/useForm";
 import { login, getUser } from "../../api/authentication";
-import { setUser } from "../../actions";
+import AuthContext from "../../context/AuthContext";
 import {
   getJwt,
   getRefresh,
@@ -80,17 +79,17 @@ const useLogin = () => {
   return [formValues, user, err, loading];
 };
 
-const NewLogin = ({ setUser, loggedIn }) => {
+const Login = () => {
   const [formValues, user, err, loading] = useLogin();
+  const { isAuthenticated, setLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
     if (Object.keys(user).length > 0) {
-      // todo: use provider, set user and loggedIn
-      setUser(user);
+      setLoggedIn(user);
     }
   }, [user]);
 
-  if (loggedIn) {
+  if (isAuthenticated) {
     return <Redirect to={{ pathname: "/" }} />;
   }
 
@@ -121,13 +120,4 @@ const NewLogin = ({ setUser, loggedIn }) => {
   );
 };
 
-const mapStateToProps = ({ auth: { loggedIn } }) => {
-  return {
-    loggedIn
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  { setUser }
-)(NewLogin);
+export default Login;

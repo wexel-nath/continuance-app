@@ -35,10 +35,9 @@ const useSuggestions = () => {
   return [suggestions, setSearch];
 };
 
-const LocationSearchInput = ({ input }) => {
+const LocationSearchInput = ({ name, onChange }) => {
   const [suggestions, setSearch] = useSuggestions();
 
-  const { name, onChange } = input;
   return (
     <Select
       name={name}

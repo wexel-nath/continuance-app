@@ -19,11 +19,20 @@ const useForm = (callback, validate) => {
     setIsSubmitting(true);
   };
 
-  const handleChange = event => {
-    event.persist();
+  const handleChange = (event, action) => {
+    let name,
+      value = "";
+    if (event.target) {
+      event.persist();
+      name = event.target.name;
+      value = event.target.value;
+    } else {
+      name = action.name;
+      value = event.value;
+    }
     setValues(values => ({
       ...values,
-      [event.target.name]: event.target.value
+      [name]: value
     }));
   };
 

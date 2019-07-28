@@ -62,11 +62,13 @@ const useLogin = () => {
     const {
       data: { data }
     } = await getUser();
+    setLoading(false);
+
     if (data) {
       setUser(toCamelCase(data));
     } else {
       setErr("Session timed out.");
-      setLoading(false);
+      clearTokens();
     }
   };
 

@@ -1,65 +1,64 @@
 import React from "react";
-import { Field, reduxForm } from "redux-form";
 
-import {
-  renderTextInput,
-  renderTextAreaInput,
-  renderLocationInput
-} from "../helper/formHelpers";
+import { Input, LocationInput, TextAreaInput } from "../helper/formHelpers";
 
-const ContactDetails = () => {
+const ContactDetails = ({ formValues }) => {
   return (
     <div className="ui segment">
       <h3 className="ui header">Contact Details</h3>
       <div className="two fields">
-        <Field
+        <Input
           label="First Name"
           name="firstName"
-          component={renderTextInput}
           placeholder="Thomas"
+          type="text"
+          formValues={formValues}
         />
-        <Field
+        <Input
           label="Last Name"
           name="lastName"
-          component={renderTextInput}
           placeholder="Alter"
+          type="text"
+          formValues={formValues}
         />
       </div>
       <div className="two fields">
-        <Field
+        <Input
           label="Contact Number"
           name="contactPhone"
-          component={renderTextInput}
           placeholder="0412 345 678"
+          type="text"
+          formValues={formValues}
         />
-        <Field
+        <Input
           label="Email Address"
           name="contactEmail"
-          component={renderTextInput}
           placeholder="thomas@example.com"
+          type="text"
+          formValues={formValues}
         />
       </div>
       <div className="two fields">
-        <Field
+        <LocationInput
           label="Based In"
           name="locationBased"
-          component={renderLocationInput}
+          formValues={formValues}
         />
-        <Field
+        <LocationInput
           label="Location Met"
           name="locationMet"
-          component={renderLocationInput}
+          formValues={formValues}
         />
       </div>
-      <Field
+      <TextAreaInput
         label="Notes"
         name="notes"
-        component={renderTextAreaInput}
         placeholder="Optional notes"
         rows="2"
+        formValues={formValues}
       />
     </div>
   );
 };
 
-export default reduxForm()(ContactDetails);
+export default ContactDetails;

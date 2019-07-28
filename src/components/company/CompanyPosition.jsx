@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { Field, reduxForm } from "redux-form";
 import { camelizeKeys as toCamelCase } from "humps";
 
 import CompanyDetails from "./CompanyDetails";
 import { getCompanyList } from "../../api/continuance";
-import {
-  renderTextInput,
-  renderOptionSelectInput
-} from "../helper/formHelpers";
+import { Input, SelectInput } from "../helper/formHelpers";
 
 const getCompanyOptions = companies => {
   const companyList = [
@@ -18,9 +13,11 @@ const getCompanyOptions = companies => {
   ];
   return companyList.map(company => {
     return (
-      <option key={company.companyId} value={company.companyId}>
-        {company.companyName}
-      </option>
+      company.companyName && (
+        <option key={company.companyId} value={company.companyId}>
+          {company.companyName}
+        </option>
+      )
     );
   });
 };
@@ -46,41 +43,33 @@ const useCompanies = () => {
   return companies;
 };
 
-const CompanyPosition = ({ selectedCompany, form }) => {
+const CompanyPosition = ({ formValues }) => {
   const companies = useCompanies();
+
   return (
     <div className="ui segment">
       <h3 className="ui header">Company Position</h3>
       <div className="two fields">
-        <Field
-          name="companyPosition"
+        <Input
           label="Position"
+          name="companyPosition"
           placeholder="Agent"
-          component={renderTextInput}
+          type="text"
+          formValues={formValues}
         />
-        <Field
-          name="companySelector"
+        <SelectInput
           label="Company"
-          className="ui dropdown"
+          name="companySelector"
+          placeholder="Select a Company"
           options={getCompanyOptions(companies)}
-          component={renderOptionSelectInput}
+          formValues={formValues}
         />
       </div>
-      {selectedCompany === "new" && (
-        <CompanyDetails header="New Company" form={form} />
+      {formValues.values.companySelector === "new" && (
+        <CompanyDetails header="New Company" formValues={formValues} />
       )}
     </div>
   );
 };
 
-const mapStateToProps = ({ form }, ownProps) => {
-  const formName = form[ownProps.form] || {};
-  const values = formName.values || {};
-  return {
-    selectedCompany: values.companySelector || ""
-  };
-};
-
-const connectFunc = connect(mapStateToProps)(CompanyPosition);
-
-export default reduxForm()(connectFunc);
+export default CompanyPosition;

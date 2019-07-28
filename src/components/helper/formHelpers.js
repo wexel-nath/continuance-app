@@ -20,6 +20,81 @@ export const Input = ({ label, name, placeholder, type, formValues }) => {
   );
 };
 
+export const TextAreaInput = ({
+  label,
+  name,
+  placeholder,
+  rows,
+  formValues
+}) => {
+  return (
+    <div className="field">
+      <label>{label}</label>
+      <textarea
+        name={name}
+        placeholder={placeholder}
+        onChange={formValues.handleChange}
+        rows={rows}
+        value={formValues.values[name] || ""}
+      />
+    </div>
+  );
+};
+
+export const SelectInput = ({
+  label,
+  name,
+  placeholder,
+  options,
+  formValues
+}) => {
+  return (
+    <div className="field">
+      <label>{label}</label>
+      <select
+        className="ui dropdown"
+        name={name}
+        onChange={formValues.handleChange}
+      >
+        <option value="">{placeholder}</option>
+        {options}
+      </select>
+    </div>
+  );
+};
+
+export const MultipleSelectInput = ({
+  label,
+  name,
+  placeholder,
+  options,
+  formValues
+}) => {
+  return (
+    <div className="field">
+      <label>{label}</label>
+      <select
+        className="ui multiple selection dropdown"
+        multiple="multiple"
+        name={name}
+        onChange={formValues.handleChange}
+      >
+        <option value="">{placeholder}</option>
+        {options}
+      </select>
+    </div>
+  );
+};
+
+export const LocationInput = ({ label, name, formValues }) => {
+  return (
+    <div className="field">
+      <label>{label}</label>
+      <LocationSearchInput name={name} onChange={formValues.handleChange} />
+    </div>
+  );
+};
+
 export const renderTextInput = ({
   input,
   label,

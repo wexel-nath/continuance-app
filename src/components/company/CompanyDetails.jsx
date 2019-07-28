@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
-import { Field, reduxForm } from "redux-form";
 
 import {
-  renderTextInput,
-  renderTextAreaInput,
-  renderOptionSelectInput
+  Input,
+  MultipleSelectInput,
+  TextAreaInput
 } from "../helper/formHelpers";
 
-const getExpertiseList = () => {
+const getExpertiseOptions = () => {
   // todo: get expertise list from continuance
   const expertiseList = ["Distributor", "Sales Agent", "Production Company"];
   return expertiseList.map((expertise, index) => {
@@ -19,7 +18,7 @@ const getExpertiseList = () => {
   });
 };
 
-const CompanyDetails = ({ header }) => {
+const CompanyDetails = ({ header, formValues }) => {
   useEffect(() => {
     window.$(".ui.dropdown").dropdown();
   }, []);
@@ -28,36 +27,37 @@ const CompanyDetails = ({ header }) => {
     <div className="ui segment">
       <h3 className="ui header">{header}</h3>
       <div className="two fields">
-        <Field
-          component={renderTextInput}
+        <Input
           label="Company Name"
           name="companyName"
           placeholder="Wexel"
+          type="text"
+          formValues={formValues}
         />
-        <Field
-          component={renderTextInput}
+        <Input
           label="Company Website"
           name="companyWebsite"
           placeholder="https://www.getwexel.com"
+          type="text"
+          formValues={formValues}
         />
       </div>
-      <Field
-        className="ui multiple selection dropdown"
-        component={renderOptionSelectInput}
+      <MultipleSelectInput
         label="Company Expertise"
         name="companyExpertise"
         placeholder="You can select multiple"
-        options={getExpertiseList()}
+        options={getExpertiseOptions()}
+        formValues={formValues}
       />
-      <Field
-        component={renderTextAreaInput}
+      <TextAreaInput
         label="Company Description"
         name="companyDescription"
         placeholder="Optional description"
         rows="2"
+        formValues={formValues}
       />
     </div>
   );
 };
 
-export default reduxForm()(CompanyDetails);
+export default CompanyDetails;

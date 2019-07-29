@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
       const {
         data: { data }
       } = await getUser();
+      setLoading(false);
 
       if (data) {
         setLoggedIn(toCamelCase(data));

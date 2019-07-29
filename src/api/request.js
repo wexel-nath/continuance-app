@@ -7,7 +7,6 @@ import {
   setRefresh,
   clearTokens
 } from "../util/storage";
-import history from "../history";
 import { refresh } from "./authentication";
 
 const getAuthHeader = () => {
@@ -52,10 +51,10 @@ export const requestWithAuth = async (axios, config) => {
 
       return await makeAuthRequest(axios, config);
     } else {
-      // todo: use auth provider, clear user
       clearTokens();
-      history.push("/login");
-      return {};
+      return {
+        data: { meta: "Your session has expired." }
+      };
     }
   }
 

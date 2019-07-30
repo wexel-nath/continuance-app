@@ -48,7 +48,7 @@ const CompanyPosition = ({ formValues }) => {
 
   return (
     <div className="ui segment">
-      <h3 className="ui header">Company Position</h3>
+      <h3 className="ui header">Company Details</h3>
       <div className="two fields">
         <Input
           label="Position"

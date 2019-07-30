@@ -1,27 +1,42 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { camelizeKeys as toCamelCase } from "humps";
 
 import {
   Input,
   MultipleSelectInput,
   TextAreaInput
 } from "../helper/formHelpers";
+import { getExpertiseList } from "../../api/continuance";
 
-const getExpertiseOptions = () => {
-  // todo: get expertise list from continuance
-  const expertiseList = ["Distributor", "Sales Agent", "Production Company"];
-  return expertiseList.map((expertise, index) => {
-    return (
-      <option className="item" key={index} value={expertise}>
-        {expertise}
-      </option>
-    );
-  });
+const useExpertise = () => {
+  const [expertise, setExpertise] = useState([]);
+
+  const getExpertise = async () => {
+    const {
+      data: { data }
+    } = await getExpertiseList();
+
+    if (data) {
+      setExpertise(toCamelCase(data));
+    }
+  };
+
+  useEffect(() => {
+    window.$(".ui.dropdown").dropdown();
+    getExpertise();
+  }, []);
+
+  return expertise;
 };
 
 const CompanyDetails = ({ header, formValues }) => {
-  useEffect(() => {
-    window.$(".ui.dropdown").dropdown();
-  }, []);
+  const expertise = useExpertise();
+  const expertiseOptions = expertise.map(e => {
+    return {
+      value: e,
+      label: e
+    };
+  });
 
   return (
     <div className="ui segment">
@@ -46,7 +61,7 @@ const CompanyDetails = ({ header, formValues }) => {
         label="Company Expertise"
         name="companyExpertise"
         placeholder="You can select multiple"
-        options={getExpertiseOptions()}
+        options={expertiseOptions}
         formValues={formValues}
       />
       <TextAreaInput

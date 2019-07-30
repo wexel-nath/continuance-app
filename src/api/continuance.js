@@ -52,3 +52,11 @@ export async function getCompanyList() {
   };
   return await requestWithAuth(continuance, config);
 }
+
+export async function getExpertiseList() {
+  const config = {
+    method: "GET",
+    url: "/company-expertise"
+  };
+  return await requestWithAuth(continuance, config);
+}

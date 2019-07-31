@@ -69,3 +69,12 @@ export async function getExpertiseList() {
   };
   return await requestWithAuth(continuance, config);
 }
+
+export async function getRecentNotes(page) {
+  const config = {
+    method: "GET",
+    url: `/recent-notes`,
+    params: { page }
+  };
+  return await requestWithAuth(continuance, config);
+}

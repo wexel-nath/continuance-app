@@ -52,7 +52,7 @@ const ContactDetails = ({ formValues }) => {
       </div>
       <TextAreaInput
         label="Notes"
-        name="notes"
+        name="contactNote"
         placeholder="Optional notes"
         rows="2"
         formValues={formValues}

@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 
 import Loader from "../helper/Loader";
 
-import "./ContactTable.css";
-
 const ContactRow = ({ contact }) => {
   const {
     contactId,

@@ -110,12 +110,3 @@ export const DisabledInput = ({ label, value }) => {
     </div>
   );
 };
-
-export const DisabledTextArea = ({ label, value }) => {
-  return (
-    <div className="field">
-      <label>{label}</label>
-      <textarea className="ui disabled input" rows="2" defaultValue={value} />
-    </div>
-  );
-};

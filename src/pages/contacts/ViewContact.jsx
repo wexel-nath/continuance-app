@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { camelizeKeys as toCamelCase } from "humps";
 
 import PageTitle from "../../components/helper/PageTitle";
 import Loader from "../../components/helper/Loader";
-import {
-  DisabledInput,
-  DisabledTextArea
-} from "../../components/helper/formHelpers";
-import { getContactById } from "../../api/continuance";
+import { DisabledInput } from "../../components/helper/formHelpers";
+import { getContactById, getNotesForContact } from "../../api/continuance";
+import NoteTable from "../../components/note/NoteTable";
+
+import "./ViewContact.css";
 
 const useContact = contactId => {
   const [contact, setContact] = useState({});
   const [loading, setLoading] = useState(true);
+  const [notes, setNotes] = useState([]);
 
   const getContact = async () => {
     const {
@@ -22,15 +24,25 @@ const useContact = contactId => {
     setLoading(false);
   };
 
+  const getNotes = async () => {
+    const {
+      data: { data }
+    } = await getNotesForContact(contactId);
+
+    setNotes(toCamelCase(data));
+  };
+
   useEffect(() => {
     getContact();
+    getNotes();
   }, []);
 
-  return [contact, loading];
+  return [contact, notes, loading];
 };
 
 const ViewContact = ({ match }) => {
-  const [contact, loading] = useContact(match.params.id);
+  const contactId = match.params.id;
+  const [contact, notes, loading] = useContact(contactId);
 
   const {
     firstName,
@@ -40,8 +52,7 @@ const ViewContact = ({ match }) => {
     locationBased,
     locationMet,
     companyPosition,
-    companyName,
-    notes
+    companyName
   } = contact;
   const fullName = firstName ? firstName + " " + lastName : "";
   return (
@@ -65,7 +76,16 @@ const ViewContact = ({ match }) => {
           <DisabledInput label="Position" value={companyPosition || ""} />
           <DisabledInput label="Company" value={companyName || ""} />
         </div>
-        <DisabledTextArea label="Notes" value={notes || ""} />
+      </div>
+      <div className="ui clearing segment">
+        <h3 className="ui header">Recent Notes</h3>
+        <NoteTable notes={notes} />
+        <Link
+          className="ui right floated primary button table-action"
+          to={`/contacts/${contactId}/note`}
+        >
+          See all Recent Notes
+        </Link>
       </div>
     </div>
   );

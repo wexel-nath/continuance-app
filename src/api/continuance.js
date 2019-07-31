@@ -36,6 +36,15 @@ export async function getContactById(contactId) {
   return await requestWithAuth(continuance, config);
 }
 
+export async function getNotesForContact(contactId, page) {
+  const config = {
+    method: "GET",
+    url: `/contact/${contactId}/notes`,
+    params: { page }
+  };
+  return await requestWithAuth(continuance, config);
+}
+
 export async function searchContacts(search) {
   const config = {
     method: "GET",

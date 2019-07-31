@@ -53,9 +53,12 @@ const useLogin = () => {
 
 const Login = () => {
   const [formValues, user, err, loading] = useLogin();
-  const { isAuthenticated, loading: authLoading, setLoggedIn } = useContext(
-    AuthContext
-  );
+  const {
+    redirectPath,
+    isAuthenticated,
+    loading: authLoading,
+    setLoggedIn
+  } = useContext(AuthContext);
 
   useEffect(() => {
     if (Object.keys(user).length > 0) {
@@ -67,7 +70,7 @@ const Login = () => {
     return <LoginLoading />;
   }
   if (isAuthenticated) {
-    return <Redirect to={{ pathname: "/" }} />;
+    return <Redirect to={{ pathname: redirectPath }} />;
   }
 
   return (

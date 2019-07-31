@@ -35,12 +35,16 @@ const LandingPage = () => {
   return (
     <div className="ui container">
       <PageTitle title="Recent Events" icon="calendar alternate outline" />
-      <NoteTable includeContact notes={notes} loading={loading} />
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        handlePageChange={setCurrentPage}
-      />
+      {notes && (
+        <>
+          <NoteTable includeContact notes={notes} loading={loading} />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            handlePageChange={setCurrentPage}
+          />
+        </>
+      )}
     </div>
   );
 };

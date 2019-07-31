@@ -6,7 +6,7 @@ import { getUser } from "../api/authentication";
 
 const AuthContext = React.createContext();
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ redirectPath, children }) => {
   const [user, setUser] = useState({});
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -45,7 +45,14 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated, loading, setLoggedIn, setLoggedOut }}
+      value={{
+        redirectPath,
+        user,
+        isAuthenticated,
+        loading,
+        setLoggedIn,
+        setLoggedOut
+      }}
     >
       {children}
     </AuthContext.Provider>

@@ -9,9 +9,12 @@ import PrivateRoute from "./PrivateRoute";
 import { AuthProvider } from "../../context/AuthContext";
 
 const App = () => {
+  const { location: loc } = window;
+  const redirectPath =
+    loc.pathname === "/login" ? "/" : loc.pathname + loc.search;
   return (
     <Router history={history}>
-      <AuthProvider>
+      <AuthProvider redirectPath={redirectPath}>
         <Header />
 
         <Switch>

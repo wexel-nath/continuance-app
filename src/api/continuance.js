@@ -92,3 +92,12 @@ export async function uploadContacts(file) {
   };
   return await requestWithAuth(continuance, config);
 }
+
+export async function getMigrationList(page) {
+  const config = {
+    method: "GET",
+    url: "/migrate",
+    params: { page }
+  };
+  return await requestWithAuth(continuance, config);
+}

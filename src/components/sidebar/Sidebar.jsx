@@ -13,6 +13,7 @@ const Sidebar = () => {
       </SidebarGroup>
       <SidebarGroup header="Contacts">
         <SidebarLink to="/contacts/new" icon="plus circle" title="Add New" />
+        <SidebarLink to="/contacts/upload" icon="cloud upload" title="Upload" />
         <SidebarLink to="/contacts/search" icon="search" title="Search" />
         <SidebarLink
           to="/contacts"

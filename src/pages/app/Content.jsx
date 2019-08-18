@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import ListContacts from "../contacts/ListContacts";
 import NewContact from "../contacts/NewContact";
 import SearchContacts from "../contacts/SearchContacts";
+import UploadContacts from "../contacts/UploadContacts";
 import ViewContact from "../contacts/ViewContact";
 import Preferences from "../Preferences";
 import LandingPage from "../LandingPage";
@@ -21,6 +22,7 @@ const Content = () => {
             <Route exact path="/contacts/new" component={NewContact} />
             <Route exact path="/contacts" component={ListContacts} />
             <Route exact path="/contacts/search" component={SearchContacts} />
+            <Route exact path="/contacts/upload" component={UploadContacts} />
             <Route exact path="/contacts/:id" component={ViewContact} />
             <Route exact path="/preferences" component={Preferences} />
             <Route exact path="/" component={LandingPage} />

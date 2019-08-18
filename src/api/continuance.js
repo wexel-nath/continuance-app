@@ -78,3 +78,17 @@ export async function getRecentNotes(page) {
   };
   return await requestWithAuth(continuance, config);
 }
+
+export async function uploadContacts(file) {
+  const formData = new FormData();
+  formData.append("migration", file);
+  const config = {
+    method: "POST",
+    url: `/migrate`,
+    data: formData,
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  };
+  return await requestWithAuth(continuance, config);
+}

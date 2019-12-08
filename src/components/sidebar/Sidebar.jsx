@@ -21,6 +21,9 @@ const Sidebar = () => {
           title="View All"
         />
       </SidebarGroup>
+      <SidebarGroup header="Submissions">
+        <SidebarLink to="/submissions" icon="archive" title="View All" />
+      </SidebarGroup>
     </div>
   );
 };

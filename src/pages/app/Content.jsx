@@ -7,6 +7,8 @@ import SearchContacts from "../contacts/SearchContacts";
 import UploadContacts from "../contacts/UploadContacts";
 import ViewContact from "../contacts/ViewContact";
 import Preferences from "../Preferences";
+import ListSubmissions from "../submissions/ListSubmissions";
+import ViewSubmission from "../submissions/ViewSubmission";
 import LandingPage from "../LandingPage";
 import Sidebar from "../../components/sidebar/Sidebar";
 
@@ -25,6 +27,8 @@ const Content = () => {
             <Route exact path="/contacts/upload" component={UploadContacts} />
             <Route exact path="/contacts/:id" component={ViewContact} />
             <Route exact path="/preferences" component={Preferences} />
+            <Route exact path="/submissions" component={ListSubmissions} />
+            <Route exact path="/submissions/:id" component={ViewSubmission} />
             <Route exact path="/" component={LandingPage} />
           </Switch>
         </div>

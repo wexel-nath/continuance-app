@@ -101,3 +101,20 @@ export async function getMigrationList(page) {
   };
   return await requestWithAuth(continuance, config);
 }
+
+export async function getSubmissionList(page) {
+  const config = {
+    method: "GET",
+    url: "/submissions",
+    params: { page }
+  };
+  return await requestWithAuth(continuance, config);
+}
+
+export async function getSubmissionById(submissionId) {
+  const config = {
+    method: "GET",
+    url: `/submission/${submissionId}`
+  };
+  return await requestWithAuth(continuance, config);
+}

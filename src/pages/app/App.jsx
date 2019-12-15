@@ -15,11 +15,10 @@ const App = () => {
   return (
     <Router history={history}>
       <AuthProvider redirectPath={redirectPath}>
-        <Header />
-
         <Switch>
           <Route component={Login} exact path="/login" />
           <PrivateRoute path="/">
+            <Header />
             <Content />
           </PrivateRoute>
         </Switch>

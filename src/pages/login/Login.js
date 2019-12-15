@@ -1,16 +1,66 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { camelizeKeys as toCamelCase } from "humps";
 
-import { Input } from "../../components/helper/formHelpers";
-import useForm from "../../components/helper/useForm";
-import { login } from "../../api/authentication";
-import AuthContext from "../../context/AuthContext";
-import { setJwt, setRefresh } from "../../util/storage";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Container from "@material-ui/core/Container";
+import Link from "@material-ui/core/Link";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 
 import logo from "../../img/continuance_logo.jpg";
-import "./Login.css";
-import LoginLoading from "./LoginLoading";
+import { login } from "../../api/authentication";
+import { setJwt, setRefresh } from "../../util/storage";
+import useForm from "../../components/helper/useForm";
+import AuthContext from "../../context/AuthContext";
+import {
+  FormError,
+  FormSubmit,
+  TextFieldInput
+} from "../../components/helper/formHelpers";
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    height: "100vh"
+  },
+  image: {
+    backgroundImage: `url(${require(`../../img/continuance_cursed_background.jpg`)})`,
+    backgroundRepeat: "no-repeat",
+    backgroundColor:
+      theme.palette.type === "dark"
+        ? theme.palette.grey[900]
+        : theme.palette.grey[50],
+    backgroundSize: "cover",
+    backgroundPosition: "center"
+  },
+  paper: {
+    marginTop: "30%",
+    margin: theme.spacing(8, 4),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    top: "50%"
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1)
+  }
+}));
+
+const Copyright = () => {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="https://getwexel.com/">
+        Wexel Tech
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+};
 
 const validate = ({ username, password }) => {
   const errors = {};
@@ -52,11 +102,12 @@ const useLogin = () => {
 };
 
 const Login = () => {
+  const classes = useStyles();
   const [formValues, user, err, loading] = useLogin();
   const {
     redirectPath,
     isAuthenticated,
-    loading: authLoading,
+    loading: backgroundSignInLoading,
     setLoggedIn
   } = useContext(AuthContext);
 
@@ -64,42 +115,49 @@ const Login = () => {
     if (Object.keys(user).length > 0) {
       setLoggedIn(user);
     }
-  }, [user]);
+  }, [setLoggedIn, user]);
 
-  if (authLoading) {
-    return <LoginLoading />;
-  }
+  const isLoading = loading || backgroundSignInLoading;
+
   if (isAuthenticated) {
     return <Redirect to={{ pathname: redirectPath }} />;
   }
 
   return (
-    <div className="ui container login-wrapper">
-      <div
-        className={`ui ${(loading || authLoading) &&
-          "loading"} segment login-card`}
-      >
-        <form className="ui form" onSubmit={formValues.handleSubmit}>
-          <img className="ui image" src={logo} alt="continuance-logo" />
-          <Input
-            name="username"
-            placeholder="Username"
-            type="text"
-            formValues={formValues}
-          />
-          <Input
-            name="password"
-            placeholder="Password"
-            type="password"
-            formValues={formValues}
-          />
-          <button className="ui primary fluid large button login-button">
-            Login
-          </button>
-        </form>
-        {err && <div className="ui warning message">{err}</div>}
-      </div>
-    </div>
+    <Grid container component="main" className={classes.root}>
+      <CssBaseline />
+      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <div className={classes.paper}>
+          <Container>
+            <img src={logo} alt="Continuance Logo" width="85%" />
+          </Container>
+          <form
+            className={classes.form}
+            onSubmit={formValues.handleSubmit}
+            noValidate
+          >
+            <TextFieldInput
+              disabled={isLoading}
+              formValues={formValues}
+              label="Username"
+              name="username"
+              type="text"
+            />
+            <TextFieldInput
+              disabled={isLoading}
+              formValues={formValues}
+              label="Password"
+              name="password"
+              type="password"
+            />
+            <FormSubmit loading={isLoading} text="Sign In" />
+            <FormError error={err} />
+          </form>
+        </div>
+        <Copyright />
+      </Grid>
+    </Grid>
   );
 };
 

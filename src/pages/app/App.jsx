@@ -1,8 +1,7 @@
 import React from "react";
 import { Router, Route, Switch } from "react-router-dom";
 
-import Content from "./Content";
-import Header from "../../components/header/Header";
+import FramedContent from "./FramedContent";
 import history from "../../history";
 import Login from "../login/Login";
 import PrivateRoute from "./PrivateRoute";
@@ -18,8 +17,7 @@ const App = () => {
         <Switch>
           <Route component={Login} exact path="/login" />
           <PrivateRoute path="/">
-            <Header />
-            <Content />
+            <FramedContent />
           </PrivateRoute>
         </Switch>
       </AuthProvider>

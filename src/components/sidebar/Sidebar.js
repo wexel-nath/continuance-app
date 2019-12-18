@@ -20,11 +20,8 @@ const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   toolbarIcon: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: "0 8px",
-    ...theme.mixins.toolbar
+    maxWidth: "100%",
+    padding: "0 8px"
   },
   drawerPaper: {
     position: "relative",
@@ -60,12 +57,15 @@ const Sidebar = ({ open }) => {
       open={open}
     >
       <a
-        className={classes.toolbarIcon}
         href="https://www.continuancepictures.com/"
         rel="noopener noreferrer"
         target="_blank"
       >
-        <img src={logo} alt="Continuance Pictures" />
+        <img
+          className={classes.toolbarIcon}
+          src={logo}
+          alt="Continuance Pictures"
+        />
       </a>
 
       <Divider />

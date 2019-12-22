@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { camelizeKeys as toCamelCase } from "humps";
 
-import PageTitle from "../../components/helper/PageTitle";
 import Loader from "../../components/helper/Loader";
 import { DisabledInput } from "../../components/helper/formHelpers";
 import { getContactById, getNotesForContact } from "../../api/continuance";
@@ -54,10 +53,9 @@ const ViewContact = ({ match }) => {
     companyPosition,
     companyName
   } = contact;
-  const fullName = firstName ? firstName + " " + lastName : "";
+
   return (
     <div className="ui form container">
-      <PageTitle title={fullName} icon="address card outline" />
       {loading && <Loader text="Loading" />}
       <div className="ui segment">
         <div className="two fields">

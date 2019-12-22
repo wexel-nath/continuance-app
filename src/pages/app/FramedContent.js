@@ -1,4 +1,5 @@
 import React from "react";
+import { SnackbarProvider } from "notistack";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -26,10 +27,12 @@ const FramedContent = () => {
     <div className={classes.root}>
       <Header open={open} setOpen={setOpen} />
       <Sidebar open={open} />
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Content />
-      </main>
+      <SnackbarProvider>
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+          <Content />
+        </main>
+      </SnackbarProvider>
     </div>
   );
 };

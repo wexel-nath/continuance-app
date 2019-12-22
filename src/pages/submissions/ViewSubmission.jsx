@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { camelizeKeys as toCamelCase } from "humps";
 
-import PageTitle from "../../components/helper/PageTitle";
 import Loader from "../../components/helper/Loader";
 import { getSubmissionById } from "../../api/continuance";
 
@@ -32,7 +31,6 @@ const ViewSubmission = ({ match }) => {
   const { scriptTitle, scriptFile } = submission;
   return (
     <div className="ui form container">
-      <PageTitle title={scriptTitle} icon="film" />
       {loading && <Loader text="Loading" />}
       <div className="ui segment">
         <a

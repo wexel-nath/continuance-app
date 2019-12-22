@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { camelizeKeys as toCamelCase } from "humps";
 
 import { Pagination } from "../../components/helper/Pagination";
-import PageTitle from "../../components/helper/PageTitle";
 import UploadContactsForm from "../../components/contacts/UploadContactsForm";
 import MigrationTable from "../../components/contacts/MigrationTable";
 import { getMigrationList } from "../../api/continuance";
@@ -41,7 +40,6 @@ const UploadContacts = () => {
 
   return (
     <div className="ui container">
-      <PageTitle title="Upload Contacts" icon="cloud upload" />
       <UploadContactsForm />
       <MigrationTable migrations={migrations} loading={loading} />
       <Pagination

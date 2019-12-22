@@ -4,7 +4,6 @@ import { decamelizeKeys as toSnakeCase } from "humps";
 import ContactDetails from "../../components/contacts/ContactDetails";
 import validate from "../../components/contacts/validateNewContact";
 import CompanyPosition from "../../components/company/CompanyPosition";
-import PageTitle from "../../components/helper/PageTitle";
 import { newContact } from "../../api/continuance";
 import history from "../../history";
 import useForm from "../../components/helper/useForm";
@@ -55,7 +54,6 @@ const NewContact = () => {
 
   return (
     <div className="ui container">
-      <PageTitle title="Add New Contact" icon="plus circle" />
       <form
         className={`ui ${loading && "loading"} ${err && "warning"} form`}
         onSubmit={formValues.handleSubmit}

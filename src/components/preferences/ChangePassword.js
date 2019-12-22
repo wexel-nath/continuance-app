@@ -1,8 +1,22 @@
 import React, { useState } from "react";
 
-import { Input } from "../helper/formHelpers";
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+
+import { FormSubmit, TextFieldInput } from "../helper/formHelpers";
 import useForm from "../helper/useForm";
 import { changePassword } from "../../api/authentication";
+import useMessage from "../helper/useMessage";
+
+const useStyles = makeStyles(theme => ({
+  paper: {
+    padding: theme.spacing(3, 2),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "left"
+  }
+}));
 
 const validate = ({ newPassword, confirmPassword }) => {
   const errors = {};
@@ -17,8 +31,8 @@ const validate = ({ newPassword, confirmPassword }) => {
 };
 
 const useChangePassword = () => {
-  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const { showSuccess, showError } = useMessage();
 
   const handleChangePassword = async ({ newPassword }) => {
     setLoading(true);
@@ -28,43 +42,42 @@ const useChangePassword = () => {
       statusText
     } = await changePassword(newPassword);
 
-    setMessage(
-      status === 200 ? "Your password has been updated." : meta || statusText
-    );
+    if (status === 200) {
+      showSuccess("Your password has been updated.");
+    } else {
+      showError(meta || statusText);
+    }
+
     setLoading(false);
   };
 
   const formValues = useForm(handleChangePassword, validate);
-  return [formValues, message, loading];
+  return [formValues, loading];
 };
 
 const ChangePassword = () => {
-  const [formValues, message, loading] = useChangePassword();
+  const classes = useStyles();
+  const [formValues, loading] = useChangePassword();
 
   return (
-    <div className={`ui ${loading && "loading"} segment`}>
-      <h3>Change Password</h3>
-      <form className="ui form" onSubmit={formValues.handleSubmit}>
-        <div className="two fields">
-          <Input
-            name="newPassword"
-            placeholder="New Password"
-            type="password"
-            formValues={formValues}
-          />
-          <Input
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            type="password"
-            formValues={formValues}
-          />
-        </div>
-        <button className="ui primary button" type="submit">
-          Change my password
-        </button>
+    <Paper className={classes.paper}>
+      <Typography variant="h5">Change Password</Typography>
+      <form onSubmit={formValues.handleSubmit} noValidate>
+        <TextFieldInput
+          name="newPassword"
+          label="New Password"
+          type="password"
+          formValues={formValues}
+        />
+        <TextFieldInput
+          name="confirmPassword"
+          label="Confirm Password"
+          type="password"
+          formValues={formValues}
+        />
+        <FormSubmit loading={loading} text="Change my password" />
       </form>
-      {message && <div className="ui warning message">{message}</div>}
-    </div>
+    </Paper>
   );
 };
 

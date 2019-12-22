@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import clsx from "clsx";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -102,8 +102,21 @@ const OptionsMenu = () => {
   );
 };
 
-const Header = ({ open, setOpen }) => {
+const pageTitles = {
+  "/contacts": "View Contacts",
+  "/contacts/:id": "Contact",
+  "/contacts/new": "Add New Contact",
+  "/contacts/upload": "Upload Contacts",
+  "/contacts/search": "Search Contacts",
+  "/preferences": "Preferences",
+  "/submissions": "View Submissions",
+  "/submissions/:id": "Submission",
+  "/": "Recent Events"
+};
+
+const Header = ({ open, setOpen, location }) => {
   const classes = useStyles();
+  const pageTitle = pageTitles[location.pathname] || "";
 
   return (
     <AppBar
@@ -127,7 +140,7 @@ const Header = ({ open, setOpen }) => {
           noWrap
           className={classes.title}
         >
-          {/** TODO: Page Title or Search Bar */}
+          {pageTitle}
         </Typography>
         <OptionsMenu />
       </Toolbar>
@@ -135,4 +148,4 @@ const Header = ({ open, setOpen }) => {
   );
 };
 
-export default Header;
+export default withRouter(Header);

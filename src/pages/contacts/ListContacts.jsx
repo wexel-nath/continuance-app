@@ -3,7 +3,6 @@ import { camelizeKeys as toCamelCase } from "humps";
 
 import ContactTable from "../../components/contacts/ContactTable";
 import { Pagination } from "../../components/helper/Pagination";
-import PageTitle from "../../components/helper/PageTitle";
 import { getContactList } from "../../api/continuance";
 
 const useGetContacts = () => {
@@ -40,7 +39,6 @@ const ListContacts = () => {
 
   return (
     <div className="ui container">
-      <PageTitle title="View Contacts" icon="address book outline" />
       <ContactTable contacts={contacts} loading={loading} />
       <Pagination
         currentPage={currentPage}

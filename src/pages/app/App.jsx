@@ -1,6 +1,8 @@
 import React from "react";
 import { Router, Route, Switch } from "react-router-dom";
 
+import CssBaseline from "@material-ui/core/CssBaseline";
+
 import FramedContent from "./FramedContent";
 import history from "../../history";
 import Login from "../login/Login";
@@ -14,6 +16,8 @@ const App = () => {
   return (
     <Router history={history}>
       <AuthProvider redirectPath={redirectPath}>
+        <CssBaseline />
+
         <Switch>
           <Route component={Login} exact path="/login" />
           <PrivateRoute path="/">

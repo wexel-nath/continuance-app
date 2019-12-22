@@ -3,7 +3,6 @@ import { camelizeKeys as toCamelCase } from "humps";
 
 import SubmissionTable from "../../components/submissions/SubmissionTable";
 import { Pagination } from "../../components/helper/Pagination";
-import PageTitle from "../../components/helper/PageTitle";
 import { getSubmissionList } from "../../api/continuance";
 
 const useGetSubmissions = () => {
@@ -40,7 +39,6 @@ const ListSubmissions = () => {
 
   return (
     <div className="ui">
-      <PageTitle title="View Submissions" icon="archive" />
       <SubmissionTable submissions={submissions} loading={loading} />
       <Pagination
         currentPage={currentPage}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { camelizeKeys as toCamelCase } from "humps";
 
-import PageTitle from "../components/helper/PageTitle";
 import { getRecentNotes } from "../api/continuance";
 import NoteTable from "../components/note/NoteTable";
 import { Pagination } from "../components/helper/Pagination";
@@ -34,7 +33,6 @@ const LandingPage = () => {
 
   return (
     <div className="ui container">
-      <PageTitle title="Recent Events" icon="calendar alternate outline" />
       {notes && (
         <>
           <NoteTable includeContact notes={notes} loading={loading} />

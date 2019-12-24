@@ -1,63 +1,74 @@
 import React from "react";
 
-import { Input, LocationInput, TextAreaInput } from "../helper/formHelpers";
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+
+import { Input, LocationInput } from "../helper/formHelpers";
+
+const useStyles = makeStyles(theme => ({
+  paper: {
+    padding: theme.spacing(3)
+  }
+}));
 
 const ContactDetails = ({ formValues }) => {
+  const classes = useStyles();
+
   return (
-    <div className="ui segment">
+    <Paper className={classes.paper}>
       <h3 className="ui header">Contact Details</h3>
-      <div className="two fields">
-        <Input
-          label="First Name"
-          name="firstName"
-          placeholder="Thomas"
-          type="text"
-          formValues={formValues}
-        />
-        <Input
-          label="Last Name"
-          name="lastName"
-          placeholder="Alter"
-          type="text"
-          formValues={formValues}
-        />
-      </div>
-      <div className="two fields">
-        <Input
-          label="Contact Number"
-          name="contactPhone"
-          placeholder="0412 345 678"
-          type="text"
-          formValues={formValues}
-        />
-        <Input
-          label="Email Address"
-          name="contactEmail"
-          placeholder="thomas@example.com"
-          type="text"
-          formValues={formValues}
-        />
-      </div>
-      <div className="two fields">
-        <LocationInput
-          label="Based In"
-          name="locationBased"
-          formValues={formValues}
-        />
-        <LocationInput
-          label="Location Met"
-          name="locationMet"
-          formValues={formValues}
-        />
-      </div>
-      <TextAreaInput
+      <Input
+        label="First Name"
+        name="firstName"
+        required
+        type="text"
+        formValues={formValues}
+      />
+      <Input
+        label="Last Name"
+        name="lastName"
+        required
+        type="text"
+        formValues={formValues}
+      />
+      <Input
+        label="Role"
+        name="companyPosition"
+        required
+        type="text"
+        formValues={formValues}
+      />
+      <Input
+        label="Contact Number"
+        name="contactPhone"
+        required
+        type="text"
+        formValues={formValues}
+      />
+      <Input
+        label="Email Address"
+        name="contactEmail"
+        required
+        type="text"
+        formValues={formValues}
+      />
+      <LocationInput
+        label="Based In"
+        name="locationBased"
+        formValues={formValues}
+      />
+      <LocationInput
+        label="Location Met"
+        name="locationMet"
+        formValues={formValues}
+      />
+      <Input
         label="Notes"
         name="contactNote"
-        placeholder="Optional notes"
         rows="2"
         formValues={formValues}
       />
-    </div>
+    </Paper>
   );
 };
 

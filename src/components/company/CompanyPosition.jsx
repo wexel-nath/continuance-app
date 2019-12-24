@@ -1,25 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { camelizeKeys as toCamelCase } from "humps";
 
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+
 import CompanyDetails from "./CompanyDetails";
 import { getCompanyList } from "../../api/continuance";
-import { Input, SelectInput } from "../helper/formHelpers";
+import { SelectInput } from "../helper/formHelpers";
+
+const useStyles = makeStyles(theme => ({
+  paper: {
+    padding: theme.spacing(3)
+  }
+}));
 
 const getCompanyOptions = companies => {
-  const companyList = [
-    { companyName: "Add new company", companyId: "new" },
-    ...companies,
-    { companyName: "I'm not sure", companyId: "none" }
+  const options = [
+    { value: "new", label: "Add new company" },
+    { value: "none", label: "I'm not sure" }
   ];
-  return companyList.map(company => {
-    return (
-      company.companyName && (
-        <option key={company.companyId} value={company.companyId}>
-          {company.companyName}
-        </option>
-      )
-    );
-  });
+
+  return options.concat(
+    companies.map(company => ({
+      value: company.companyId,
+      label: company.companyName
+    }))
+  );
 };
 
 const useCompanies = () => {
@@ -36,7 +42,6 @@ const useCompanies = () => {
   };
 
   useEffect(() => {
-    window.$(".ui.dropdown").dropdown();
     getCompanies();
   }, []);
 
@@ -44,31 +49,23 @@ const useCompanies = () => {
 };
 
 const CompanyPosition = ({ formValues }) => {
+  const classes = useStyles();
   const companies = useCompanies();
 
   return (
-    <div className="ui segment">
+    <Paper className={classes.paper}>
       <h3 className="ui header">Company Details</h3>
-      <div className="two fields">
-        <Input
-          label="Position"
-          name="companyPosition"
-          placeholder="Agent"
-          type="text"
-          formValues={formValues}
-        />
-        <SelectInput
-          label="Company"
-          name="companySelector"
-          placeholder="Select a Company"
-          options={getCompanyOptions(companies)}
-          formValues={formValues}
-        />
-      </div>
+      <SelectInput
+        label="Company"
+        name="companySelector"
+        placeholder="Select a Company"
+        options={getCompanyOptions(companies)}
+        formValues={formValues}
+      />
       {formValues.values.companySelector === "new" && (
         <CompanyDetails header="New Company" formValues={formValues} />
       )}
-    </div>
+    </Paper>
   );
 };
 

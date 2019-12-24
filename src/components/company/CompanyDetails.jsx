@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { camelizeKeys as toCamelCase } from "humps";
 
-import {
-  Input,
-  MultipleSelectInput,
-  TextAreaInput
-} from "../helper/formHelpers";
+import { Input, SelectInput } from "../helper/formHelpers";
 import { getExpertiseList } from "../../api/continuance";
 
 const useExpertise = () => {
@@ -22,52 +18,44 @@ const useExpertise = () => {
   };
 
   useEffect(() => {
-    window.$(".ui.dropdown").dropdown();
     getExpertise();
   }, []);
 
   return expertise;
 };
 
-const CompanyDetails = ({ header, formValues }) => {
+const CompanyDetails = ({ formValues }) => {
   const expertise = useExpertise();
-  const expertiseOptions = expertise.map(e => {
-    return {
-      value: e,
-      label: e
-    };
-  });
+  const expertiseOptions = expertise.map(e => ({
+    value: e,
+    label: e
+  }));
 
   return (
-    <div className="ui segment">
-      <h3 className="ui header">{header}</h3>
-      <div className="two fields">
-        <Input
-          label="Company Name"
-          name="companyName"
-          placeholder="Wexel"
-          type="text"
-          formValues={formValues}
-        />
-        <Input
-          label="Company Website"
-          name="companyWebsite"
-          placeholder="https://www.getwexel.com"
-          type="text"
-          formValues={formValues}
-        />
-      </div>
-      <MultipleSelectInput
+    <div>
+      <Input
+        label="Company Name"
+        name="companyName"
+        required
+        type="text"
+        formValues={formValues}
+      />
+      <Input
+        label="Company Website"
+        name="companyWebsite"
+        type="text"
+        formValues={formValues}
+      />
+      <SelectInput
         label="Company Expertise"
+        multiple
         name="companyExpertise"
-        placeholder="You can select multiple"
         options={expertiseOptions}
         formValues={formValues}
       />
-      <TextAreaInput
+      <Input
         label="Company Description"
         name="companyDescription"
-        placeholder="Optional description"
         rows="2"
         formValues={formValues}
       />

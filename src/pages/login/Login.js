@@ -38,14 +38,7 @@ const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: "30%",
     margin: theme.spacing(8, 4),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
     top: "50%"
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
   }
 }));
 
@@ -132,11 +125,7 @@ const Login = () => {
           <Container>
             <img src={logo} alt="Continuance Logo" width="85%" />
           </Container>
-          <form
-            className={classes.form}
-            onSubmit={formValues.handleSubmit}
-            noValidate
-          >
+          <form onSubmit={formValues.handleSubmit} noValidate>
             <TextFieldInput
               disabled={isLoading}
               formValues={formValues}

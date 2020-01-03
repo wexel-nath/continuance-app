@@ -20,12 +20,13 @@ const useForm = (callback, validate) => {
   };
 
   const handleChange = (event, action) => {
+    const { target } = event;
     let name,
       value = "";
-    if (event.target) {
+    if (target) {
       event.persist();
-      name = event.target.name;
-      value = event.target.value;
+      name = target.name;
+      value = name.includes("location") ? target.textContent : target.value;
     } else {
       name = action.name;
       value = event.value;

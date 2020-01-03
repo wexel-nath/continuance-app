@@ -26,7 +26,7 @@ const useForm = (callback, validate) => {
     if (target) {
       event.persist();
       name = target.name;
-      value = name.includes("location") ? target.textContent : target.value;
+      value = target.action || target.value;
     } else {
       name = action.name;
       value = event.value;

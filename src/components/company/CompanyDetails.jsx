@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { camelizeKeys as toCamelCase } from "humps";
 
-import { Input, SelectInput } from "../helper/formHelpers";
+import { Input, SearchSelect } from "../helper/formHelpers";
 import { getExpertiseList } from "../../api/continuance";
 
 const useExpertise = () => {
@@ -26,10 +26,6 @@ const useExpertise = () => {
 
 const CompanyDetails = ({ formValues }) => {
   const expertise = useExpertise();
-  const expertiseOptions = expertise.map(e => ({
-    value: e,
-    label: e
-  }));
 
   return (
     <div>
@@ -46,11 +42,10 @@ const CompanyDetails = ({ formValues }) => {
         type="text"
         formValues={formValues}
       />
-      <SelectInput
+      <SearchSelect
         label="Company Expertise"
-        multiple
         name="companyExpertise"
-        options={expertiseOptions}
+        options={expertise}
         formValues={formValues}
       />
       <Input

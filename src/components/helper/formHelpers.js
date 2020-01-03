@@ -9,20 +9,12 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import Chip from "@material-ui/core/Chip";
 import { makeStyles } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 
 import useLocations from "./useLocations";
 
 const useStyles = makeStyles(theme => ({
-  chips: {
-    display: "flex",
-    flexWrap: "wrap"
-  },
-  chip: {
-    margin: 2
-  },
   select: {
     margin: "normal",
     width: "100%"
@@ -109,7 +101,7 @@ export const Input = ({ formValues, label, name, required, type, rows }) => {
   );
 };
 
-export const SelectInput = ({ label, name, options, formValues, multiple }) => {
+export const SelectInput = ({ label, name, options, formValues }) => {
   const classes = useStyles();
   const labelId = "select-" + name;
 
@@ -127,14 +119,7 @@ export const SelectInput = ({ label, name, options, formValues, multiple }) => {
       </MenuItem>
     ));
 
-  const value = formValues.values[name] || (multiple ? [] : "");
-  const renderValue = selected => (
-    <div className={classes.chips}>
-      {selected.map(value => (
-        <Chip key={value} label={value} className={classes.chip} />
-      ))}
-    </div>
-  );
+  const value = formValues.values[name] || "";
 
   return (
     <FormControl variant="outlined" className={classes.select} margin="normal">
@@ -144,9 +129,7 @@ export const SelectInput = ({ label, name, options, formValues, multiple }) => {
       <Select
         labelId={labelId}
         labelWidth={labelWidth}
-        multiple={multiple}
         name={name}
-        renderValue={multiple && renderValue}
         value={value}
         onChange={formValues.handleChange}
       >
@@ -156,10 +139,41 @@ export const SelectInput = ({ label, name, options, formValues, multiple }) => {
   );
 };
 
+export const SearchSelect = ({ label, name, options, formValues }) => {
+  const onChange = (event, action) => {
+    event.target.name = name;
+    event.target.action = action;
+    formValues.handleChange(event);
+  };
+
+  return (
+    <Autocomplete
+      onChange={onChange}
+      onKeyPress={e => e.key === "Enter" && e.preventDefault()}
+      name={name}
+      options={options}
+      disableCloseOnSelect
+      filterSelectedOptions
+      freeSolo
+      multiple
+      renderInput={params => (
+        <TextField
+          {...params}
+          variant="outlined"
+          label={label}
+          margin="normal"
+          fullWidth
+        />
+      )}
+    />
+  );
+};
+
 export const LocationInput = ({ label, name, formValues }) => {
   const [locations, setSearch] = useLocations();
-  const onChange = event => {
+  const onChange = (event, action) => {
     event.target.name = name;
+    event.target.action = action.value;
     formValues.handleChange(event);
   };
 

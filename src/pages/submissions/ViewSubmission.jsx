@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { camelizeKeys as toCamelCase } from "humps";
 
 import Loader from "../../components/helper/Loader";
+import SubmissionCard from "../../components/submissions/SubmissionCard";
 import { getSubmissionById } from "../../api/continuance";
 
 const useSubmission = submissionId => {
@@ -28,20 +29,10 @@ const ViewSubmission = ({ match }) => {
   const submissionId = match.params.id;
   const [submission, loading] = useSubmission(submissionId);
 
-  const { scriptTitle, scriptFile } = submission;
   return (
     <div className="ui form container">
       {loading && <Loader text="Loading" />}
-      <div className="ui segment">
-        <a
-          href={scriptFile}
-          target="_blank"
-          rel="noopener noreferrer"
-          download={scriptTitle}
-        >
-          Download Submission
-        </a>
-      </div>
+      <SubmissionCard submission={submission} />
     </div>
   );
 };

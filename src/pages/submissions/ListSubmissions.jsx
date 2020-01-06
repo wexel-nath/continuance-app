@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { camelizeKeys as toCamelCase } from "humps";
 
+import Container from "@material-ui/core/Container";
+
 import SubmissionTable from "../../components/submissions/SubmissionTable";
 import { Pagination } from "../../components/helper/Pagination";
 import { getSubmissionList } from "../../api/continuance";
@@ -38,14 +40,14 @@ const ListSubmissions = () => {
   ] = useGetSubmissions();
 
   return (
-    <div className="ui">
+    <Container maxWidth="lg">
       <SubmissionTable submissions={submissions} loading={loading} />
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         handlePageChange={setCurrentPage}
       />
-    </div>
+    </Container>
   );
 };
 

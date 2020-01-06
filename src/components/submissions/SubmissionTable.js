@@ -1,6 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+
 import Loader from "../helper/Loader";
 
 const SubmissionRow = ({ submission }) => {
@@ -11,70 +19,46 @@ const SubmissionRow = ({ submission }) => {
     firstName,
     lastName,
     submissionCreated,
-    reviewedBy,
-    reviewedOn,
-    originality,
-    viability,
-    socialTrend,
-    structure,
-    characters,
-    stakes,
-    dialog,
-    cost,
-    score
+    reviewCreatedBy,
+    reviewCreated,
+    reviewScore
   } = submission;
   return (
-    <tr>
-      <td>
+    <TableRow>
+      <TableCell>
         <Link className="header" to={`/submissions/${submissionId}`}>
           {scriptTitle}
         </Link>
-      </td>
-      <td>
+      </TableCell>
+      <TableCell>
         <Link className="header" to={`/contacts/${contactId}`}>
           {firstName + " " + lastName}
         </Link>
-      </td>
-      <td>{submissionCreated || ""}</td>
-      <td>{reviewedBy || ""}</td>
-      <td>{reviewedOn || ""}</td>
-      <td>{originality || ""}</td>
-      <td>{viability || ""}</td>
-      <td>{socialTrend || ""}</td>
-      <td>{structure || ""}</td>
-      <td>{characters || ""}</td>
-      <td>{stakes || ""}</td>
-      <td>{dialog || ""}</td>
-      <td>{cost || ""}</td>
-      <td>{score || ""}</td>
-    </tr>
+      </TableCell>
+      <TableCell>{submissionCreated || ""}</TableCell>
+      <TableCell>{reviewCreatedBy || ""}</TableCell>
+      <TableCell>{reviewCreated || ""}</TableCell>
+      <TableCell>{reviewScore >= 0 ? reviewScore : ""}</TableCell>
+    </TableRow>
   );
 };
 
 const SubmissionTable = ({ submissions, loading }) => {
   return (
-    <div>
+    <TableContainer component={Paper}>
       {loading && <Loader text="Loading" />}
-      <table className="ui striped table">
-        <thead>
-          <tr>
-            <th>Script</th>
-            <th>Uploader</th>
-            <th>Submitted</th>
-            <th>Reviewed By</th>
-            <th>Reviewed On</th>
-            <th>Originality</th>
-            <th>Viability</th>
-            <th>Social Trend</th>
-            <th>Structure</th>
-            <th>Characters</th>
-            <th>Stakes</th>
-            <th>Dialog</th>
-            <th>Cost</th>
-            <th>Score</th>
-          </tr>
-        </thead>
-        <tbody>
+      <Table size="small">
+        <TableHead>
+          <TableRow>
+            <TableCell>Script</TableCell>
+            <TableCell>Uploader</TableCell>
+            <TableCell>Submitted</TableCell>
+            <TableCell>Reviewed By</TableCell>
+            <TableCell>Reviewed On</TableCell>
+            <TableCell>Score</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {submissions.map(submission => {
             return (
               <SubmissionRow
@@ -83,9 +67,9 @@ const SubmissionTable = ({ submissions, loading }) => {
               />
             );
           })}
-        </tbody>
-      </table>
-    </div>
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

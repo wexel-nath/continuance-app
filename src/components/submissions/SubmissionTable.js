@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -10,6 +10,26 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
 import Loader from "../helper/Loader";
+import history from "../../history";
+
+const useStyles = makeStyles(() => ({
+  tableCell: {
+    "&:hover": {
+      cursor: "pointer",
+      fontWeight: "bold"
+    }
+  }
+}));
+
+const ClickableCell = ({ to, value }) => {
+  const classes = useStyles();
+
+  return (
+    <TableCell className={classes.tableCell} onClick={() => history.push(to)}>
+      {value}
+    </TableCell>
+  );
+};
 
 const SubmissionRow = ({ submission }) => {
   const {
@@ -23,22 +43,22 @@ const SubmissionRow = ({ submission }) => {
     reviewCreated,
     reviewScore
   } = submission;
+
+  const submissionLink = "/submissions/" + submissionId;
   return (
-    <TableRow>
-      <TableCell>
-        <Link className="header" to={`/submissions/${submissionId}`}>
-          {scriptTitle}
-        </Link>
-      </TableCell>
-      <TableCell>
-        <Link className="header" to={`/contacts/${contactId}`}>
-          {firstName + " " + lastName}
-        </Link>
-      </TableCell>
-      <TableCell>{submissionCreated || ""}</TableCell>
-      <TableCell>{reviewCreatedBy || ""}</TableCell>
-      <TableCell>{reviewCreated || ""}</TableCell>
-      <TableCell>{reviewScore >= 0 ? reviewScore : ""}</TableCell>
+    <TableRow hover>
+      <ClickableCell to={submissionLink} value={scriptTitle} />
+      <ClickableCell
+        to={`/contacts/${contactId}`}
+        value={firstName + " " + lastName}
+      />
+      <ClickableCell to={submissionLink} value={submissionCreated || ""} />
+      <ClickableCell to={submissionLink} value={reviewCreatedBy || ""} />
+      <ClickableCell to={submissionLink} value={reviewCreated || ""} />
+      <ClickableCell
+        to={submissionLink}
+        value={reviewScore >= 0 ? reviewScore : ""}
+      />
     </TableRow>
   );
 };
@@ -47,7 +67,7 @@ const SubmissionTable = ({ submissions, loading }) => {
   return (
     <TableContainer component={Paper}>
       {loading && <Loader text="Loading" />}
-      <Table size="small">
+      <Table>
         <TableHead>
           <TableRow>
             <TableCell>Script</TableCell>

@@ -6,6 +6,7 @@ import Container from "@material-ui/core/Container";
 import SubmissionTable from "../../components/submissions/SubmissionTable";
 import { Pagination } from "../../components/helper/Pagination";
 import { getSubmissionList } from "../../api/continuance";
+import Loader from "../../components/helper/Loader";
 
 const useGetSubmissions = () => {
   const [submissions, setSubmissions] = useState([]);
@@ -41,7 +42,8 @@ const ListSubmissions = () => {
 
   return (
     <Container maxWidth="lg">
-      <SubmissionTable submissions={submissions} loading={loading} />
+      {loading && <Loader text="Loading" />}
+      <SubmissionTable submissions={submissions} />
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

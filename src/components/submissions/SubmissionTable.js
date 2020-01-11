@@ -9,7 +9,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
-import Loader from "../helper/Loader";
 import history from "../../history";
 
 const useStyles = makeStyles(() => ({
@@ -31,7 +30,7 @@ const ClickableCell = ({ to, value }) => {
   );
 };
 
-const SubmissionRow = ({ submission }) => {
+const Row = ({ submission }) => {
   const {
     scriptTitle,
     submissionId,
@@ -63,11 +62,10 @@ const SubmissionRow = ({ submission }) => {
   );
 };
 
-const SubmissionTable = ({ submissions, loading }) => {
+const SubmissionTable = ({ submissions }) => {
   return (
     <TableContainer component={Paper}>
-      {loading && <Loader text="Loading" />}
-      <Table>
+      <Table size="small">
         <TableHead>
           <TableRow>
             <TableCell>Script</TableCell>
@@ -79,14 +77,9 @@ const SubmissionTable = ({ submissions, loading }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {submissions.map(submission => {
-            return (
-              <SubmissionRow
-                submission={submission}
-                key={submission.submissionId}
-              />
-            );
-          })}
+          {submissions.map(submission => (
+            <Row submission={submission} key={submission.submissionId} />
+          ))}
         </TableBody>
       </Table>
     </TableContainer>

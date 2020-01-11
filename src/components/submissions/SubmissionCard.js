@@ -1,15 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
-import TheatersIcon from "@material-ui/icons/Theaters";
-
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
+import TheatersIcon from "@material-ui/icons/Theaters";
+
+import history from "../../history";
 
 const Row = ({ name, value }) => {
   return (
@@ -67,7 +69,7 @@ const SubmissionContent = ({ data }) => {
   } = data;
 
   return (
-    <Table>
+    <Table size="small">
       <TableBody>
         <Row name="Alternative Contact Name" value={altContactName} />
         <Row name="Alternative Contact Email" value={altContactEmail} />
@@ -100,7 +102,8 @@ const SubmissionCard = ({ submission }) => {
     scriptFile,
     scriptTitle,
     submissionCreated,
-    submissionData
+    submissionData,
+    submissionId
   } = submission;
 
   const title = (
@@ -118,12 +121,23 @@ const SubmissionCard = ({ submission }) => {
     </div>
   );
 
+  const reviewButton = (
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={() => history.push(`/submissions/${submissionId}/review`)}
+    >
+      Review
+    </Button>
+  );
+
   return (
     <Card>
       <CardHeader
         avatar={<TheatersIcon />}
         title={title}
         subheader={submissionCreated}
+        action={reviewButton}
       />
       <CardContent>
         <SubmissionContent data={submissionData} />

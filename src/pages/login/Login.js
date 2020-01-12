@@ -18,7 +18,7 @@ import AuthContext from "../../context/AuthContext";
 import {
   FormError,
   FormSubmit,
-  TextFieldInput
+  Input
 } from "../../components/helper/formHelpers";
 
 const useStyles = makeStyles(theme => ({
@@ -126,19 +126,19 @@ const Login = () => {
             <img src={logo} alt="Continuance Logo" width="85%" />
           </Container>
           <form onSubmit={formValues.handleSubmit} noValidate>
-            <TextFieldInput
-              disabled={isLoading}
+            <Input
               formValues={formValues}
               label="Username"
               name="username"
               type="text"
+              required
             />
-            <TextFieldInput
-              disabled={isLoading}
+            <Input
               formValues={formValues}
               label="Password"
               name="password"
               type="password"
+              required
             />
             <FormSubmit loading={isLoading} text="Sign In" />
             <FormError error={err} />

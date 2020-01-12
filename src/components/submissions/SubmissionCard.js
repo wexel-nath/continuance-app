@@ -9,6 +9,7 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
+import Typography from "@material-ui/core/Typography";
 import TheatersIcon from "@material-ui/icons/Theaters";
 
 import history from "../../history";
@@ -94,7 +95,7 @@ const SubmissionContent = ({ data }) => {
   );
 };
 
-const SubmissionCard = ({ submission }) => {
+export const SubmissionCardHeader = ({ submission, reviewable }) => {
   const {
     firstName,
     lastName,
@@ -102,12 +103,11 @@ const SubmissionCard = ({ submission }) => {
     scriptFile,
     scriptTitle,
     submissionCreated,
-    submissionData,
     submissionId
   } = submission;
 
   const title = (
-    <div>
+    <Typography variant="h6">
       <a
         href={scriptFile}
         target="_blank"
@@ -118,10 +118,10 @@ const SubmissionCard = ({ submission }) => {
       </a>
       {" submitted by "}
       <Link to={`/contacts/${contactId}`}>{firstName + " " + lastName}</Link>
-    </div>
+    </Typography>
   );
 
-  const reviewButton = (
+  const reviewButton = reviewable && (
     <Button
       variant="contained"
       color="primary"
@@ -132,15 +132,21 @@ const SubmissionCard = ({ submission }) => {
   );
 
   return (
+    <CardHeader
+      avatar={<TheatersIcon />}
+      title={title}
+      subheader={submissionCreated}
+      action={reviewButton}
+    />
+  );
+};
+
+const SubmissionCard = ({ submission }) => {
+  return (
     <Card>
-      <CardHeader
-        avatar={<TheatersIcon />}
-        title={title}
-        subheader={submissionCreated}
-        action={reviewButton}
-      />
+      <SubmissionCardHeader submission={submission} reviewable />
       <CardContent>
-        <SubmissionContent data={submissionData} />
+        <SubmissionContent data={submission.submissionData} />
       </CardContent>
     </Card>
   );

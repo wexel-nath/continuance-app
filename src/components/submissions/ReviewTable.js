@@ -29,14 +29,14 @@ const Row = ({ review }) => {
     submissionReviewCreated,
     submissionReviewScore,
     submissionReviewData: {
-      characters,
-      cost,
-      dialog,
-      originality,
-      socialTrend,
-      stakes,
-      structure,
-      viability
+      characters: { score: characters },
+      cost: { score: cost },
+      dialog: { score: dialog },
+      originality: { score: originality },
+      socialTrend: { score: socialTrend },
+      stakes: { score: stakes },
+      structure: { score: structure },
+      viability: { score: viability }
     }
   } = review;
 

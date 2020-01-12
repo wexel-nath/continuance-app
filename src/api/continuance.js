@@ -126,3 +126,12 @@ export async function getReviewsBySubmissionById(submissionId) {
   };
   return await requestWithAuth(continuance, config);
 }
+
+export async function newReview(submissionId, data) {
+  const config = {
+    method: "POST",
+    url: `/submission/${submissionId}/review`,
+    data: data
+  };
+  return await requestWithAuth(continuance, config);
+}

@@ -1,6 +1,7 @@
 import React from "react";
 
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import Rating from "@material-ui/lab/Rating";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -27,29 +28,6 @@ const useStyles = makeStyles(theme => ({
     position: "absolute"
   }
 }));
-
-export const TextFieldInput = ({ disabled, formValues, label, name, type }) => {
-  const error = formValues.errors[name] || "";
-  const value = formValues.values[name] || "";
-
-  return (
-    <TextField
-      disabled={disabled}
-      error={!!error}
-      fullWidth
-      helperText={error}
-      id={name}
-      label={label}
-      margin="normal"
-      name={name}
-      onChange={formValues.handleChange}
-      required
-      type={type}
-      value={value}
-      variant="outlined"
-    />
-  );
-};
 
 export const FormSubmit = ({ loading, text }) => {
   const classes = useStyles();
@@ -81,6 +59,7 @@ export const FormError = ({ error }) => (
 export const Input = ({ formValues, label, name, required, type, rows }) => {
   const error = formValues.errors[name] || "";
   const value = formValues.values[name] || "";
+
   return (
     <TextField
       error={!!error}
@@ -195,6 +174,22 @@ export const LocationInput = ({ label, name, formValues }) => {
           fullWidth
         />
       )}
+    />
+  );
+};
+
+export const RatingInput = ({ name, formValues }) => {
+  const onChange = (event, action) => {
+    event.target.name = name;
+    event.target.action = action;
+    formValues.handleChange(event);
+  };
+
+  return (
+    <Rating
+      name={name}
+      value={formValues.values[name] || 0}
+      onChange={onChange}
     />
   );
 };

@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 
-import { FormSubmit, TextFieldInput } from "../helper/formHelpers";
+import { FormSubmit, Input } from "../helper/formHelpers";
 import useForm from "../helper/useForm";
 import { changePassword } from "../../api/authentication";
 import useMessage from "../helper/useMessage";
@@ -63,17 +63,19 @@ const ChangePassword = () => {
     <Paper className={classes.paper}>
       <Typography variant="h5">Change Password</Typography>
       <form onSubmit={formValues.handleSubmit} noValidate>
-        <TextFieldInput
+        <Input
           name="newPassword"
           label="New Password"
           type="password"
           formValues={formValues}
+          required
         />
-        <TextFieldInput
+        <Input
           name="confirmPassword"
           label="Confirm Password"
           type="password"
           formValues={formValues}
+          required
         />
         <FormSubmit loading={loading} text="Change my password" />
       </form>

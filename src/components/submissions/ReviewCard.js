@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import ReviewForm from "./ReviewForm";
 import { SubmissionCardHeader } from "./SubmissionCard";
 
-const ReviewCard = ({ submission, criteria }) => {
+const ReviewCard = ({ submission }) => {
   const data = submission.submissionData || {};
   const { synopsisLine } = data;
   return (
@@ -17,10 +17,7 @@ const ReviewCard = ({ submission, criteria }) => {
         <Typography>
           <b>Synopsis:</b> {synopsisLine}
         </Typography>
-        <ReviewForm
-          criteria={criteria}
-          submissionId={submission.submissionId}
-        />
+        <ReviewForm submissionId={submission.submissionId} />
       </CardContent>
     </Card>
   );

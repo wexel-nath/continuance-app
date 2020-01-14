@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import Markdown from "react-markdown";
 import { decamelizeKeys as toSnakeCase } from "humps";
 import { isNullOrUndefined } from "util";
 
-import { Typography, Divider, Grid } from "@material-ui/core";
-
 import {
-  Input,
   FormError,
   FormSubmit,
-  RatingInput
+  RatingInput,
+  Input
 } from "../helper/formHelpers";
 import history from "../../history";
 import useForm from "../../components/helper/useForm";
 import { newReview } from "../../api/continuance";
+import ReviewItem from "./ReviewItem";
+import { criteria } from "./reviewCriteria";
 
 const validate = () => {
   const errors = {};
@@ -72,50 +71,29 @@ const useNewReview = submissionId => {
   return [formValues, err, loading];
 };
 
-const Separator = () => {
-  return <Divider style={{ marginTop: "10px", marginBottom: "10px" }} />;
-};
-
-const ReviewItem = ({ criterion, formValues }) => {
-  const { title, description, key } = criterion;
-
-  return (
-    <>
-      <Separator />
-      <Grid container direction="row" justify="space-between">
-        <Grid item xs={9}>
-          <Typography variant="h6">{title}</Typography>
-          <Markdown source={description} />
-        </Grid>
-        <Grid item>
-          <Typography variant="h6">Score</Typography>
-          <RatingInput name={key} formValues={formValues} />
-        </Grid>
-        <Grid item xs={12}>
-          <Input
-            label="Comments"
-            name={key + "Comment"}
-            rows="3"
-            formValues={formValues}
-          />
-        </Grid>
-      </Grid>
-    </>
-  );
-};
-
-const ReviewForm = ({ submissionId, criteria }) => {
+const ReviewForm = ({ submissionId }) => {
   const [formValues, err, loading] = useNewReview(submissionId);
 
   return (
     <form onSubmit={formValues.handleSubmit} noValidate>
-      {criteria.map(criterion => (
-        <ReviewItem
-          key={criterion.key}
-          criterion={criterion}
-          formValues={formValues}
-        />
-      ))}
+      {criteria.map(criterion => {
+        const { key } = criterion;
+        return (
+          <ReviewItem
+            comments={
+              <Input
+                label="Comments"
+                name={key + "Comment"}
+                rows="3"
+                formValues={formValues}
+              />
+            }
+            rating={<RatingInput name={key} formValues={formValues} />}
+            key={key}
+            criterion={criterion}
+          />
+        );
+      })}
       <FormSubmit loading={loading} text="Submit Review" />
       <FormError error={err} />
     </form>

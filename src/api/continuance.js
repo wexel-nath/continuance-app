@@ -119,6 +119,14 @@ export async function getSubmissionById(submissionId) {
   return await requestWithAuth(continuance, config);
 }
 
+export async function getReviewById(reviewId) {
+  const config = {
+    method: "GET",
+    url: `/review/${reviewId}`
+  };
+  return await requestWithAuth(continuance, config);
+}
+
 export async function getReviewsBySubmissionById(submissionId) {
   const config = {
     method: "GET",

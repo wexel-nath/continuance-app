@@ -10,6 +10,7 @@ import Preferences from "../Preferences";
 import ListSubmissions from "../submissions/ListSubmissions";
 import ViewSubmission from "../submissions/ViewSubmission";
 import ReviewSubmission from "../submissions/ReviewSubmission";
+import ViewReview from "../submissions/ViewReview";
 import LandingPage from "../LandingPage";
 
 const Content = () => {
@@ -28,6 +29,11 @@ const Content = () => {
           exact
           path="/submissions/:id/review"
           component={ReviewSubmission}
+        />
+        <Route
+          exact
+          path="/submissions/:submissionId/reviews/:reviewId"
+          component={ViewReview}
         />
         <Route exact path="/" component={LandingPage} />
       </Switch>

@@ -12,6 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import logo from "../../img/continuance_logo.jpg";
 import { login } from "../../api/authentication";
+import { getHealth } from "../../api/continuance";
 import { setJwt, setRefresh } from "../../util/storage";
 import useForm from "../../components/helper/useForm";
 import AuthContext from "../../context/AuthContext";
@@ -73,6 +74,9 @@ const useLogin = () => {
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async ({ username, password }) => {
+    // awaken continuance-server
+    getHealth();
+
     setLoading(true);
     const {
       data: { data, meta },

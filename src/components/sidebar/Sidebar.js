@@ -74,7 +74,7 @@ const Sidebar = ({ open }) => {
       </SidebarGroup>
 
       <Divider />
-      <SidebarGroup header="Contacts">
+      <SidebarGroup header="Contact Book">
         <SidebarLink
           icon={<PersonAddIcon />}
           primary="Add New"
@@ -98,7 +98,7 @@ const Sidebar = ({ open }) => {
       </SidebarGroup>
 
       <Divider />
-      <SidebarGroup header="Submissions">
+      <SidebarGroup header="Short Film Initiative">
         <SidebarLink
           icon={<InboxIcon />}
           primary="View All"

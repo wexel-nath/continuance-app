@@ -1,5 +1,8 @@
-import React, { useState } from "react";
-import { decamelizeKeys as toSnakeCase } from "humps";
+import React, { useState, useEffect } from "react";
+import {
+  decamelizeKeys as toSnakeCase,
+  camelizeKeys as toCamelCase
+} from "humps";
 
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
@@ -7,7 +10,7 @@ import Grid from "@material-ui/core/Grid";
 import ContactDetails from "../../components/contacts/ContactDetails";
 import validate from "../../components/contacts/validateNewContact";
 import CompanyPosition from "../../components/company/CompanyPosition";
-import { newContact } from "../../api/continuance";
+import { newContact, getExpertiseList } from "../../api/continuance";
 import history from "../../history";
 import useForm from "../../components/helper/useForm";
 import { FormSubmit, FormError } from "../../components/helper/formHelpers";
@@ -32,6 +35,7 @@ const mapFormToContact = formValues => {
 const useNewContact = () => {
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
+  const [expertise, setExpertise] = useState([]);
 
   const handleNewContact = async formValues => {
     setLoading(true);
@@ -49,23 +53,35 @@ const useNewContact = () => {
     }
   };
 
+  const getExpertise = async () => {
+    const {
+      data: { data }
+    } = await getExpertiseList();
+
+    data && setExpertise(toCamelCase(data));
+  };
+
+  useEffect(() => {
+    getExpertise();
+  }, []);
+
   const formValues = useForm(handleNewContact, validate);
-  return [formValues, err, loading];
+  return [formValues, err, loading, expertise];
 };
 
 const NewContact = () => {
-  const [formValues, err, loading] = useNewContact();
+  const [formValues, err, loading, expertise] = useNewContact();
 
   return (
     <Container>
       <form onSubmit={formValues.handleSubmit} noValidate>
         <Grid container spacing={3}>
           <Grid item sm={12} md={6}>
-            <ContactDetails formValues={formValues} />
+            <ContactDetails formValues={formValues} expertise={expertise} />
           </Grid>
 
           <Grid item sm={12} md={6}>
-            <CompanyPosition formValues={formValues} />
+            <CompanyPosition formValues={formValues} expertise={expertise} />
           </Grid>
           <Grid item sm={12} md={6}>
             <FormSubmit loading={loading} text="Create New Contact" />

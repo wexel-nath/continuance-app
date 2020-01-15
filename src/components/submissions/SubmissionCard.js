@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
@@ -12,7 +11,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import TheatersIcon from "@material-ui/icons/Theaters";
 
-import history from "../../history";
+import { ButtonLink } from "../ui/Button";
 
 const Row = ({ name, value }) => {
   return (
@@ -40,7 +39,7 @@ const protagonistValue = data => {
   if (hasFemaleProtagonist) protagonists.push("female");
   if (hasAsianProtagonist) protagonists.push("asian");
   if (hasOtherProtagonist) protagonists.push(otherProtagonist);
-  return protagonists.join();
+  return protagonists.join(", ");
 };
 
 const SubmissionContent = ({ data }) => {
@@ -122,18 +121,12 @@ export const SubmissionCardHeader = ({ submission, reviewable }) => {
   );
 
   const reviewButton = reviewable && (
-    <Button
-      variant="contained"
-      color="primary"
-      onClick={() => history.push(`/submissions/${submissionId}/review`)}
-    >
-      Review
-    </Button>
+    <ButtonLink text="Review" to={`/submissions/${submissionId}/review`} />
   );
 
   return (
     <CardHeader
-      avatar={<TheatersIcon />}
+      avatar={<TheatersIcon color="primary" />}
       title={title}
       subheader={submissionCreated}
       action={reviewButton}

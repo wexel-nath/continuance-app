@@ -48,7 +48,7 @@ const useCompanies = () => {
   return companies;
 };
 
-const CompanyPosition = ({ formValues }) => {
+const CompanyPosition = ({ formValues, expertise }) => {
   const classes = useStyles();
   const companies = useCompanies();
 
@@ -63,7 +63,11 @@ const CompanyPosition = ({ formValues }) => {
         formValues={formValues}
       />
       {formValues.values.companySelector === "new" && (
-        <CompanyDetails header="New Company" formValues={formValues} />
+        <CompanyDetails
+          header="New Company"
+          formValues={formValues}
+          expertise={expertise}
+        />
       )}
     </Paper>
   );

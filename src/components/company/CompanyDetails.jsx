@@ -1,32 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { camelizeKeys as toCamelCase } from "humps";
+import React from "react";
 
 import { Input, SearchSelect } from "../helper/formHelpers";
-import { getExpertiseList } from "../../api/continuance";
 
-const useExpertise = () => {
-  const [expertise, setExpertise] = useState([]);
-
-  const getExpertise = async () => {
-    const {
-      data: { data }
-    } = await getExpertiseList();
-
-    if (data) {
-      setExpertise(toCamelCase(data));
-    }
-  };
-
-  useEffect(() => {
-    getExpertise();
-  }, []);
-
-  return expertise;
-};
-
-const CompanyDetails = ({ formValues }) => {
-  const expertise = useExpertise();
-
+const CompanyDetails = ({ formValues, expertise }) => {
   return (
     <div>
       <Input

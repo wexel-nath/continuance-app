@@ -3,7 +3,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 
-import { Input, LocationInput } from "../helper/formHelpers";
+import { Input, LocationInput, SearchSelect } from "../helper/formHelpers";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ContactDetails = ({ formValues }) => {
+const ContactDetails = ({ formValues, expertise }) => {
   const classes = useStyles();
 
   return (
@@ -52,6 +52,12 @@ const ContactDetails = ({ formValues }) => {
         type="text"
         formValues={formValues}
       />
+      <Input
+        label="Website"
+        name="contactLink"
+        type="text"
+        formValues={formValues}
+      />
       <LocationInput
         label="Based In"
         name="locationBased"
@@ -60,6 +66,12 @@ const ContactDetails = ({ formValues }) => {
       <LocationInput
         label="Location Met"
         name="locationMet"
+        formValues={formValues}
+      />
+      <SearchSelect
+        label="Expertise"
+        name="contactExpertise"
+        options={expertise}
         formValues={formValues}
       />
       <Input

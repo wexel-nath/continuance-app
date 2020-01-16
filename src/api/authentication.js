@@ -49,3 +49,19 @@ export async function changePassword(newPassword) {
   };
   return await requestWithAuth(auth, config);
 }
+
+export const getAllUsers = async () => {
+  const config = {
+    method: "GET",
+    url: "/users"
+  };
+  return await requestWithAuth(auth, config);
+};
+
+export const getAllPermissions = async () => {
+  const config = {
+    method: "GET",
+    url: "/service/continuance/permissions"
+  };
+  return await requestWithAuth(auth, config);
+};

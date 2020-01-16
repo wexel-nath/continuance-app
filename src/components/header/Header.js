@@ -111,6 +111,7 @@ const pageTitles = {
   "/preferences": "Preferences",
   "/submissions": "View Submissions",
   "/submissions/:id": "Submission",
+  "/operators": "Manage Operators",
   "/": "Recent Events"
 };
 

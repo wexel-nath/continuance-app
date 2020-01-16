@@ -107,14 +107,14 @@ const Sidebar = ({ open }) => {
         />
       </SidebarGroup>
 
-      <Divider />
+      {/*<Divider />
       <SidebarGroup header="Administration">
         <SidebarLink
           icon={<SupervisorAccountIcon />}
           primary="Manage Operators"
           to="/operators"
-        />
-      </SidebarGroup>
+      />
+      </SidebarGroup>*/}
     </Drawer>
   );
 };

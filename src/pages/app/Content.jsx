@@ -14,30 +14,28 @@ import ViewReview from "../submissions/ViewReview";
 import LandingPage from "../LandingPage";
 import ManageOperators from "../administration/ManageOperators";
 
+const routes = {
+  "/contacts/new": NewContact,
+  "/contacts": ListContacts,
+  "/contacts/search": SearchContacts,
+  "/contacts/upload": UploadContacts,
+  "/contacts/:id": ViewContact,
+  "/preferences": Preferences,
+  "/submissions": ListSubmissions,
+  "/submissions/:id": ViewSubmission,
+  "/submissions/:id/review": ReviewSubmission,
+  "/submissions/:submissionId/reviews/:reviewId": ViewReview,
+  "/operators": ManageOperators,
+  "/": LandingPage
+};
+
 const Content = () => {
   return (
-    <div className="ui basic segment">
+    <div style={{ padding: "24px" }}>
       <Switch>
-        <Route exact path="/contacts/new" component={NewContact} />
-        <Route exact path="/contacts" component={ListContacts} />
-        <Route exact path="/contacts/search" component={SearchContacts} />
-        <Route exact path="/contacts/upload" component={UploadContacts} />
-        <Route exact path="/contacts/:id" component={ViewContact} />
-        <Route exact path="/preferences" component={Preferences} />
-        <Route exact path="/submissions" component={ListSubmissions} />
-        <Route exact path="/submissions/:id" component={ViewSubmission} />
-        <Route
-          exact
-          path="/submissions/:id/review"
-          component={ReviewSubmission}
-        />
-        <Route
-          exact
-          path="/submissions/:submissionId/reviews/:reviewId"
-          component={ViewReview}
-        />
-        <Route exact path="/operators" component={ManageOperators} />
-        <Route exact path="/" component={LandingPage} />
+        {Object.entries(routes).map(([route, component]) => (
+          <Route key={route} exact path={route} component={component} />
+        ))}
       </Switch>
     </div>
   );

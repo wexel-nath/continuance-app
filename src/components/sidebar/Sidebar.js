@@ -11,6 +11,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import InboxIcon from "@material-ui/icons/Inbox";
 import DateRangeIcon from "@material-ui/icons/DateRange";
+import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 
 import { SidebarGroup, SidebarLink } from "./SidebarItem";
 
@@ -103,6 +104,15 @@ const Sidebar = ({ open }) => {
           icon={<InboxIcon />}
           primary="View All"
           to="/submissions"
+        />
+      </SidebarGroup>
+
+      <Divider />
+      <SidebarGroup header="Administration">
+        <SidebarLink
+          icon={<SupervisorAccountIcon />}
+          primary="Manage Operators"
+          to="/operators"
         />
       </SidebarGroup>
     </Drawer>

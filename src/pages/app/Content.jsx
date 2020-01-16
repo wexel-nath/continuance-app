@@ -12,6 +12,7 @@ import ViewSubmission from "../submissions/ViewSubmission";
 import ReviewSubmission from "../submissions/ReviewSubmission";
 import ViewReview from "../submissions/ViewReview";
 import LandingPage from "../LandingPage";
+import ManageOperators from "../administration/ManageOperators";
 
 const Content = () => {
   return (
@@ -35,6 +36,7 @@ const Content = () => {
           path="/submissions/:submissionId/reviews/:reviewId"
           component={ViewReview}
         />
+        <Route exact path="/operators" component={ManageOperators} />
         <Route exact path="/" component={LandingPage} />
       </Switch>
     </div>

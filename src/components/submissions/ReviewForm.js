@@ -33,7 +33,7 @@ const criteriaKeys = [
 const mapFormToReview = values => {
   let review = {};
 
-  criteriaKeys.map(key => {
+  criteriaKeys.forEach(key => {
     review[key] = isNullOrUndefined(values[key])
       ? null
       : {

@@ -79,18 +79,18 @@ const useLogin = () => {
 
     setLoading(true);
     const {
-      data: { data, meta },
+      data: { result, message },
       statusText
     } = await login(username, password);
     setLoading(false);
 
-    if (data) {
-      const { jwt, refreshToken, user: userData } = toCamelCase(data);
+    if (result) {
+      const { jwt, refreshToken, user: userData } = toCamelCase(result);
       setJwt(jwt);
       setRefresh(refreshToken);
       setUser(userData);
     } else {
-      setErr(meta || statusText);
+      setErr(message || statusText);
     }
   };
 

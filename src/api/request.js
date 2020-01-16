@@ -42,10 +42,10 @@ export const requestWithAuth = async (axios, config) => {
 
   if (status === 401 || status === 403) {
     const {
-      data: { data }
+      data: { result }
     } = await refresh(getRefresh());
-    if (data) {
-      const { jwt, refreshToken } = toCamelCase(data);
+    if (result) {
+      const { jwt, refreshToken } = toCamelCase(result);
       setJwt(jwt);
       setRefresh(refreshToken);
 

@@ -37,7 +37,7 @@ const useChangePassword = () => {
   const handleChangePassword = async ({ newPassword }) => {
     setLoading(true);
     const {
-      data: { meta },
+      data: { message },
       status,
       statusText
     } = await changePassword(newPassword);
@@ -45,7 +45,7 @@ const useChangePassword = () => {
     if (status === 200) {
       showSuccess("Your password has been updated.");
     } else {
-      showError(meta || statusText);
+      showError(message || statusText);
     }
 
     setLoading(false);

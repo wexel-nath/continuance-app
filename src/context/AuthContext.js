@@ -25,11 +25,11 @@ const isLoggedIn = async () => {
 
   if (error && error === "expired jwt") {
     const {
-      data: { data }
+      data: { result }
     } = await refresh(getRefresh());
 
-    if (data) {
-      const { jwt, refreshToken } = toCamelCase(data);
+    if (result) {
+      const { jwt, refreshToken } = toCamelCase(result);
       setJwt(jwt);
       setRefresh(refreshToken);
 

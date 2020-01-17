@@ -118,7 +118,14 @@ export const SelectInput = ({ label, name, options, formValues }) => {
   );
 };
 
-export const SearchSelect = ({ label, name, options, formValues }) => {
+export const SearchSelect = ({
+  formValues,
+  freeSolo,
+  getOptionLabel,
+  label,
+  name,
+  options
+}) => {
   const onChange = (event, action) => {
     event.target.name = name;
     event.target.action = action;
@@ -133,7 +140,8 @@ export const SearchSelect = ({ label, name, options, formValues }) => {
       options={options}
       disableCloseOnSelect
       filterSelectedOptions
-      freeSolo
+      freeSolo={freeSolo}
+      getOptionLabel={getOptionLabel}
       multiple
       renderInput={params => (
         <TextField

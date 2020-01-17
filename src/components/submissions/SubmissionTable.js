@@ -65,7 +65,7 @@ const Row = ({ submission }) => {
 const SubmissionTable = ({ submissions }) => {
   return (
     <TableContainer component={Paper}>
-      <Table size="small">
+      <Table>
         <TableHead>
           <TableRow>
             <TableCell>Script</TableCell>

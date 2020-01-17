@@ -12,11 +12,12 @@ import ViewSubmission from "../submissions/ViewSubmission";
 import ReviewSubmission from "../submissions/ReviewSubmission";
 import ViewReview from "../submissions/ViewReview";
 import LandingPage from "../LandingPage";
-import ManageOperators from "../administration/ManageOperators";
+import ManageUsers from "../administration/ManageUsers";
+import NewUser from "../administration/NewUser";
 
 const routes = {
-  "/contacts/new": NewContact,
   "/contacts": ListContacts,
+  "/contacts/new": NewContact,
   "/contacts/search": SearchContacts,
   "/contacts/upload": UploadContacts,
   "/contacts/:id": ViewContact,
@@ -25,7 +26,8 @@ const routes = {
   "/submissions/:id": ViewSubmission,
   "/submissions/:id/review": ReviewSubmission,
   "/submissions/:submissionId/reviews/:reviewId": ViewReview,
-  "/operators": ManageOperators,
+  "/users": ManageUsers,
+  "/users/new": NewUser,
   "/": LandingPage
 };
 

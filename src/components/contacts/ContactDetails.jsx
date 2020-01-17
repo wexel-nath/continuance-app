@@ -69,6 +69,7 @@ const ContactDetails = ({ formValues, expertise }) => {
         formValues={formValues}
       />
       <SearchSelect
+        freeSolo
         label="Expertise"
         name="contactExpertise"
         options={expertise}

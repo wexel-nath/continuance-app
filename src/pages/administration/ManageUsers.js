@@ -4,9 +4,9 @@ import { camelizeKeys as toCamelCase } from "humps";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 
-import Loader from "../../components/helper/Loader";
 import { getAllUsers } from "../../api/authentication";
-import OperatorsCard from "../../components/operators/OperatorsCard";
+import UsersCard from "../../components/users/UsersCard";
+import Progress from "../../components/helper/Progress";
 
 const useUsers = () => {
   const [users, setUsers] = useState([]);
@@ -28,19 +28,20 @@ const useUsers = () => {
   return [users, loading];
 };
 
-const ManageOperators = () => {
+const ManageUsers = () => {
   const [users, loading] = useUsers();
 
   return (
     <Container maxWidth="lg">
-      {loading && <Loader text="Loading" />}
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <OperatorsCard users={users} />
+      <Progress loading={loading}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <UsersCard users={users} />
+          </Grid>
         </Grid>
-      </Grid>
+      </Progress>
     </Container>
   );
 };
 
-export default ManageOperators;
+export default ManageUsers;

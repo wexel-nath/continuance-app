@@ -7,12 +7,13 @@ import Typography from "@material-ui/core/Typography";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 
 import { ButtonLink } from "../ui/Button";
+import UserTable from "./UserTable";
 
-const OperatorsCardHeader = ({ text }) => {
-  const title = <Typography variant="h6">{text}</Typography>;
+const UsersCardHeader = ({ text }) => {
+  const title = <Typography variant="h6"> {text} </Typography>;
 
   const createUserButton = (
-    <ButtonLink text="Create an Operator" to={`/operators/new`} />
+    <ButtonLink text="Create a User" to={`/users/new`} />
   );
 
   return (
@@ -24,15 +25,15 @@ const OperatorsCardHeader = ({ text }) => {
   );
 };
 
-const OperatorsCard = ({ users }) => {
-  console.log(users);
-
+const UsersCard = ({ users }) => {
   return (
     <Card>
-      <OperatorsCardHeader text="Manage Operators" />
-      <CardContent>UserTable</CardContent>
+      <UsersCardHeader text="Manage Users" />
+      <CardContent>
+        <UserTable users={users} />
+      </CardContent>
     </Card>
   );
 };
 
-export default OperatorsCard;
+export default UsersCard;

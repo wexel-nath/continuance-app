@@ -33,6 +33,15 @@ export async function logout(refreshToken) {
   return await requestWithAuth(auth, config);
 }
 
+export async function newUser(data) {
+  const config = {
+    method: "POST",
+    url: "/user",
+    data: data
+  };
+  return await requestWithAuth(auth, config);
+}
+
 export async function getUser() {
   const config = {
     method: "GET",

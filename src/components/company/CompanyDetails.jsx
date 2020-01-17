@@ -19,6 +19,7 @@ const CompanyDetails = ({ formValues, expertise }) => {
         formValues={formValues}
       />
       <SearchSelect
+        freeSolo
         label="Company Expertise"
         name="companyExpertise"
         options={expertise}

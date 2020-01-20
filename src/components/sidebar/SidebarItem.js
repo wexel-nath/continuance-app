@@ -17,12 +17,8 @@ export const SidebarGroup = ({ header, children }) => {
 };
 
 export const SidebarLink = ({ icon, primary, to }) => {
-  const renderLink = React.forwardRef((linkProps, ref) => (
-    <Link to={to} {...linkProps} innerRef={ref} />
-  ));
-
   return (
-    <ListItem button component={renderLink}>
+    <ListItem button component={Link} to={to}>
       <ListItemIcon>{icon}</ListItemIcon>
       <ListItemText primary={primary} />
     </ListItem>

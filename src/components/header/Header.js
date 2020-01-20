@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, forwardRef } from "react";
 import clsx from "clsx";
 import { Link, withRouter } from "react-router-dom";
 
@@ -52,14 +52,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const MenuLink = ({ onClick, text, to }) => {
-  const renderLink = React.forwardRef((linkProps, ref) => (
-    <Link to={to} {...linkProps} innerRef={ref} />
-  ));
+const ForwardLink = forwardRef((props, ref) => <Link ref={ref} {...props} />);
 
+const MenuLink = ({ onClick, value, to }) => {
   return (
-    <MenuItem button component={renderLink} onClick={onClick}>
-      {text}
+    <MenuItem button component={ForwardLink} to={to} onClick={onClick}>
+      {value}
     </MenuItem>
   );
 };
@@ -79,24 +77,18 @@ const OptionsMenu = () => {
 
   return (
     <div>
-      <Button
-        aria-controls="simple-menu"
-        aria-haspopup="true"
-        onClick={e => setAnchorEl(e.currentTarget)}
-        color="inherit"
-      >
+      <Button onClick={e => setAnchorEl(e.currentTarget)} color="inherit">
         <SettingsIcon />
         <ExpandMoreIcon />
       </Button>
       <Menu
-        id="simple-menu"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
       >
-        <MenuLink onClick={handleClose} text="Preferences" to="/preferences" />
-        <MenuLink onClick={() => handleLogout()} text="Logout" to="/" />
+        <MenuLink onClick={handleClose} value="Preferences" to="/preferences" />
+        <MenuLink onClick={() => handleLogout()} value="Logout" to="/" />
       </Menu>
     </div>
   );

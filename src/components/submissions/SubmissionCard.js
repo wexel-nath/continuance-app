@@ -28,69 +28,85 @@ const boolValue = value => {
   return value ? "Yes" : "No";
 };
 
-const protagonistValue = data => {
-  const {
-    hasFemaleProtagonist,
-    hasAsianProtagonist,
-    hasOtherProtagonist,
-    otherProtagonist
-  } = data;
-  let protagonists = [];
-  if (hasFemaleProtagonist) protagonists.push("female");
-  if (hasAsianProtagonist) protagonists.push("asian");
-  if (hasOtherProtagonist) protagonists.push(otherProtagonist);
-  return protagonists.join(", ");
-};
-
-const SubmissionContent = ({ data }) => {
+const SubmissionContent = ({ data, supportingFiles }) => {
   if (!data) {
     return null;
   }
   const {
     altContactName,
     altContactEmail,
-    alreadySubmitted,
+    previouslySubmitted,
     budget,
     hasFunding,
     fundingDetails,
     location,
-    synopsisLine,
-    synopsisParagraph,
+    logline,
+    synopsis,
     genre,
-    targetAudience,
+    primaryAudience,
+    hasFemaleProtagonist,
+    hasDiversity,
+    diversityDetails,
+    website,
     visionStatement,
     videoLinks,
     socialMedia,
     referenceFilms,
-    hasDiversity,
-    diversityDetails,
     chainOfTitle,
     otherTeam
   } = data;
 
+  const fileLinks = supportingFiles.map(file => {
+    const parts = file.split("/");
+    return (
+      <Typography>
+        <FileLink href={file} title={parts[parts.length - 1]} />
+      </Typography>
+    );
+  });
+
   return (
     <Table size="small">
       <TableBody>
+        <Row name="Supporting Files" value={fileLinks} />
         <Row name="Alternative Contact Name" value={altContactName} />
         <Row name="Alternative Contact Email" value={altContactEmail} />
-        <Row name="Previously Submitted" value={boolValue(alreadySubmitted)} />
+        <Row
+          name="Previously Submitted"
+          value={boolValue(previouslySubmitted)}
+        />
         <Row name="Project Budget (USD)" value={budget} />
-        <Row name="Project Funding" value={hasFunding && fundingDetails} />
+        <Row
+          name="Project Funding"
+          value={hasFunding ? fundingDetails : "No"}
+        />
         <Row name="Location" value={location} />
-        <Row name="One-line Synopsis" value={synopsisLine} />
-        <Row name="One-Paragraph Synopsis" value={synopsisParagraph} />
-        <Row name="Genre" value={genre} />
-        <Row name="Target Audience" value={targetAudience} />
-        <Row name="Protagonist" value={protagonistValue(data)} />
-        <Row name="Vision Statement" value={visionStatement} />
-        <Row name="Video Links" value={videoLinks} />
-        <Row name="Social Media" value={socialMedia} />
+        <Row name="Logline" value={logline} />
+        <Row name="Synopsis" value={synopsis} />
         <Row name="Reference Films" value={referenceFilms} />
-        <Row name="Diversity" value={hasDiversity && diversityDetails} />
+        <Row name="Genre" value={genre} />
+        <Row name="Primary Audience" value={primaryAudience} />
+        <Row
+          name="Female Protagonist"
+          value={boolValue(hasFemaleProtagonist)}
+        />
+        <Row name="Diversity" value={hasDiversity ? diversityDetails : "No"} />
+        <Row name="Website" value={website} />
+        <Row name="Vision Statement" value={visionStatement} />
         <Row name="Chain of Title" value={chainOfTitle} />
         <Row name="Other Team Members" value={otherTeam} />
+        <Row name="Video Links" value={videoLinks} />
+        <Row name="Social Media" value={socialMedia} />
       </TableBody>
     </Table>
+  );
+};
+
+const FileLink = ({ href, title }) => {
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" download={title}>
+      {title}
+    </a>
   );
 };
 
@@ -107,14 +123,7 @@ export const SubmissionCardHeader = ({ submission, reviewable }) => {
 
   const title = (
     <Typography variant="h6">
-      <a
-        href={scriptFile}
-        target="_blank"
-        rel="noopener noreferrer"
-        download={scriptTitle}
-      >
-        {scriptTitle}
-      </a>
+      <FileLink href={scriptFile} title={scriptTitle} />
       {" submitted by "}
       <Link to={`/contacts/${contactId}`}>{firstName + " " + lastName}</Link>
     </Typography>
@@ -135,11 +144,15 @@ export const SubmissionCardHeader = ({ submission, reviewable }) => {
 };
 
 const SubmissionCard = ({ submission }) => {
+  const { submissionData, supportingFiles } = submission;
   return (
     <Card>
       <SubmissionCardHeader submission={submission} reviewable />
       <CardContent>
-        <SubmissionContent data={submission.submissionData} />
+        <SubmissionContent
+          data={submissionData}
+          supportingFiles={supportingFiles || []}
+        />
       </CardContent>
     </Card>
   );

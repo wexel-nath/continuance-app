@@ -31,9 +31,14 @@ const Comments = ({ comments }) => {
 
 const Subtitle = ({ name, value }) => {
   return (
-    <Typography>
-      <b>{name}:</b> {value}
-    </Typography>
+    <tr>
+      <td>
+        <Typography style={{ fontWeight: "bold" }}>{name}:</Typography>
+      </td>
+      <td>
+        <Typography>{value}</Typography>
+      </td>
+    </tr>
   );
 };
 
@@ -46,17 +51,18 @@ const ReviewDetails = ({ submission, review }) => {
     submissionReviewScore
   } = review;
 
-  const { synopsisLine } = data;
   return (
     <Card>
       <SubmissionCardHeader submission={submission} />
       <CardContent>
-        <Subtitle name="Synopsis" value={synopsisLine} />
-        <Subtitle name="Score" value={submissionReviewScore} />
-        <Subtitle
-          name="Reviewed By"
-          value={`${submissionReviewCreatedBy} on ${submissionReviewCreated}`}
-        />
+        <table>
+          <tbody>
+            <Subtitle name="Logline" value={data.logline} />
+            <Subtitle name="Score" value={submissionReviewScore} />
+            <Subtitle name="Reviewer" value={submissionReviewCreatedBy} />
+            <Subtitle name="Reviewed" value={submissionReviewCreated} />
+          </tbody>
+        </table>
         {criteria.map(criterion => {
           const key = criterion.key;
           const { score, comments } = submissionReviewData

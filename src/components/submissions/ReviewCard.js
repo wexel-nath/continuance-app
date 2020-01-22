@@ -9,13 +9,13 @@ import { SubmissionCardHeader } from "./SubmissionCard";
 
 const ReviewCard = ({ submission }) => {
   const data = submission.submissionData || {};
-  const { synopsisLine } = data;
+  const { logline } = data;
   return (
     <Card>
       <SubmissionCardHeader submission={submission} />
       <CardContent>
         <Typography>
-          <b>Synopsis:</b> {synopsisLine}
+          <b>Logline:</b> {logline}
         </Typography>
         <ReviewForm submissionId={submission.submissionId} />
       </CardContent>

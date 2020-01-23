@@ -27,14 +27,14 @@ const useSubmission = submissionId => {
   return [submission, loading];
 };
 
-const useReview = reviewId => {
+const useReview = (submissionId, reviewId) => {
   const [review, setReview] = useState({});
   const [loading, setLoading] = useState(true);
 
   const getReview = async () => {
     const {
       data: { data }
-    } = await getReviewById(reviewId);
+    } = await getReviewById(submissionId, reviewId);
 
     setReview(toCamelCase(data));
     setLoading(false);
@@ -50,7 +50,7 @@ const useReview = reviewId => {
 const ViewReview = ({ match }) => {
   const { submissionId, reviewId } = match.params;
   const [submission, submissionLoading] = useSubmission(submissionId);
-  const [review, reviewLoading] = useReview(reviewId);
+  const [review, reviewLoading] = useReview(submissionId, reviewId);
 
   return (
     <Container maxWidth="lg">

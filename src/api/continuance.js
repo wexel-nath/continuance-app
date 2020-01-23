@@ -13,7 +13,7 @@ export async function getHealth() {
 export async function newContact(data) {
   const config = {
     method: "POST",
-    url: "/contact",
+    url: "/contacts",
     data: data
   };
   return await requestWithAuth(continuance, config);
@@ -22,7 +22,7 @@ export async function newContact(data) {
 export async function getContactList(page) {
   const config = {
     method: "GET",
-    url: "/contact",
+    url: "/contacts",
     params: { page }
   };
   return await requestWithAuth(continuance, config);
@@ -31,7 +31,7 @@ export async function getContactList(page) {
 export async function getContactById(contactId) {
   const config = {
     method: "GET",
-    url: `/contact/${contactId}`
+    url: `/contacts/${contactId}`
   };
   return await requestWithAuth(continuance, config);
 }
@@ -39,7 +39,7 @@ export async function getContactById(contactId) {
 export async function getNotesForContact(contactId, page) {
   const config = {
     method: "GET",
-    url: `/contact/${contactId}/notes`,
+    url: `/contacts/${contactId}/notes`,
     params: { page }
   };
   return await requestWithAuth(continuance, config);
@@ -48,7 +48,7 @@ export async function getNotesForContact(contactId, page) {
 export async function searchContacts(search) {
   const config = {
     method: "GET",
-    url: "/search/contact",
+    url: "/contacts/search",
     params: { search }
   };
   return await requestWithAuth(continuance, config);
@@ -57,7 +57,7 @@ export async function searchContacts(search) {
 export async function getCompanyList() {
   const config = {
     method: "GET",
-    url: "/company"
+    url: "/companies"
   };
   return await requestWithAuth(continuance, config);
 }
@@ -65,7 +65,7 @@ export async function getCompanyList() {
 export async function getExpertiseList() {
   const config = {
     method: "GET",
-    url: "/company-expertise"
+    url: "/expertise"
   };
   return await requestWithAuth(continuance, config);
 }
@@ -73,7 +73,7 @@ export async function getExpertiseList() {
 export async function getRecentNotes(page) {
   const config = {
     method: "GET",
-    url: `/recent-notes`,
+    url: `/notes`,
     params: { page }
   };
   return await requestWithAuth(continuance, config);
@@ -84,7 +84,7 @@ export async function uploadContacts(file) {
   formData.append("migration", file);
   const config = {
     method: "POST",
-    url: `/migrate`,
+    url: `/migrations`,
     data: formData,
     headers: {
       "Content-Type": "multipart/form-data"
@@ -96,7 +96,7 @@ export async function uploadContacts(file) {
 export async function getMigrationList(page) {
   const config = {
     method: "GET",
-    url: "/migrate",
+    url: "/migrations",
     params: { page }
   };
   return await requestWithAuth(continuance, config);
@@ -114,15 +114,15 @@ export async function getSubmissionList(page) {
 export async function getSubmissionById(submissionId) {
   const config = {
     method: "GET",
-    url: `/submission/${submissionId}`
+    url: `/submissions/${submissionId}`
   };
   return await requestWithAuth(continuance, config);
 }
 
-export async function getReviewById(reviewId) {
+export async function getReviewById(submissionId, reviewId) {
   const config = {
     method: "GET",
-    url: `/review/${reviewId}`
+    url: `/submissions/${submissionId}/reviews/${reviewId}`
   };
   return await requestWithAuth(continuance, config);
 }
@@ -130,7 +130,7 @@ export async function getReviewById(reviewId) {
 export async function getReviewsBySubmissionById(submissionId) {
   const config = {
     method: "GET",
-    url: `/submission/${submissionId}/reviews`
+    url: `/submissions/${submissionId}/reviews`
   };
   return await requestWithAuth(continuance, config);
 }
@@ -138,7 +138,7 @@ export async function getReviewsBySubmissionById(submissionId) {
 export async function newReview(submissionId, data) {
   const config = {
     method: "POST",
-    url: `/submission/${submissionId}/review`,
+    url: `/submissions/${submissionId}/reviews`,
     data: data
   };
   return await requestWithAuth(continuance, config);

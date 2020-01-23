@@ -115,7 +115,8 @@ export const SubmissionCardHeader = ({ submission, reviewable }) => {
     firstName,
     lastName,
     contactId,
-    scriptFile,
+    shortScript,
+    featureScript,
     scriptTitle,
     submissionCreated,
     submissionId
@@ -123,7 +124,7 @@ export const SubmissionCardHeader = ({ submission, reviewable }) => {
 
   const title = (
     <Typography variant="h6">
-      <FileLink href={scriptFile} title={scriptTitle} />
+      <FileLink href={featureScript} title={scriptTitle} />
       {" submitted by "}
       <Link to={`/contacts/${contactId}`}>{firstName + " " + lastName}</Link>
     </Typography>
@@ -133,11 +134,21 @@ export const SubmissionCardHeader = ({ submission, reviewable }) => {
     <ButtonLink text="Review" to={`/submissions/${submissionId}/review`} />
   );
 
+  const subHeader = (
+    <div>
+      {submissionCreated}
+      {" | "}
+      <FileLink href={shortScript} title="Short" />
+      {" | "}
+      <FileLink href={featureScript} title="Feature" />
+    </div>
+  );
+
   return (
     <CardHeader
       avatar={<TheatersIcon color="primary" />}
       title={title}
-      subheader={submissionCreated}
+      subheader={subHeader}
       action={reviewButton}
     />
   );

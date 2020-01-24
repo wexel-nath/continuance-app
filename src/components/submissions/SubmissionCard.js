@@ -28,7 +28,12 @@ const boolValue = value => {
   return value ? "Yes" : "No";
 };
 
-const SubmissionContent = ({ data, supportingFiles }) => {
+const SubmissionContent = ({
+  data,
+  featureScript,
+  shortScript,
+  supportingFiles
+}) => {
   if (!data) {
     return null;
   }
@@ -56,18 +61,13 @@ const SubmissionContent = ({ data, supportingFiles }) => {
     otherTeam
   } = data;
 
-  const fileLinks = supportingFiles.map(file => {
-    const parts = file.split("/");
-    return (
-      <Typography>
-        <FileLink href={file} title={parts[parts.length - 1]} />
-      </Typography>
-    );
-  });
+  const fileLinks = supportingFiles.map(file => <FileLink file={file} />);
 
   return (
     <Table size="small">
       <TableBody>
+        <Row name="Short Script" value={<FileLink file={shortScript} />} />
+        <Row name="Feature Script" value={<FileLink file={featureScript} />} />
         <Row name="Supporting Files" value={fileLinks} />
         <Row name="Alternative Contact Name" value={altContactName} />
         <Row name="Alternative Contact Email" value={altContactEmail} />
@@ -102,11 +102,14 @@ const SubmissionContent = ({ data, supportingFiles }) => {
   );
 };
 
-const FileLink = ({ href, title }) => {
+const FileLink = ({ file }) => {
+  const { url, name } = file;
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" download={title}>
-      {title}
-    </a>
+    <Typography>
+      <a href={url} target="_blank" rel="noopener noreferrer">
+        {name}
+      </a>
+    </Typography>
   );
 };
 
@@ -115,52 +118,57 @@ export const SubmissionCardHeader = ({ submission, reviewable }) => {
     firstName,
     lastName,
     contactId,
-    shortScript,
-    featureScript,
     scriptTitle,
     submissionCreated,
     submissionId
   } = submission;
 
+  const inlineStyle = {
+    display: "inline",
+    margin: 0,
+    padding: 0
+  };
+
   const title = (
-    <Typography variant="h6">
-      <FileLink href={featureScript} title={scriptTitle} />
-      {" submitted by "}
-      <Link to={`/contacts/${contactId}`}>{firstName + " " + lastName}</Link>
-    </Typography>
+    <>
+      <Typography variant="h6" style={inlineStyle}>
+        {scriptTitle}
+      </Typography>
+      <p style={inlineStyle}>
+        {" submitted by "}
+        <Link to={`/contacts/${contactId}`}>{firstName + " " + lastName}</Link>
+      </p>
+    </>
   );
 
   const reviewButton = reviewable && (
     <ButtonLink text="Review" to={`/submissions/${submissionId}/review`} />
   );
 
-  const subHeader = (
-    <div>
-      {submissionCreated}
-      {" | "}
-      <FileLink href={shortScript} title="Short" />
-      {" | "}
-      <FileLink href={featureScript} title="Feature" />
-    </div>
-  );
-
   return (
     <CardHeader
       avatar={<TheatersIcon color="primary" />}
       title={title}
-      subheader={subHeader}
+      subheader={submissionCreated}
       action={reviewButton}
     />
   );
 };
 
 const SubmissionCard = ({ submission }) => {
-  const { submissionData, supportingFiles } = submission;
+  const {
+    shortScript,
+    featureScript,
+    submissionData,
+    supportingFiles
+  } = submission;
   return (
     <Card>
       <SubmissionCardHeader submission={submission} reviewable />
       <CardContent>
         <SubmissionContent
+          shortScript={shortScript}
+          featureScript={featureScript}
           data={submissionData}
           supportingFiles={supportingFiles || []}
         />

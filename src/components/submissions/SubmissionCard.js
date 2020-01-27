@@ -17,7 +17,10 @@ const Row = ({ name, value }) => {
   return (
     <TableRow>
       <TableCell style={{ width: "250px" }}>{name}</TableCell>
-      <TableCell align="left" style={{ fontWeight: "bold" }}>
+      <TableCell
+        align="left"
+        style={{ fontWeight: "bold", whiteSpace: "pre-line" }}
+      >
         {value}
       </TableCell>
     </TableRow>
@@ -58,7 +61,9 @@ const SubmissionContent = ({
     socialMedia,
     referenceFilms,
     chainOfTitle,
-    otherTeam
+    otherTeam,
+    orderId,
+    orderTotal
   } = data;
 
   const fileLinks = supportingFiles.map(file => <FileLink file={file} />);
@@ -97,6 +102,11 @@ const SubmissionContent = ({
         <Row name="Other Team Members" value={otherTeam} />
         <Row name="Video Links" value={videoLinks} />
         <Row name="Social Media" value={socialMedia} />
+        <Row name="Squarespace Order Id" value={orderId} />
+        <Row
+          name="Squarespace Order Total"
+          value={orderTotal && "$" + orderTotal}
+        />
       </TableBody>
     </Table>
   );

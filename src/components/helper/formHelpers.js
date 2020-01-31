@@ -13,7 +13,7 @@ import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 
-import useLocations from "./useLocations";
+import { getCountryList } from "../../api/countries";
 
 const useStyles = makeStyles(theme => ({
   select: {
@@ -124,7 +124,8 @@ export const SearchSelect = ({
   getOptionLabel,
   label,
   name,
-  options
+  options,
+  single
 }) => {
   const onChange = (event, action) => {
     event.target.name = name;
@@ -138,47 +139,17 @@ export const SearchSelect = ({
       onKeyPress={e => e.key === "Enter" && e.preventDefault()}
       name={name}
       options={options}
-      disableCloseOnSelect
+      disableCloseOnSelect={!single}
       filterSelectedOptions
       freeSolo={freeSolo}
       getOptionLabel={getOptionLabel}
-      multiple
+      multiple={!single}
       renderInput={params => (
         <TextField
           {...params}
           variant="outlined"
           label={label}
           margin="normal"
-          fullWidth
-        />
-      )}
-    />
-  );
-};
-
-export const LocationInput = ({ label, name, formValues }) => {
-  const [locations, setSearch] = useLocations();
-  const onChange = (event, action) => {
-    event.target.name = name;
-    event.target.action = action.value;
-    formValues.handleChange(event);
-  };
-
-  return (
-    <Autocomplete
-      name={name}
-      onChange={onChange}
-      disableClearable
-      freeSolo
-      options={locations}
-      getOptionLabel={option => option.label || ""}
-      renderInput={params => (
-        <TextField
-          {...params}
-          onChange={e => setSearch(e.target.value)}
-          margin="normal"
-          label={label}
-          variant="outlined"
           fullWidth
         />
       )}

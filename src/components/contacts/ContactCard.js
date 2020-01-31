@@ -28,8 +28,7 @@ const ContactContent = ({ contact }) => {
     contactPhone,
     contactEmail,
     contactLink,
-    locationBased,
-    locationMet,
+    country,
     contactExpertise = [],
     companyPosition,
     companyName
@@ -51,8 +50,7 @@ const ContactContent = ({ contact }) => {
         <Row name="Contact number" value={contactPhone} />
         <Row name="Email Address" value={email} />
         <Row name="Website" value={website} />
-        <Row name="Based In" value={locationBased} />
-        <Row name="Location Met" value={locationMet} />
+        <Row name="Country" value={country} />
         <Row name="Position" value={companyPosition} />
         <Row name="Expertise" value={contactExpertise.join(", ")} />
         <Row name="Company" value={companyName} />

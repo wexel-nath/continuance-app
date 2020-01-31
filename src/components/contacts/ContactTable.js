@@ -9,7 +9,7 @@ const ContactRow = ({ contact }) => {
     firstName,
     lastName,
     contactEmail,
-    locationBased,
+    country,
     companyPosition,
     companyName
   } = contact;
@@ -21,7 +21,7 @@ const ContactRow = ({ contact }) => {
         </Link>
       </td>
       <td>{contactEmail || ""}</td>
-      <td>{locationBased || ""}</td>
+      <td>{country || ""}</td>
       <td>{companyName || ""}</td>
       <td>{companyPosition || ""}</td>
     </tr>
@@ -37,7 +37,7 @@ const ContactTable = ({ contacts, loading }) => {
           <tr>
             <th>Name</th>
             <th>Email</th>
-            <th>Based In</th>
+            <th>Country</th>
             <th>Company</th>
             <th>Position</th>
           </tr>

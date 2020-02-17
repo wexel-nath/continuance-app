@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { decamelizeKeys as toSnakeCase } from "humps";
 import { isNullOrUndefined } from "util";
 
+import { Typography } from "@material-ui/core";
+
 import {
   FormError,
   FormSubmit,
@@ -11,7 +13,7 @@ import {
 import history from "../../history";
 import useForm from "../../components/helper/useForm";
 import { newReview } from "../../api/continuance";
-import ReviewItem from "./ReviewItem";
+import ReviewItem, { Separator } from "./ReviewItem";
 import { criteria } from "./reviewCriteria";
 
 const validate = () => {
@@ -41,6 +43,7 @@ const mapFormToReview = values => {
           comments: values[key + "Comment"] || ""
         };
   });
+  review.generalComments = values.generalComments || "";
 
   return toSnakeCase(review);
 };
@@ -94,6 +97,14 @@ const ReviewForm = ({ submissionId }) => {
           />
         );
       })}
+      <Separator />
+      <Typography variant="h6">General Comments</Typography>
+      <Input
+        label="Comments"
+        name={"generalComments"}
+        rows="3"
+        formValues={formValues}
+      />
       <FormSubmit loading={loading} text="Submit Review" />
       <FormError error={err} />
     </form>

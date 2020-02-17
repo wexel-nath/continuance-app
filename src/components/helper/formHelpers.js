@@ -13,8 +13,6 @@ import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 
-import { getCountryList } from "../../api/countries";
-
 const useStyles = makeStyles(theme => ({
   select: {
     margin: "normal",

@@ -3,7 +3,7 @@ import Markdown from "react-markdown";
 
 import { Typography, Divider, Grid } from "@material-ui/core";
 
-const Separator = () => {
+export const Separator = () => {
   return <Divider style={{ marginTop: "10px", marginBottom: "10px" }} />;
 };
 

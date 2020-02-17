@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import FeedbackIcon from "@material-ui/icons/Feedback";
 
 import { SubmissionCardHeader } from "./SubmissionCard";
-import ReviewItem from "./ReviewItem";
+import ReviewItem, { Separator } from "./ReviewItem";
 import { criteria } from "./reviewCriteria";
 
 const Comments = ({ comments }) => {
@@ -22,7 +22,14 @@ const Comments = ({ comments }) => {
       <Grid item>
         <FeedbackIcon color="primary" fontSize="large" />
       </Grid>
-      <Grid item style={{ marginLeft: "10px", fontStyle: "italic" }}>
+      <Grid
+        item
+        style={{
+          marginLeft: "10px",
+          fontStyle: "italic",
+          whiteSpace: "pre-wrap"
+        }}
+      >
         {comments}
       </Grid>
     </Grid>
@@ -50,6 +57,7 @@ const ReviewDetails = ({ submission, review }) => {
     submissionReviewData,
     submissionReviewScore
   } = review;
+  const { generalComments = "" } = submissionReviewData || {};
 
   return (
     <Card>
@@ -78,6 +86,9 @@ const ReviewDetails = ({ submission, review }) => {
             />
           );
         })}
+        <Separator />
+        <Typography variant="h6">General Comments</Typography>
+        <Comments comments={generalComments || ""} />
       </CardContent>
     </Card>
   );

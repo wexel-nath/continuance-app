@@ -101,8 +101,8 @@ const pageTitles = {
   "/contacts/upload": "Upload Contacts",
   "/contacts/search": "Search Contacts",
   "/preferences": "Preferences",
-  "/submissions": "View Submissions",
-  "/submissions/:id": "Submission",
+  "/short-film/:year/submissions": "View Submissions",
+  "/short-film/:year/submissions/:id": "Submission",
   "/users": "Manage Users",
   "/": "Recent Events"
 };

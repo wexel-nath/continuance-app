@@ -43,18 +43,19 @@ const useSubmission = submissionId => {
 };
 
 const ViewSubmission = ({ match }) => {
-  const submissionId = match.params.id;
-  const [submission, reviews, loading] = useSubmission(submissionId);
+  console.log(match.params);
+  const { year, id } = match.params;
+  const [submission, reviews, loading] = useSubmission(id);
 
   return (
     <Container maxWidth="lg">
       {loading && <Loader text="Loading" />}
       <Grid container spacing={3}>
         <Grid item sm={12}>
-          <SubmissionCard submission={submission} />
+          <SubmissionCard year={year} submission={submission} />
         </Grid>
         <Grid item sm={12}>
-          <ReviewTable reviews={reviews} />
+          <ReviewTable year={year} reviews={reviews} />
         </Grid>
       </Grid>
     </Container>

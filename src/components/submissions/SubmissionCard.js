@@ -123,7 +123,7 @@ const FileLink = ({ file }) => {
   );
 };
 
-export const SubmissionCardHeader = ({ submission, reviewable }) => {
+export const SubmissionCardHeader = ({ year, submission, reviewable }) => {
   const {
     firstName,
     lastName,
@@ -152,7 +152,7 @@ export const SubmissionCardHeader = ({ submission, reviewable }) => {
   );
 
   const reviewButton = reviewable && (
-    <ButtonLink text="Review" to={`/submissions/${submissionId}/review`} />
+    <ButtonLink text="Review" to={`/short-film/${year}/submissions/${submissionId}/review`} />
   );
 
   return (
@@ -165,7 +165,7 @@ export const SubmissionCardHeader = ({ submission, reviewable }) => {
   );
 };
 
-const SubmissionCard = ({ submission }) => {
+const SubmissionCard = ({ year, submission }) => {
   const {
     shortScript,
     featureScript,
@@ -174,7 +174,7 @@ const SubmissionCard = ({ submission }) => {
   } = submission;
   return (
     <Card>
-      <SubmissionCardHeader submission={submission} reviewable />
+      <SubmissionCardHeader year={year} submission={submission} reviewable />
       <CardContent>
         <SubmissionContent
           shortScript={shortScript}

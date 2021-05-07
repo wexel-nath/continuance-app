@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const Row = ({ review }) => {
+const Row = ({ year, review }) => {
   const classes = useStyles();
 
   const {
@@ -46,7 +46,7 @@ const Row = ({ review }) => {
       hover
       onClick={() =>
         history.push(
-          `/submissions/${submissionId}/reviews/${submissionReviewId}`
+          `/short-film/${year}/submissions/${submissionId}/reviews/${submissionReviewId}`
         )
       }
     >
@@ -65,7 +65,7 @@ const Row = ({ review }) => {
   );
 };
 
-const ReviewTable = ({ reviews }) => {
+const ReviewTable = ({ year, reviews }) => {
   return (
     <TableContainer component={Paper}>
       <Table size="small">
@@ -86,7 +86,7 @@ const ReviewTable = ({ reviews }) => {
         </TableHead>
         <TableBody>
           {reviews.map(review => {
-            return <Row review={review} key={review.submissionReviewId} />;
+            return <Row year={year} review={review} key={review.submissionReviewId} />;
           })}
         </TableBody>
       </Table>

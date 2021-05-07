@@ -17,7 +17,7 @@ const ClickableCell = ({ to, value }) => {
   );
 };
 
-const Row = ({ submission }) => {
+const Row = ({ year, submission }) => {
   const {
     scriptTitle,
     submissionId,
@@ -30,7 +30,7 @@ const Row = ({ submission }) => {
     reviewScore
   } = submission;
 
-  const submissionLink = "/submissions/" + submissionId;
+  const submissionLink = `/short-film/${year}/submissions/${submissionId}`;
   return (
     <TableRow hover>
       <ClickableCell to={submissionLink} value={scriptTitle} />
@@ -49,7 +49,7 @@ const Row = ({ submission }) => {
   );
 };
 
-const SubmissionTable = ({ submissions }) => {
+const SubmissionTable = ({ year, submissions }) => {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -65,7 +65,7 @@ const SubmissionTable = ({ submissions }) => {
         </TableHead>
         <TableBody>
           {submissions.map(submission => (
-            <Row submission={submission} key={submission.submissionId} />
+            <Row year={year} submission={submission} key={submission.submissionId} />
           ))}
         </TableBody>
       </Table>

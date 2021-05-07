@@ -102,10 +102,10 @@ export async function getMigrationList(page) {
   return await requestWithAuth(continuance, config);
 }
 
-export async function getSubmissionList(page) {
+export async function getSubmissionsByYear(year, page) {
   const config = {
     method: "GET",
-    url: "/submissions",
+    url: `/submissions/list/${year}`,
     params: { page }
   };
   return await requestWithAuth(continuance, config);

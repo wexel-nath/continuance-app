@@ -102,8 +102,13 @@ const Sidebar = ({ open }) => {
       <SidebarGroup header="Short Film Initiative">
         <SidebarLink
           icon={<InboxIcon />}
-          primary="View All"
-          to="/submissions"
+          primary="View 2021"
+          to="/short-film/2021/submissions"
+        />
+        <SidebarLink
+          icon={<InboxIcon />}
+          primary="View 2020"
+          to="/short-film/2020/submissions"
         />
       </SidebarGroup>
 

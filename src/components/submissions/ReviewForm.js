@@ -48,7 +48,7 @@ const mapFormToReview = values => {
   return toSnakeCase(review);
 };
 
-const useNewReview = submissionId => {
+const useNewReview = (year, submissionId) => {
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -62,7 +62,7 @@ const useNewReview = submissionId => {
     } = await newReview(submissionId, mapFormToReview(values));
 
     if (status === 201) {
-      history.push(`/submissions/${submissionId}`);
+      history.push(`/short-film/${year}/submissions/${submissionId}`);
     } else {
       setErr(meta || statusText);
     }
@@ -74,8 +74,8 @@ const useNewReview = submissionId => {
   return [formValues, err, loading];
 };
 
-const ReviewForm = ({ submissionId }) => {
-  const [formValues, err, loading] = useNewReview(submissionId);
+const ReviewForm = ({ year, submissionId }) => {
+  const [formValues, err, loading] = useNewReview(year, submissionId);
 
   return (
     <form onSubmit={formValues.handleSubmit} noValidate>
